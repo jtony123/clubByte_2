@@ -1,0 +1,15 @@
+<%-- 
+    Document   : index
+    Created on : 27-Nov-2014, 11:54:15
+    Author     : jtony_000
+--%>
+
+
+        <div id="footer">
+            <hr>
+            <p id="footerText">Team 2 CT338 Project</p>
+        </div>
+    </div>
+</body>
+    </body>
+</html>
