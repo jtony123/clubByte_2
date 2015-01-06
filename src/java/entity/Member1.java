@@ -1,29 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * No license found
+ * 
+ * 
  */
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,53 +32,49 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Member1.findAll", query = "SELECT m FROM Member1 m"),
     @NamedQuery(name = "Member1.findByMemberID", query = "SELECT m FROM Member1 m WHERE m.memberID = :memberID"),
-    @NamedQuery(name = "Member1.findByUserName", query = "SELECT m FROM Member1 m WHERE m.userName = :userName"),
-    @NamedQuery(name = "Member1.findByAddress", query = "SELECT m FROM Member1 m WHERE m.address = :address"),
-    @NamedQuery(name = "Member1.findByDob", query = "SELECT m FROM Member1 m WHERE m.dob = :dob"),
-    @NamedQuery(name = "Member1.findByMobileNumber", query = "SELECT m FROM Member1 m WHERE m.mobileNumber = :mobileNumber"),
-    @NamedQuery(name = "Member1.findByContactNumICE", query = "SELECT m FROM Member1 m WHERE m.contactNumICE = :contactNumICE"),
     @NamedQuery(name = "Member1.findByFirstName", query = "SELECT m FROM Member1 m WHERE m.firstName = :firstName"),
     @NamedQuery(name = "Member1.findBySurName", query = "SELECT m FROM Member1 m WHERE m.surName = :surName"),
-    @NamedQuery(name = "Member1.findByEmailAddress", query = "SELECT m FROM Member1 m WHERE m.emailAddress = :emailAddress")})
+    @NamedQuery(name = "Member1.findByEmailAddress", query = "SELECT m FROM Member1 m WHERE m.emailAddress = :emailAddress"),
+    @NamedQuery(name = "Member1.findByUserName", query = "SELECT m FROM Member1 m WHERE m.userName = :userName"),
+    @NamedQuery(name = "Member1.findByPassWord", query = "SELECT m FROM Member1 m WHERE m.passWord = :passWord"),
+    @NamedQuery(name = "Member1.findByDob", query = "SELECT m FROM Member1 m WHERE m.dob = :dob"),
+    @NamedQuery(name = "Member1.findByMobileNo", query = "SELECT m FROM Member1 m WHERE m.mobileNo = :mobileNo")})
 public class Member1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "memberID")
     private Integer memberID;
+    @Size(max = 45)
+    @Column(name = "firstName")
+    private String firstName;
+    @Size(max = 45)
+    @Column(name = "surName")
+    private String surName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 25)
+    @Size(min = 1, max = 45)
+    @Column(name = "emailAddress")
+    private String emailAddress;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "userName")
     private String userName;
-    @Size(max = 255)
-    @Column(name = "Address")
-    private String address;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "passWord")
+    private String passWord;
     @Basic(optional = false)
     @NotNull
     @Column(name = "DOB")
     @Temporal(TemporalType.DATE)
     private Date dob;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "MobileNumber")
-    private int mobileNumber;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "contactNumICE")
-    private int contactNumICE;
-    @Column(name = "firstName")
-    private Integer firstName;
-    @Column(name = "surName")
-    private Integer surName;
-    @Column(name = "emailAddress")
-    private Integer emailAddress;
-    @ManyToMany(mappedBy = "member1Collection")
-    private Collection<Club> clubCollection;
-    @JoinColumn(name = "memberID", referencedColumnName = "personID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Person person;
+    @Size(max = 45)
+    @Column(name = "mobileNo")
+    private String mobileNo;
 
     public Member1() {
     }
@@ -90,12 +83,12 @@ public class Member1 implements Serializable {
         this.memberID = memberID;
     }
 
-    public Member1(Integer memberID, String userName, Date dob, int mobileNumber, int contactNumICE) {
+    public Member1(Integer memberID, String emailAddress, String userName, String passWord, Date dob) {
         this.memberID = memberID;
+        this.emailAddress = emailAddress;
         this.userName = userName;
+        this.passWord = passWord;
         this.dob = dob;
-        this.mobileNumber = mobileNumber;
-        this.contactNumICE = contactNumICE;
     }
 
     public Integer getMemberID() {
@@ -106,6 +99,30 @@ public class Member1 implements Serializable {
         this.memberID = memberID;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public void setSurName(String surName) {
+        this.surName = surName;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -114,12 +131,12 @@ public class Member1 implements Serializable {
         this.userName = userName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
     public Date getDob() {
@@ -130,61 +147,12 @@ public class Member1 implements Serializable {
         this.dob = dob;
     }
 
-    public int getMobileNumber() {
-        return mobileNumber;
+    public String getMobileNo() {
+        return mobileNo;
     }
 
-    public void setMobileNumber(int mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public int getContactNumICE() {
-        return contactNumICE;
-    }
-
-    public void setContactNumICE(int contactNumICE) {
-        this.contactNumICE = contactNumICE;
-    }
-
-    public Integer getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(Integer firstName) {
-        this.firstName = firstName;
-    }
-
-    public Integer getSurName() {
-        return surName;
-    }
-
-    public void setSurName(Integer surName) {
-        this.surName = surName;
-    }
-
-    public Integer getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(Integer emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    @XmlTransient
-    public Collection<Club> getClubCollection() {
-        return clubCollection;
-    }
-
-    public void setClubCollection(Collection<Club> clubCollection) {
-        this.clubCollection = clubCollection;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
     }
 
     @Override

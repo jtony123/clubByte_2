@@ -4,7 +4,6 @@
     Document   : index
     Created on : 27-Nov-2014, 11:54:15
     Author     : jtony_000
-    testing a new commit
 --%>
 
 
@@ -25,7 +24,7 @@
         <div id="indexCentreColumn">
             <c:forEach var="category" items="${categories}">
                 <div class="categoryBox">
-                    <a href="category"${category.name}>  
+                    <a href="category?${category.name}">  
                         <div class="categoryImage">
                             <img src="${initParam.categoryImagePath}${category.name}.jpg"
                                 alt="${category.name}">

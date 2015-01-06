@@ -1,21 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * No license found
+ * 
+ * 
  */
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,29 +37,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 45)
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "category_blurb")
     private String categoryBlurb;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Collection<Club> clubCollection;
 
     public Category() {
     }
 
     public Category(Integer id) {
         this.id = id;
-    }
-
-    public Category(Integer id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Integer getId() {
@@ -79,6 +79,15 @@ public class Category implements Serializable {
 
     public void setCategoryBlurb(String categoryBlurb) {
         this.categoryBlurb = categoryBlurb;
+    }
+
+    @XmlTransient
+    public Collection<Club> getClubCollection() {
+        return clubCollection;
+    }
+
+    public void setClubCollection(Collection<Club> clubCollection) {
+        this.clubCollection = clubCollection;
     }
 
     @Override

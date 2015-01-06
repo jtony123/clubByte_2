@@ -10,14 +10,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<sql:query var="categories" dataSource="jdbc/clubByte_2">
+<%--<sql:query var="categories" dataSource="jdbc/clubByte_2">
     SELECT * FROM category
 </sql:query>
     
 <sql:query var="selectedCategory" dataSource="jdbc/clubByte_2">
     SELECT name FROM category WHERE id = ?
     <sql:param value="${pageContext.request.queryString}"/>
-</sql:query>
+</sql:query>--%>
 
 
 <%--query the database for clubs belonging to the category selected by the user
@@ -31,7 +31,7 @@ the category name is found on the request object--%>
         <div id="indexLeftColumn">
             <div id="welcomeText">
                 <p>Club Categories</p>
-                    <c:forEach var="category" items="${categories.rows}">
+                    <c:forEach var="category" items="${categories}">
 
                         <c:choose>
                             <c:when test="${category.id == pageContext.request.queryString}">
@@ -55,7 +55,7 @@ the category name is found on the request object--%>
         </div>
         
         <div id="indexCentreColumn">
-            CLICK a category to see all clubs in that category
+            Clubs currently in the ${categoryName} category
 
             <table id="productTable">
 

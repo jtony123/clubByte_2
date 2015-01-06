@@ -6,11 +6,14 @@
 package controller;
 
 import entity.Category;
+import entity.Club;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.EJB;
+import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,12 +43,15 @@ public class myControllerServlet extends HttpServlet {
     
     @EJB
     private CategoryFacade categoryFacade;
+    @EJB
+    private ClubFacade clubFacade;
     
     @Override
         public void init() throws ServletException {
 
         // store category list in servlet context
-        getServletContext().setAttribute("categories", categoryFacade.findAll());        
+        getServletContext().setAttribute("categories", categoryFacade.findAll());
+        
     }
         
     @Override
@@ -53,20 +59,29 @@ public class myControllerServlet extends HttpServlet {
     throws ServletException, IOException {
 
         String userPath = request.getServletPath();
+        Category selectedCategory;
+        Club aclub;
+        Collection<Club> categoryClubs;
 
         // if category page is requested
-        if (userPath.equals("/login")) {
+        if (userPath.equals("/category")) {
             // TODO: Implement category request
-            //System.out.println("hello");
-            userPath = "/category";
-//            String categoryName = request.getQueryString();
-//            //System.out.println(categoryName);
-//            if (categoryName != null){
-//        // get selected category
-//        Category selectedCategory = categoryFacade.find((String)(categoryName));
-//        request.setAttribute("selectedCategory", selectedCategory);
-//
-//            }
+            String categoryName = request.getQueryString();
+
+            if (categoryName != null) {
+
+                //selectedCategory = categoryFacade.find(categoryName);
+                // place selected category in request scope
+                request.setAttribute("categoryName", categoryName);
+            
+                
+                // get all clubs for selected category
+                //categoryClubs = ;
+
+                // place category products in request scope
+                //request.setAttribute("categoryClubs", categoryClubs);
+            }
+
 
         // if cart page is requested
         } else if (userPath.equals("/login")) {
@@ -110,8 +125,8 @@ public class myControllerServlet extends HttpServlet {
         // if login action is called
         if (userPath.equals("/login")) {
             // TODO: Implement username and password check 
-            userPath = "category";
-            System.out.println("here");
+            userPath = "login";
+            System.out.println("login clicked");
         
         // if category action is called
         } else if (userPath.equals("/category")) {
