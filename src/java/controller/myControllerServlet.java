@@ -68,21 +68,18 @@ public class myControllerServlet extends HttpServlet {
             // TODO: Implement category request
             String categoryName = request.getQueryString();
 
-            if (categoryName != null) {
+    if (categoryName != null) {
 
-                //selectedCategory = categoryFacade.find(categoryName);
-                // place selected category in request scope
-                request.setAttribute("categoryName", categoryName);
-            
-                
-                // get all clubs for selected category
-                //categoryClubs = ;
+        // get selected category
+        //selectedCategory = categoryFacade.find(categoryName);
 
-                // place category products in request scope
-                //request.setAttribute("categoryClubs", categoryClubs);
-            }
+        // place selected category in request scope
+        //request.setAttribute("selectedCategory", selectedCategory);
 
+        // get all products for selected category
+        //categoryClubs = selectedCategory.getClubCollection();
 
+    }
         // if cart page is requested
         } else if (userPath.equals("/login")) {
             // TODO: Implement cart page request
