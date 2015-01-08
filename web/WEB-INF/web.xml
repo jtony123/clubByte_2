@@ -19,10 +19,10 @@
             <include-coda>/WEB-INF/jspf/clubByte_footer.jspf</include-coda>
         </jsp-property-group>
     </jsp-config>
-    <resource-ref>
+<!--    <resource-ref>
         <res-ref-name>jdbc/clubByte_2</res-ref-name>
         <res-type>javax.sql.ConnectionPoolDataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
-    </resource-ref>
+    </resource-ref>-->
 </web-app>

@@ -23,10 +23,10 @@
 <%--query the database for clubs belonging to the category selected by the user
 the category name is found on the request object--%>
 
-<sql:query var="clubs" dataSource="jdbc/clubByte_2">
+<%--<sql:query var="clubs" dataSource="jdbc/clubByte_2">
     SELECT * FROM Club WHERE category = ?
     <sql:param value="${pageContext.request.queryString}"/>
-</sql:query>
+</sql:query>--%>
     
         <div id="indexLeftColumn">
             <div id="welcomeText">
@@ -42,7 +42,7 @@ the category name is found on the request object--%>
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <a href="category?${category.name}" class="categoryButton">
+                                <a href="category?${category.id}" class="categoryButton">
                                     <div class="categoryText">
                                         ${category.name}
                                     </div>
@@ -55,11 +55,12 @@ the category name is found on the request object--%>
         </div>
         
         <div id="indexCentreColumn">
-            Clubs currently in the ${categoryName} category
+            Clubs currently in the ${selectedCategory} category
 
             <table id="productTable">
 
-                <c:forEach var="club" items="${clubs.rows}" varStatus="iter">
+                <%--<c:forEach var="club" items="${clubs.rows}" varStatus="iter">--%>
+                <c:forEach var="club" items="${categoryClubs}" varStatus="iter">
 
                     <tr class="${((iter.index % 2) == 0) ? 'lightBlue' : 'white'}">
                         <td>
@@ -68,7 +69,7 @@ the category name is found on the request object--%>
                         <td>
                             ${club.clubName}
                             <br>
-                            <span class="smallText">${club.Description}</span>
+                            <span class="smallText">${club.description}</span>
                         </td>
                         <td>
                             #members; ${club.maxMembers}
@@ -80,7 +81,7 @@ the category name is found on the request object--%>
                             <form action="addToCart" method="post">
                                 <input type="hidden"
                                        name="productId"
-                                       value="${club.id}">
+                                       value="${club.clubID}">
                                 <input type="submit"
                                        value="JOIN">
                             </form>

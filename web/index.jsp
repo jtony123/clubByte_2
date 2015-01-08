@@ -24,7 +24,7 @@
         <div id="indexCentreColumn">
             <c:forEach var="category" items="${categories}">
                 <div class="categoryBox">
-                    <a href="category?${category.name}">  
+                    <a href="category?${category.id}">  
                         <div class="categoryImage">
                             <img src="${initParam.categoryImagePath}${category.name}.jpg"
                                 alt="${category.name}">
