@@ -10,8 +10,12 @@ import entity.Club;
 import entity.Member1;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.persistence.TypedQuery;
@@ -24,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.CategoryFacade;
 import session.ClubFacade;
+import session.LoginManager;
+import session.Member1Facade;
 import session.NewMemberManager;
 
 /**
@@ -53,7 +59,11 @@ public class myControllerServlet extends HttpServlet {
     @EJB
     private ClubFacade clubFacade;
     @EJB
+    private Member1Facade memberFacade;
+    @EJB
     private NewMemberManager newMemberMan;
+    @EJB
+    private LoginManager loginMan;
     
     @Override
         public void init(ServletConfig servletConfig) throws ServletException {
@@ -96,9 +106,9 @@ public class myControllerServlet extends HttpServlet {
 
     }
         // if cart page is requested
-        } else if (userPath.equals("/login")) {
+        } else if (userPath.equals("/loggin")) {
             // TODO: Implement cart page request
-
+            System.out.println("got here");
             userPath = "/category";
 
         // if checkout page is requested
@@ -135,9 +145,9 @@ public class myControllerServlet extends HttpServlet {
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
 
-        // if login action is called
+        // if register action is called
         if (userPath.equals("/submit")) {
-            // TODO: Implement username and password check 
+            // TODO: Implement password encryption
             
             String fname = request.getParameter("firstname");
             String sname = request.getParameter("surname");
@@ -145,31 +155,49 @@ public class myControllerServlet extends HttpServlet {
             String uname = request.getParameter("username");
             String pword = request.getParameter("password");
             int mobnum = Integer.parseInt(request.getParameter("phone"));
+            	
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String dateInString = request.getParameter("dob");
+ 
+            try {
+ 
+		Date date = formatter.parse(dateInString);
+		//System.out.println(date);
+		//System.out.println(formatter.format(date));
+                
+                // call the joinMember method of the NewMemberManager class to save this user as
+                // a new mamber to the database.
+                int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobnum);
+ 
+            } catch (ParseException e) {
+		e.printStackTrace();
+            }
             
-            
-            //System.out.println("got " + fname + " " + sname + " " + email + " " + mobnum);
-            
-            int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, null, mobnum);
-    
-            
-            
-            userPath = "/category";
-           
+            userPath = "/category";           
         
         // if category action is called
         } else if (userPath.equals("/category")) {
             // TODO: Implement category selection
-                // get categoryId from request  
+                
+        
+        // if login action is called
+        } else if (userPath.equals("/login")) {
+            // TODO: Implement purchase action
+
+            String uName = request.getParameter("this_user");
+            String pWord = request.getParameter("this_password");
             
-            String testing = request.getParameter("firstname");
-            System.out.println("got this back " + testing);
+            boolean validUser = loginMan.checkValidUser(uName, pWord);
+            
+            if(validUser){
+                session.setAttribute("user_name", uName);
+                userPath = "/category";
+            }
+            else {
+                userPath = "/loginerror";
+            }
+            
         }
-        // if purchase action is called
-//        } else if (userPath.equals("/purchase")) {
-//            // TODO: Implement purchase action
-//
-//            userPath = "/confirmation";
-//        }
 
         // use RequestDispatcher to forward request internally
         String url = "/WEB-INF/view/" + userPath + ".jsp";

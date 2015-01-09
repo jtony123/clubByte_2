@@ -5,14 +5,9 @@
  */
 package session;
 
-import com.sun.xml.ws.tx.at.validation.TXAttributesValidator.TransactionAttributeType;
 import entity.Member1;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionManagement;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -26,16 +21,16 @@ public class NewMemberManager {
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;
 
-    public int joinMember(String fname, String sname, String email, String uname, String pword, Object object, int mobnum) {
+    public int joinMember(String fname, String sname, String email, String uname, String pword, Date date, int mobnum) {
     
-        Member1 member = addMember(fname, sname, email, uname, pword, object, mobnum);
+        Member1 member = addMember(fname, sname, email, uname, pword, date, mobnum);
         return member.getMemberID();
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    private Member1 addMember(String fname, String sname, String email, String uname, String pword, Object object, int mobnum) {
+    private Member1 addMember(String fname, String sname, String email, String uname, String pword, Date date, int mobnum) {
     
         
         Member1 m = new Member1();
@@ -45,7 +40,6 @@ public class NewMemberManager {
         m.setUserName(uname);
         m.setPassWord(pword);
         m.setMobileNo(email);
-        Date date = new Date(1111111111);
         m.setDob(date);
         
         em.persist(m);

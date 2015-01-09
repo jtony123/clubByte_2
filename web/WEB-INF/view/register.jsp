@@ -94,14 +94,14 @@
 
             </tr>
             <tr>
-                <td><label for="creditcard">credit card number:</label></td>
+                <td><label for="creditcard">Date of Birth:</label></td>
                 <td class="inputField">
-                    <input type="text"
+                    <input type="date"
                            size="31"
                            maxlength="19"
-                           id="creditcard"
-                           name="creditcard"
-                           value="${param.creditcard}">
+                           id="dob"
+                           name="dob"
+                           value="${param.dob}">
                 </td>
             </tr>
             <tr>
