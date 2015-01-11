@@ -40,6 +40,7 @@ import session.NewMemberManager;
         loadOnStartup = 1,
         urlPatterns = {"/category",
                         "/login", 
+                        "/logout",
                         "/register",
                         "/submit"})
 // TODO: come back here and redirect page requests as pages are added
@@ -82,47 +83,49 @@ public class myControllerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Category selectedCategory;
         Collection<Club> categoryClubs;
+        
+        String url = "/WEB-INF/view" + userPath + ".jsp";
 
         // if category page is requested
         if (userPath.equals("/category")) {
             // TODO: Implement category request
             String categoryName = request.getQueryString();
 
-    if (categoryName != null) {
+            if (categoryName != null) {
 
-        // get selected category
-        selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
+            // get selected category
+            selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
         
-        // place selected category in request scope to be used as a title
-        // in the centre column
-        session.setAttribute("selectedCategory", selectedCategory.getName());
+            // place selected category in request scope to be used as a title
+            // in the centre column
+            session.setAttribute("selectedCategory", selectedCategory.getName());
 
-        // get all products for selected category
-        categoryClubs = selectedCategory.getClubCollection();
+            // get all products for selected category
+            categoryClubs = selectedCategory.getClubCollection();
         
-        // place the list of clubs in the request scope, jsp page iterates
-        // over the list and displays them.
-        session.setAttribute("categoryClubs", categoryClubs);
+            // place the list of clubs in the request scope, jsp page iterates
+            // over the list and displays them.
+            session.setAttribute("categoryClubs", categoryClubs);
 
-    }
+            url = "/WEB-INF/view" + userPath + ".jsp";
+            }
         // if cart page is requested
-        } else if (userPath.equals("/loggin")) {
-            // TODO: Implement cart page request
-            System.out.println("got here");
-            userPath = "/category";
+        } else if (userPath.equals("/logout")) {
+            
+            System.out.println("logging out got here");
+            session.removeAttribute("user_name");
+            session.invalidate();
+            userPath = "/index";
+            url = userPath + ".jsp";
 
         // if checkout page is requested
         } else if (userPath.equals("/register")) {
             // TODO: Implement checkout page request
 
-        // if user switches language
-        } else if (userPath.equals("/logout")) {
-            // TODO: Implement language request
-
-        }
+        } 
 
         // use RequestDispatcher to forward request internally
-        String url = "/WEB-INF/view" + userPath + ".jsp";
+        
 
         try {
             request.getRequestDispatcher(url).forward(request, response);

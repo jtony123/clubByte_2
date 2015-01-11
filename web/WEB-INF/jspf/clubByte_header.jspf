@@ -29,6 +29,9 @@
                         </d:when>
                         <d:otherwise>
                             ${user_name} logged in 
+                            <a href="logout">
+                                LOGOUT
+                            </a>
                         </d:otherwise>
                     </d:choose>     
                 </div>
