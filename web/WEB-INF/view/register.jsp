@@ -25,7 +25,7 @@
                     minlength: 6
                 },
                 phone: {
-                    number: true,
+                    required: true,
                     minlength: 10
                 },
                 dob: {
@@ -34,7 +34,7 @@
                 },
                 contactICE: {
                     required: true,
-                    number: true,                    
+                    minlength: 10                    
                 }
             }
         });
@@ -143,7 +143,7 @@
                            value="${param.dob}">
                 </td>
             </tr>
-                        <tr>
+            <tr>
                 <td><label for="contactICE">contact number ICE:</label></td>
                 <td class="inputField">
                     <input type="text"
@@ -154,6 +154,17 @@
                            id="contactICE"
                            name="contactICE"
                            value="${param.contactICE}">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="location">location:</label></td>
+                <td class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="31"
+                           id="location"
+                           name="location"
+                           value="${param.location}">
                 </td>
             </tr>
             <tr>

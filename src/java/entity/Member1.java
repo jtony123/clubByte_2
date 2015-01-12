@@ -38,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Member1.findByUserName", query = "SELECT m FROM Member1 m WHERE m.userName = :userName"),
     @NamedQuery(name = "Member1.findByPassWord", query = "SELECT m FROM Member1 m WHERE m.passWord = :passWord"),
     @NamedQuery(name = "Member1.findByDob", query = "SELECT m FROM Member1 m WHERE m.dob = :dob"),
-    @NamedQuery(name = "Member1.findByMobileNo", query = "SELECT m FROM Member1 m WHERE m.mobileNo = :mobileNo")})
+    @NamedQuery(name = "Member1.findByMobileNo", query = "SELECT m FROM Member1 m WHERE m.mobileNo = :mobileNo"),
+    @NamedQuery(name = "Member1.findByContactICE", query = "SELECT m FROM Member1 m WHERE m.contactICE = :contactICE"),
+    @NamedQuery(name = "Member1.findByLocation", query = "SELECT m FROM Member1 m WHERE m.location = :location")})
 public class Member1 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +77,12 @@ public class Member1 implements Serializable {
     @Size(max = 45)
     @Column(name = "mobileNo")
     private String mobileNo;
+    @Size(max = 45)
+    @Column(name = "contactICE")
+    private String contactICE;
+    @Size(max = 45)
+    @Column(name = "location")
+    private String location;
 
     public Member1() {
     }
@@ -153,6 +161,22 @@ public class Member1 implements Serializable {
 
     public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
+    }
+
+    public String getContactICE() {
+        return contactICE;
+    }
+
+    public void setContactICE(String contactICE) {
+        this.contactICE = contactICE;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override

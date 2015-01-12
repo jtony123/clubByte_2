@@ -21,16 +21,16 @@ public class NewMemberManager {
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;
 
-    public int joinMember(String fname, String sname, String email, String uname, String pword, Date date, int mobnum) {
+    public int joinMember(String fname, String sname, String email, String uname, String pword, Date date, String mobnum, String numICE, String location) {
     
-        Member1 member = addMember(fname, sname, email, uname, pword, date, mobnum);
+        Member1 member = addMember(fname, sname, email, uname, pword, date, mobnum, numICE, location);
         return member.getMemberID();
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    private Member1 addMember(String fname, String sname, String email, String uname, String pword, Date date, int mobnum) {
+    private Member1 addMember(String fname, String sname, String email, String uname, String pword, Date date, String mobnum, String numICE, String location) {
     
         
         Member1 m = new Member1();
@@ -39,8 +39,10 @@ public class NewMemberManager {
         m.setEmailAddress(email);
         m.setUserName(uname);
         m.setPassWord(pword);
-        m.setMobileNo(email);
+        m.setMobileNo(mobnum);
         m.setDob(date);
+        m.setContactICE(numICE);
+        m.setLocation(location);
         
         em.persist(m);
         // have to flush through the database operation to get the 

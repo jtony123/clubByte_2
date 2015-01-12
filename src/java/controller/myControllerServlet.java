@@ -42,7 +42,7 @@ import session.NewMemberManager;
                         "/login", 
                         "/logout",
                         "/register",
-                        "/submit"})
+                        "/submit_for_registration"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -166,10 +166,12 @@ public class myControllerServlet extends HttpServlet {
             String uname = request.getParameter("username");
             String pword = request.getParameter("password");
             String mobno = request.getParameter("phone");
-            int mobnum = 0;
-            if(!mobno.equals("")){
-                mobnum = Integer.parseInt(mobno);
-            }
+            //int mobnum = 0;
+            //if(!mobno.equals("")){
+            //    mobnum = Integer.parseInt(mobno);
+            //}
+            String numICE = request.getParameter("contactICE");
+            String loc = request.getParameter("location");
             	
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String dateInString = request.getParameter("dob");
@@ -179,7 +181,7 @@ public class myControllerServlet extends HttpServlet {
                 
                 // call the joinMember method of the NewMemberManager class to save this user as
                 // a new mamber to the database.
-                int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobnum);
+                int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
  
             } catch (ParseException e) {
 		e.printStackTrace();
