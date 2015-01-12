@@ -4,6 +4,43 @@
     Author     : jtony_000
 --%>
 
+<script src="js/jquery.validate.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("#registrationForm").validate({
+            rules: {
+                name: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                username: {
+                    required: true,
+                    minlength: 6
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                phone: {
+                    number: true,
+                    minlength: 10
+                },
+                dob: {
+                    required: true,
+                    mydate: true
+                },
+                contactICE: {
+                    required: true,
+                    number: true,                    
+                }
+            }
+        });
+    });
+</script>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,7 +55,7 @@
 
     <p>In order to access club information and join clubs, please provide us with the following information:</p>
 
-    <form action='submit' method="post">
+    <form id="registrationForm"action='submit' method="post">
         <table id="checkoutTable">
             <tr>
                 <td><label for="name">Firstname:</label></td>
@@ -28,6 +65,7 @@
                            maxlength="45"
                            id="firstname"
                            name="firstname"
+                           placeholder="first name"
                            value="${param.firstname}">
                 </td>
             </tr
@@ -94,14 +132,28 @@
 
             </tr>
             <tr>
-                <td><label for="creditcard">Date of Birth:</label></td>
+                <td><label for="dateofbirth">Date of Birth:</label></td>
                 <td class="inputField">
                     <input type="date"
                            size="31"
                            maxlength="19"
+                           placeholder="dd/mm/yyyy"
                            id="dob"
                            name="dob"
                            value="${param.dob}">
+                </td>
+            </tr>
+                        <tr>
+                <td><label for="contactICE">contact number ICE:</label></td>
+                <td class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="19"
+                           minlength="7"
+                           placeholder="phone number"
+                           id="contactICE"
+                           name="contactICE"
+                           value="${param.contactICE}">
                 </td>
             </tr>
             <tr>

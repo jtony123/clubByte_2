@@ -91,23 +91,29 @@ public class myControllerServlet extends HttpServlet {
             // TODO: Implement category request
             String categoryName = request.getQueryString();
 
-            if (categoryName != null) {
+            if(session.getAttribute("user_name") != null){
+                                    
+                if (categoryName != null) {
 
-            // get selected category
-            selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
+                // get selected category
+                selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
         
-            // place selected category in request scope to be used as a title
-            // in the centre column
-            session.setAttribute("selectedCategory", selectedCategory.getName());
+                // place selected category in request scope to be used as a title
+                // in the centre column
+                session.setAttribute("selectedCategory", selectedCategory.getName());
 
-            // get all products for selected category
-            categoryClubs = selectedCategory.getClubCollection();
+                // get all products for selected category
+                categoryClubs = selectedCategory.getClubCollection();
         
-            // place the list of clubs in the request scope, jsp page iterates
-            // over the list and displays them.
-            session.setAttribute("categoryClubs", categoryClubs);
+                // place the list of clubs in the request scope, jsp page iterates
+                // over the list and displays them.
+                session.setAttribute("categoryClubs", categoryClubs);
 
-            url = "/WEB-INF/view" + userPath + ".jsp";
+                url = "/WEB-INF/view" + userPath + ".jsp";
+                }
+            }
+            else {
+                url = "/index.jsp";
             }
         // if cart page is requested
         } else if (userPath.equals("/logout")) {
@@ -147,6 +153,8 @@ public class myControllerServlet extends HttpServlet {
 
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
+        
+        String url = "/WEB-INF/view" + userPath + ".jsp";
 
         // if register action is called
         if (userPath.equals("/submit")) {
@@ -157,7 +165,11 @@ public class myControllerServlet extends HttpServlet {
             String email = request.getParameter("email");
             String uname = request.getParameter("username");
             String pword = request.getParameter("password");
-            int mobnum = Integer.parseInt(request.getParameter("phone"));
+            String mobno = request.getParameter("phone");
+            int mobnum = 0;
+            if(!mobno.equals("")){
+                mobnum = Integer.parseInt(mobno);
+            }
             	
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String dateInString = request.getParameter("dob");
@@ -174,7 +186,8 @@ public class myControllerServlet extends HttpServlet {
 		e.printStackTrace();
             }
             
-            userPath = "/category";           
+            url = "/index.jsp";   
+            session.setAttribute("user_name", uname);
         
         // if category action is called
         } else if (userPath.equals("/category")) {
@@ -191,7 +204,7 @@ public class myControllerServlet extends HttpServlet {
             
             if(validUser){
                 session.setAttribute("user_name", uName);
-                userPath = "/category";
+                url = "/index.jsp";
             }
             else {
                 userPath = "/loginerror";
@@ -200,7 +213,7 @@ public class myControllerServlet extends HttpServlet {
         }
 
         // use RequestDispatcher to forward request internally
-        String url = "/WEB-INF/view/" + userPath + ".jsp";
+        //String url = "/WEB-INF/view/" + userPath + ".jsp";
 
         try {
             request.getRequestDispatcher(url).forward(request, response);
