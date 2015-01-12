@@ -112,7 +112,7 @@ public class myControllerServlet extends HttpServlet {
         // if cart page is requested
         } else if (userPath.equals("/logout")) {
             
-            System.out.println("logging out got here");
+            System.out.println("logging out");
             session.removeAttribute("user_name");
             session.invalidate();
             userPath = "/index";
@@ -165,8 +165,6 @@ public class myControllerServlet extends HttpServlet {
             try {
  
 		Date date = formatter.parse(dateInString);
-		//System.out.println(date);
-		//System.out.println(formatter.format(date));
                 
                 // call the joinMember method of the NewMemberManager class to save this user as
                 // a new mamber to the database.
@@ -185,7 +183,6 @@ public class myControllerServlet extends HttpServlet {
         
         // if login action is called
         } else if (userPath.equals("/login")) {
-            // TODO: Implement purchase action
 
             String uName = request.getParameter("this_user");
             String pWord = request.getParameter("this_password");
