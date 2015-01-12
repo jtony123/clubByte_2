@@ -6,17 +6,20 @@
     Author     : jtony_000
 --%>
 
-
-<%--<sql:query var="categories" dataSource="jdbc/clubByte_2">
-    SELECT * FROM category
-</sql:query>--%>
         <div id="indexLeftColumn">
             <div id="welcomeText">
                 <p>All about clubByte and how it works, what it can do for you.</p>
                     <div class="headerWidget">
-                        <a href="register">
-                        Register
-                        </a>
+                        <c:choose>
+                            <c:when test="${user_name == null}">
+                                <a href="register">
+                                Register
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                Your Messages
+                            </c:otherwise>
+                        </c:choose>
                     </div>        
             </div>
         </div>
@@ -46,6 +49,7 @@
 
         <div id="indexRightColumn">
             advertising goes here!
+            Good rates
         </div>
 
 

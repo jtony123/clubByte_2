@@ -9,24 +9,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-<%--<sql:query var="categories" dataSource="jdbc/clubByte_2">
-    SELECT * FROM category
-</sql:query>
-    
-<sql:query var="selectedCategory" dataSource="jdbc/clubByte_2">
-    SELECT name FROM category WHERE id = ?
-    <sql:param value="${pageContext.request.queryString}"/>
-</sql:query>--%>
-
-
-<%--query the database for clubs belonging to the category selected by the user
-the category name is found on the request object--%>
-
-<%--<sql:query var="clubs" dataSource="jdbc/clubByte_2">
-    SELECT * FROM Club WHERE category = ?
-    <sql:param value="${pageContext.request.queryString}"/>
-</sql:query>--%>
     
         <div id="indexLeftColumn">
             <div id="welcomeText">

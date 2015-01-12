@@ -55,7 +55,7 @@
 
     <p>In order to access club information and join clubs, please provide us with the following information:</p>
 
-    <form id="registrationForm"action='submit' method="post">
+    <form id="registrationForm"action='submit_for_registration' method="post">
         <table id="checkoutTable">
             <tr>
                 <td><label for="name">Firstname:</label></td>

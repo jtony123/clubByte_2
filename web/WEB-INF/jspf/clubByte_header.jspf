@@ -41,8 +41,8 @@
                 </div>
             </div>
 
-            <a href="#">
-                <img src="#" id="logo" alt="clubByte logo">
+            <a href="index.jsp">
+                <img src="img/ClubByte_2_logo.png" id="logo" alt="clubByte logo">
             </a>
 
             <img src="#" id="logoText" alt="Manage all your clubs">

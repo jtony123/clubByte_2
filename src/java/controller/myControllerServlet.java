@@ -157,7 +157,7 @@ public class myControllerServlet extends HttpServlet {
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
         // if register action is called
-        if (userPath.equals("/submit")) {
+        if (userPath.equals("/submit_for_registration")) {
             // TODO: Implement password encryption
             
             String fname = request.getParameter("firstname");
@@ -174,8 +174,7 @@ public class myControllerServlet extends HttpServlet {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String dateInString = request.getParameter("dob");
  
-            try {
- 
+            try { 
 		Date date = formatter.parse(dateInString);
                 
                 // call the joinMember method of the NewMemberManager class to save this user as
