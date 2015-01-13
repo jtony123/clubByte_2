@@ -2,8 +2,8 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 
 <%-- 
-    Document   : myclubs
-    Created on : 13-Jan-2015, 15:09:56
+    Document   : club
+    Created on : 13-Jan-2015, 21:52:40
     Author     : jtony_000
 --%>
 
@@ -12,40 +12,40 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Clubs you are a member of</title>
+        <title>Club Details</title>
     </head>
     <body>
         <div id="indexLeftColumn">
-           Hi!
+           the club name etc...!
         </div>        
         <div id="indexCentreColumn">
-            Your Clubs 
+            This Clubs Members 
             <table id="myClubTable">  
-                <td>Club Name</td>
-                <td>Description</td>
-                <td>Club Owner</td>
-                <td>Max Members</td>
-                <c:forEach var="aclub" items="${myclubs}" varStatus="iter">
+                <td>Username</td>
+                <td>email address</td>
+                <td>location</td>
+                <td>age</td>
+                <c:forEach var="member" items="${clubMembers}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
-                            ${aclub.club.clubName}
+                            ${member.member1.userName}
                         </td>    
                         <td>  
-                            ${aclub.club.description}
+                            ${member.member1.emailAddress}
                         </td>
                         <td>
-                            ${aclub.club.clubOwner}
+                            ${member.member1.location}
                         </td>
                         <td>
-                            ${aclub.club.maxMembers}
+                            ${member.member1.dob}
                         </td>
                         <td>
                             <form action="viewclub" method="post">
                                 <input type="hidden"
                                        name="clubId"
-                                       value="${aclub.club.clubID}">
+                                       value="${member.member1.emailAddress}">
                                 <input type="submit"
-                                       value="VIEW">
+                                       value="SEND MESSAGE">
                             </form>
                         </td>
                     </tr>

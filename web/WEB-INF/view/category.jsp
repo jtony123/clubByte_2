@@ -39,12 +39,10 @@
         <div id="indexCentreColumn">
             Clubs currently in the ${selectedCategory} category
 
-            <table id="productTable">
-
-                <%--<c:forEach var="club" items="${clubs.rows}" varStatus="iter">--%>
+            <table id="clubTable">
                 <c:forEach var="club" items="${categoryClubs}" varStatus="iter">
 
-                    <tr class="${((iter.index % 2) == 0) ? 'lightBlue' : 'white'}">
+                    <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
                             image from db
                         </td>

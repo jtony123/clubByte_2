@@ -17,6 +17,10 @@ body {
 
 #main { background: #eee }
 
+.oddline { background-color: #ccc }
+
+.evenline { background-color: #fff }
+
 #header {
     height: 150px;
     background: #aaa;

@@ -45,9 +45,7 @@
                         <div class="categoryDescription">                  
                         ${category.categoryBlurb}
                         </div>
-                    </a>
-                        
-                    
+                    </a>   
                 </div>
             </c:forEach>
         </div>

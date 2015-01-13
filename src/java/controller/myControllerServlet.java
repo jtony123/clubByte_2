@@ -47,7 +47,8 @@ import session.NewMemberManager;
                         "/submit_for_registration",
                         "/joinclub",
                         "/myclubs",
-                        "/mymessages"})
+                        "/mymessages",
+                        "/viewclub"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -130,7 +131,7 @@ public class myControllerServlet extends HttpServlet {
             
             
             int userID = (int)session.getAttribute("memberID");
-            //Member1Facade mf = null;
+            
             member = memberFacade.find(userID);
                     
             myclubs = member.getClubMembersCollection();
@@ -176,6 +177,9 @@ public class myControllerServlet extends HttpServlet {
 
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
+        Club selectedClub;
+        Member1 member;
+        Collection<ClubMembers> clubMembers;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
@@ -214,7 +218,6 @@ public class myControllerServlet extends HttpServlet {
             url = "/index.jsp";   
             session.setAttribute("user_name", uname);
             
-        
         // if category action is called
         } else if (userPath.equals("/category")) {
             // TODO: Implement category selection
@@ -252,6 +255,43 @@ public class myControllerServlet extends HttpServlet {
                 String msg = "You are already a member of this club";
                 url = "/loginerror.jsp";
             }
+            
+        } else if (userPath.equals("/viewclub")) {
+            
+            //int thisClub = Integer.parseInt(request.getParameter("clubId"));
+            
+            //System.out.println( "selected " + thisClub);
+            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
+            
+            session.setAttribute("selectedClub", selectedClub);
+            
+            clubMembers = selectedClub.getClubMembersCollection();
+            
+            session.setAttribute("clubMembers", clubMembers);
+//            boolean joined = joinManager.joinClub(memberID, thisClub);
+//            if (joined){
+//                url = "/index.jsp";
+//            } else {
+//                // TODO: implement a messaging system back to the user when thry make a mistake
+//                String msg = "You are already a member of this club";
+//                url = "/loginerror.jsp";
+//            }
+            
+                            // get selected category
+                //selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
+        
+                // place selected category in request scope to be used as a title
+                // in the centre column
+                //session.setAttribute("selectedCategory", selectedCategory.getName());
+
+                // get all products for selected category
+                //categoryClubs = selectedCategory.getClubCollection();
+        
+                // place the list of clubs in the request scope, jsp page iterates
+                // over the list and displays them.
+                //session.setAttribute("categoryClubs", categoryClubs);
+            
+            url = "/WEB-INF/view/club.jsp";  
             
         }
 
