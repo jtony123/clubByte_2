@@ -5,8 +5,8 @@
  */
 package session;
 
-import entity.Club;
-import entity.Member1;
+import entity.ClubMembers;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,22 +19,35 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class JoinManager {
     
-    @PersistenceContext(unitName = "cluBbyte_2PU")
-    private EntityManager em;
+    @EJB
+    private ClubMembersFacade clubMembersFacade;
     
-    private ClubFacade clubFacade;
+    @PersistenceContext(unitName = "cluBbyte_2PU")
+    private EntityManager em;   
+    
+    public List checkMembership(int memberID, int thisClub) {
+    return em.createQuery(
+        "SELECT c FROM ClubMembers c WHERE c.clubMembersPK.clubclubID = :clubID AND c.clubMembersPK.membermemberID = :memberID")
+        .setParameter("clubID", thisClub)
+        .setParameter("memberID", memberID)
+        .getResultList();
+    }
 
     public boolean joinClub(int memberID, int thisClub) {
         //To change body of generated methods, choose Tools | Templates.
+                
+        List<ClubMembers> existing = checkMembership(memberID, thisClub);
         
-        Club club = clubFacade.find(thisClub);
+        boolean check = existing.isEmpty();
         
-        
+        if (check) {
+            ClubMembers clubmembership = new ClubMembers(thisClub, memberID);
+            em.persist(clubmembership);
+            return true;
+        } else {
+            return false;
+        } 
     
-    
-    return true;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

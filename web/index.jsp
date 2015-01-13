@@ -17,7 +17,12 @@
                                 </a>
                             </c:when>
                             <c:otherwise>
+                                <a href="mymessages">
                                 Your Messages
+                                </a><br>
+                                <a href="myclubs">
+                                Your Club Membership
+                                </a>
                             </c:otherwise>
                         </c:choose>
                     </div>        

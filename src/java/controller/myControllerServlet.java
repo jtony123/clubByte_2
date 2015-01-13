@@ -7,6 +7,7 @@ package controller;
 
 import entity.Category;
 import entity.Club;
+import entity.ClubMembers;
 import entity.Member1;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,7 +45,9 @@ import session.NewMemberManager;
                         "/logout",
                         "/register",
                         "/submit_for_registration",
-                        "/joinclub"})
+                        "/joinclub",
+                        "/myclubs",
+                        "/mymessages"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -86,7 +89,9 @@ public class myControllerServlet extends HttpServlet {
         String userPath = request.getServletPath();
         HttpSession session = request.getSession();
         Category selectedCategory;
+        Member1 member;
         Collection<Club> categoryClubs;
+        Collection<ClubMembers> myclubs;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
@@ -119,8 +124,22 @@ public class myControllerServlet extends HttpServlet {
             else {
                 url = "/index.jsp";
             }
-        // if cart page is requested
-        } else if (userPath.equals("/logout")) {
+        
+            
+        } else if (userPath.equals("/myclubs")) {//////////////////////////////////////////////////////////
+            
+            
+            int userID = (int)session.getAttribute("memberID");
+            //Member1Facade mf = null;
+            member = memberFacade.find(userID);
+                    
+            myclubs = member.getClubMembersCollection();
+            session.setAttribute("myclubs", myclubs);
+            
+            
+            url = "/WEB-INF/view/myclubs.jsp";
+            
+        } else if (userPath.equals("/logout")) {//////////////////////////////////////////////////////////
             
             System.out.println("logging out");
             session.removeAttribute("user_name");
@@ -186,6 +205,7 @@ public class myControllerServlet extends HttpServlet {
                 // call the joinMember method of the NewMemberManager class to save this user as
                 // a new mamber to the database.
                 int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
+                session.setAttribute("memberID", memberID);
  
             } catch (ParseException e) {
 		e.printStackTrace();
@@ -193,6 +213,7 @@ public class myControllerServlet extends HttpServlet {
             
             url = "/index.jsp";   
             session.setAttribute("user_name", uname);
+            
         
         // if category action is called
         } else if (userPath.equals("/category")) {
@@ -224,8 +245,13 @@ public class myControllerServlet extends HttpServlet {
             System.out.println("User with idnumber" + memberID + " joined " + thisClub);
             
             boolean joined = joinManager.joinClub(memberID, thisClub);
-            
-            url = "/index.jsp";
+            if (joined){
+                url = "/index.jsp";
+            } else {
+                // TODO: implement a messaging system back to the user when thry make a mistake
+                String msg = "You are already a member of this club";
+                url = "/loginerror.jsp";
+            }
             
         }
 
