@@ -18,6 +18,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class LoginManager {
+    @EJB
+    private Member1Facade member1Facade;
     
     
     @PersistenceContext(unitName = "cluBbyte_2PU")
@@ -32,10 +34,15 @@ public class LoginManager {
         .getResultList();
     }  
     
-    public boolean checkValidUser(String uName, String pWord) {
-     
+    public int checkValidUser(String uName, String pWord) {
+
         List<Member1> l = this.findWithNameAndPassword(uName, pWord);
+        if (!(l.isEmpty())) {
+            Member1 m = l.get(0);
+            int memberID = m.getMemberID();
+            return memberID;
+        } else return 0;
         
-        return (!(l.isEmpty()));
+        //return (!(l.isEmpty()));
     }
 }

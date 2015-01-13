@@ -6,7 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,9 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -52,6 +56,8 @@ public class Club implements Serializable {
     private String description;
     @Column(name = "maxMembers")
     private Integer maxMembers;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
+    private Collection<ClubMembers> clubMembersCollection;
     @JoinColumn(name = "category", referencedColumnName = "name")
     @ManyToOne(optional = false)
     private Category category;
@@ -101,6 +107,15 @@ public class Club implements Serializable {
 
     public void setMaxMembers(Integer maxMembers) {
         this.maxMembers = maxMembers;
+    }
+
+    @XmlTransient
+    public Collection<ClubMembers> getClubMembersCollection() {
+        return clubMembersCollection;
+    }
+
+    public void setClubMembersCollection(Collection<ClubMembers> clubMembersCollection) {
+        this.clubMembersCollection = clubMembersCollection;
     }
 
     public Category getCategory() {

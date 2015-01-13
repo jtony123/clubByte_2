@@ -6,8 +6,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +17,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -83,6 +87,8 @@ public class Member1 implements Serializable {
     @Size(max = 45)
     @Column(name = "location")
     private String location;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
+    private Collection<ClubMembers> clubMembersCollection;
 
     public Member1() {
     }
@@ -177,6 +183,15 @@ public class Member1 implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @XmlTransient
+    public Collection<ClubMembers> getClubMembersCollection() {
+        return clubMembersCollection;
+    }
+
+    public void setClubMembersCollection(Collection<ClubMembers> clubMembersCollection) {
+        this.clubMembersCollection = clubMembersCollection;
     }
 
     @Override

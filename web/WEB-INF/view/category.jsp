@@ -60,9 +60,9 @@
                             limit; ${club.maxMembers}
                         </td>
                         <td>
-                            <form action="addToCart" method="post">
+                            <form action="joinclub" method="post">
                                 <input type="hidden"
-                                       name="productId"
+                                       name="clubId"
                                        value="${club.clubID}">
                                 <input type="submit"
                                        value="JOIN">

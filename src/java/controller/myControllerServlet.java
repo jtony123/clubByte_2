@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.CategoryFacade;
 import session.ClubFacade;
+import session.JoinManager;
 import session.LoginManager;
 import session.Member1Facade;
 import session.NewMemberManager;
@@ -42,7 +43,8 @@ import session.NewMemberManager;
                         "/login", 
                         "/logout",
                         "/register",
-                        "/submit_for_registration"})
+                        "/submit_for_registration",
+                        "/joinclub"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -65,6 +67,8 @@ public class myControllerServlet extends HttpServlet {
     private NewMemberManager newMemberMan;
     @EJB
     private LoginManager loginMan;
+    @EJB
+    private JoinManager joinManager;
     
     @Override
         public void init(ServletConfig servletConfig) throws ServletException {
@@ -201,15 +205,27 @@ public class myControllerServlet extends HttpServlet {
             String uName = request.getParameter("this_user");
             String pWord = request.getParameter("this_password");
             
-            boolean validUser = loginMan.checkValidUser(uName, pWord);
+            int memberID = loginMan.checkValidUser(uName, pWord);
             
-            if(validUser){
+            if(memberID != 0){
                 session.setAttribute("user_name", uName);
+                session.setAttribute("memberID", memberID);
                 url = "/index.jsp";
             }
             else {
-                userPath = "/loginerror";
+                url = "/loginerror.jsp";
             }
+            
+        } else if (userPath.equals("/joinclub")) {
+            
+            int thisClub = Integer.parseInt(request.getParameter("clubId"));
+            //String thisUser = (String)session.getAttribute("user_name");
+            int memberID = (int)session.getAttribute("memberID");
+            System.out.println("User with idnumber" + memberID + " joined " + thisClub);
+            
+            boolean joined = joinManager.joinClub(memberID, thisClub);
+            
+            url = "/index.jsp";
             
         }
 
