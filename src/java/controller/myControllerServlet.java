@@ -135,6 +135,24 @@ public class myControllerServlet extends HttpServlet {
             
         } else if (userPath.equals("/logout")) {
             
+            ///////////////////////////////////////////////////////////////
+            //by gary
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            ////////////////////////////////////////////////
+            
+            
+            
+            
             System.out.println("logging out");
             session.removeAttribute("user_name");
             session.removeAttribute("memberID");
