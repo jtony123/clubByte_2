@@ -35,9 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Club.findAll", query = "SELECT c FROM Club c"),
     @NamedQuery(name = "Club.findByClubID", query = "SELECT c FROM Club c WHERE c.clubID = :clubID"),
     @NamedQuery(name = "Club.findByClubName", query = "SELECT c FROM Club c WHERE c.clubName = :clubName"),
-    @NamedQuery(name = "Club.findByClubOwner", query = "SELECT c FROM Club c WHERE c.clubOwner = :clubOwner"),
     @NamedQuery(name = "Club.findByDescription", query = "SELECT c FROM Club c WHERE c.description = :description"),
-    @NamedQuery(name = "Club.findByMaxMembers", query = "SELECT c FROM Club c WHERE c.maxMembers = :maxMembers")})
+    @NamedQuery(name = "Club.findByMaxMembers", query = "SELECT c FROM Club c WHERE c.maxMembers = :maxMembers"),
+    @NamedQuery(name = "Club.findByParentOrganisation", query = "SELECT c FROM Club c WHERE c.parentOrganisation = :parentOrganisation"),
+    @NamedQuery(name = "Club.findByParentURL", query = "SELECT c FROM Club c WHERE c.parentURL = :parentURL")})
 public class Club implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,19 +49,30 @@ public class Club implements Serializable {
     @Size(max = 45)
     @Column(name = "clubName")
     private String clubName;
-    @Size(max = 45)
-    @Column(name = "clubOwner")
-    private String clubOwner;
     @Size(max = 150)
     @Column(name = "Description")
     private String description;
     @Column(name = "maxMembers")
     private Integer maxMembers;
+    @Size(max = 45)
+    @Column(name = "parentOrganisation")
+    private String parentOrganisation;
+    @Size(max = 100)
+    @Column(name = "parentURL")
+    private String parentURL;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Collection<ClubMembers> clubMembersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
+    private Collection<Event> eventCollection;
     @JoinColumn(name = "category", referencedColumnName = "name")
     @ManyToOne(optional = false)
     private Category category;
+    @JoinColumn(name = "clubAdminID", referencedColumnName = "memberID")
+    @ManyToOne
+    private Member1 clubAdminID;
+    @JoinColumn(name = "clubOwnerID", referencedColumnName = "memberID")
+    @ManyToOne(optional = false)
+    private Member1 clubOwnerID;
 
     public Club() {
     }
@@ -85,14 +97,6 @@ public class Club implements Serializable {
         this.clubName = clubName;
     }
 
-    public String getClubOwner() {
-        return clubOwner;
-    }
-
-    public void setClubOwner(String clubOwner) {
-        this.clubOwner = clubOwner;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -109,6 +113,22 @@ public class Club implements Serializable {
         this.maxMembers = maxMembers;
     }
 
+    public String getParentOrganisation() {
+        return parentOrganisation;
+    }
+
+    public void setParentOrganisation(String parentOrganisation) {
+        this.parentOrganisation = parentOrganisation;
+    }
+
+    public String getParentURL() {
+        return parentURL;
+    }
+
+    public void setParentURL(String parentURL) {
+        this.parentURL = parentURL;
+    }
+
     @XmlTransient
     public Collection<ClubMembers> getClubMembersCollection() {
         return clubMembersCollection;
@@ -118,12 +138,37 @@ public class Club implements Serializable {
         this.clubMembersCollection = clubMembersCollection;
     }
 
+    @XmlTransient
+    public Collection<Event> getEventCollection() {
+        return eventCollection;
+    }
+
+    public void setEventCollection(Collection<Event> eventCollection) {
+        this.eventCollection = eventCollection;
+    }
+
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Member1 getClubAdminID() {
+        return clubAdminID;
+    }
+
+    public void setClubAdminID(Member1 clubAdminID) {
+        this.clubAdminID = clubAdminID;
+    }
+
+    public Member1 getClubOwnerID() {
+        return clubOwnerID;
+    }
+
+    public void setClubOwnerID(Member1 clubOwnerID) {
+        this.clubOwnerID = clubOwnerID;
     }
 
     @Override

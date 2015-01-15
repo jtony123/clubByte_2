@@ -34,9 +34,6 @@
                             ${aclub.club.description}
                         </td>
                         <td>
-                            ${aclub.club.clubOwner}
-                        </td>
-                        <td>
                             ${aclub.club.maxMembers}
                         </td>
                         <td>

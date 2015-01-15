@@ -16,17 +16,22 @@
     </head>
     <body>
         <div id="indexLeftColumn">
-           the club name etc...!
+           this clubs details: name, etc...
+           <br><br>
             <c:forEach begin="0" end="0" step="1" var="clubdetails" items="${clubMembers}" varStatus="iter">
-                Club Name ${clubdetails.club.clubName}
-                <br>
-                Club Owner ${clubdetails.club.clubOwner}
-                <br>
-                Description ${clubdetails.club.description}
-                <br>
-                Max no of members ${clubdetails.club.maxMembers}
-                <br>
-                Category ${clubdetails.club.category}
+                Club Name: ${clubdetails.club.clubName}
+                <br><br>
+                Club Owner:${clubdetails.club.clubOwnerID.firstName} ${clubdetails.club.clubOwnerID.surName}
+                <br><br>
+                Description: ${clubdetails.club.description}
+                <br><br>
+                Max no of members: ${clubdetails.club.maxMembers}
+                <br><br>
+                Category: ${clubdetails.club.category.name}
+                <br><br>
+                Parent Club: ${clubdetails.club.parentOrganisation}
+                <br><br>
+                <a href="${clubdetails.club.parentURL}" target="_blank">Link to Parent Organisation</a>
             </c:forEach>
         </div>        
         <div id="indexCentreColumn">
