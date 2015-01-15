@@ -35,6 +35,9 @@
                 contactICE: {
                     required: true,
                     minlength: 10                    
+                },
+                checkbox:{
+                    required: true,
                 }
             }
         });
@@ -58,8 +61,8 @@
     <form id="registrationForm"action='submit_for_registration' method="post">
         <table id="checkoutTable">
             <tr>
-                <td><label for="name">Firstname:</label></td>
-                <td class="inputField">
+                <div><label for="name">Firstname:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="45"
@@ -67,73 +70,73 @@
                            name="firstname"
                            placeholder="first name"
                            value="${param.firstname}">
-                </td>
+                </div>
             </tr
             <tr>
-                <td><label for="name">Surname:</label></td>
-                <td class="inputField">
+                <div><label for="name">Surname:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="45"
                            id="surname"
                            name="surname"
                            value="${param.surname}">
-                </td>
+                </div>
             </tr>
         </table>
         
         <table id="checkoutTable">
             <tr>
-                <td><label for="email">email:</label></td>
-                <td class="inputField">
+                <div><label for="email">Email:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="45"
                            id="email"
                            name="email"
                            value="${param.email}">
-                </td>
+                </div>
             </tr>
             <tr>
-                <td><label for="email">username:</label></td>
-                <td class="inputField">
+                <div><label for="email">Username:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="45"
                            id="username"
                            name="username"
                            value="${param.username}">
-                </td>
+                </div>
             </tr>
                         <tr>
-                <td><label for="email">password:</label></td>
-                <td class="inputField">
+                <div><label for="email">Password:</label></div>
+                <div class="inputField">
                     <input type="password"
                            size="31"
                            maxlength="45"
                            id="password"
                            name="password"
                            value="${param.password}">
-                </td>
+                </div>
             </tr>
             
             <tr>
-                <td><label for="phone">mobile no:</label></td>
-                <td class="inputField">
+                <div><label for="phone">Mobile no:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="16"
                            id="phone"
                            name="phone"
                            value="${param.phone}">
-                </td>
+                </div>
             </tr>
             <tr>
 
             </tr>
             <tr>
-                <td><label for="dateofbirth">Date of Birth:</label></td>
-                <td class="inputField">
+                <div><label for="dateofbirth">Date of Birth:</label></div>
+                <div class="inputField">
                     <input type="date"
                            size="31"
                            maxlength="19"
@@ -141,11 +144,11 @@
                            id="dob"
                            name="dob"
                            value="${param.dob}">
-                </td>
+                </div>
             </tr>
             <tr>
-                <td><label for="contactICE">contact number ICE:</label></td>
-                <td class="inputField">
+                <div><label for="contactICE">Contact number ICE:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="19"
@@ -154,23 +157,27 @@
                            id="contactICE"
                            name="contactICE"
                            value="${param.contactICE}">
-                </td>
+                </div>
             </tr>
             <tr>
-                <td><label for="location">location:</label></td>
-                <td class="inputField">
+                <div><label for="location">Location:</label></div>
+                <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="31"
                            id="location"
                            name="location"
                            value="${param.location}">
-                </td>
+                </div>
             </tr>
             <tr>
-                <td colspan="2">
+                <div colspan="2">
                     <input type="submit" name="submit" value="SUBMIT">
-                </td>
+                    <input type="checkbox"
+                           id="checkbox"
+                           name="checkbox" 
+                           value="checkbox">Read <a href="Terms">Terms</a> & Conditions and tick box to submit.
+                </div>
             </tr>
         </table>
     </form>

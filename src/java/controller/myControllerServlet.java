@@ -48,7 +48,9 @@ import session.NewMemberManager;
                         "/joinclub",
                         "/myclubs",
                         "/mymessages",
-                        "/viewclub"})
+                        "/viewclub",
+                        "/Terms"})
+    ///////////////////////////////////////////////////////////////////////////
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -134,25 +136,7 @@ public class myControllerServlet extends HttpServlet {
             url = "/WEB-INF/view/myclubs.jsp";
             
         } else if (userPath.equals("/logout")) {
-            
-            ///////////////////////////////////////////////////////////////
-            //by gary
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            ////////////////////////////////////////////////
-            
-            
-            
-            
+                  
             System.out.println("logging out");
             session.removeAttribute("user_name");
             session.removeAttribute("memberID");
@@ -165,9 +149,13 @@ public class myControllerServlet extends HttpServlet {
         // if checkout page is requested
         } else if (userPath.equals("/register")) {
             // TODO: Implement checkout page request
-
-        } 
-
+        ///////////////////////////////////////////////////////
+            //gary
+        } else if(userPath.equals("/Terms")){
+            
+        }
+        
+        //////////////////////////////////////////////////////
         // use RequestDispatcher to forward request internally
         
 
