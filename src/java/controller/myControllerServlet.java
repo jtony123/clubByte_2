@@ -141,6 +141,7 @@ public class myControllerServlet extends HttpServlet {
             session.invalidate();            
             
             url = "/index.jsp";
+            //blah blah blah
             //return;
 
         // if checkout page is requested
