@@ -17,6 +17,17 @@
     <body>
         <div id="indexLeftColumn">
            the club name etc...!
+            <c:forEach begin="0" end="0" step="1" var="clubdetails" items="${clubMembers}" varStatus="iter">
+                Club Name ${clubdetails.club.clubName}
+                <br>
+                Club Owner ${clubdetails.club.clubOwner}
+                <br>
+                Description ${clubdetails.club.description}
+                <br>
+                Max no of members ${clubdetails.club.maxMembers}
+                <br>
+                Category ${clubdetails.club.category}
+            </c:forEach>
         </div>        
         <div id="indexCentreColumn">
             This Clubs Members 

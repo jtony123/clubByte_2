@@ -43,6 +43,7 @@ public class JoinManager {
         if (check) {
             ClubMembers clubmembership = new ClubMembers(thisClub, memberID);
             em.persist(clubmembership);
+            em.flush();
             return true;
         } else {
             return false;

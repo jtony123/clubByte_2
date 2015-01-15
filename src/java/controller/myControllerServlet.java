@@ -105,18 +105,12 @@ public class myControllerServlet extends HttpServlet {
                                     
                 if (categoryName != null) {
 
-                // get selected category
                 selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
-        
-                // place selected category in request scope to be used as a title
-                // in the centre column
+                        
                 session.setAttribute("selectedCategory", selectedCategory.getName());
 
-                // get all products for selected category
                 categoryClubs = selectedCategory.getClubCollection();
         
-                // place the list of clubs in the request scope, jsp page iterates
-                // over the list and displays them.
                 session.setAttribute("categoryClubs", categoryClubs);
 
                 url = "/WEB-INF/view" + userPath + ".jsp";
@@ -127,7 +121,7 @@ public class myControllerServlet extends HttpServlet {
             }
         
             
-        } else if (userPath.equals("/myclubs")) {//////////////////////////////////////////////////////////
+        } else if (userPath.equals("/myclubs")) {
             
             
             int userID = (int)session.getAttribute("memberID");
@@ -135,18 +129,19 @@ public class myControllerServlet extends HttpServlet {
             member = memberFacade.find(userID);
                     
             myclubs = member.getClubMembersCollection();
-            session.setAttribute("myclubs", myclubs);
-            
+            session.setAttribute("myclubs", myclubs);            
             
             url = "/WEB-INF/view/myclubs.jsp";
             
-        } else if (userPath.equals("/logout")) {//////////////////////////////////////////////////////////
+        } else if (userPath.equals("/logout")) {
             
             System.out.println("logging out");
             session.removeAttribute("user_name");
-            session.invalidate();
-            userPath = "/index";
-            url = userPath + ".jsp";
+            session.removeAttribute("memberID");
+            session.invalidate();            
+            
+            url = "/index.jsp";
+            //return;
 
         // if checkout page is requested
         } else if (userPath.equals("/register")) {
@@ -193,10 +188,6 @@ public class myControllerServlet extends HttpServlet {
             String uname = request.getParameter("username");
             String pword = request.getParameter("password");
             String mobno = request.getParameter("phone");
-            //int mobnum = 0;
-            //if(!mobno.equals("")){
-            //    mobnum = Integer.parseInt(mobno);
-            //}
             String numICE = request.getParameter("contactICE");
             String loc = request.getParameter("location");
             	
@@ -206,8 +197,6 @@ public class myControllerServlet extends HttpServlet {
             try { 
 		Date date = formatter.parse(dateInString);
                 
-                // call the joinMember method of the NewMemberManager class to save this user as
-                // a new mamber to the database.
                 int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
                 session.setAttribute("memberID", memberID);
  
@@ -215,8 +204,8 @@ public class myControllerServlet extends HttpServlet {
 		e.printStackTrace();
             }
             
-            url = "/index.jsp";   
             session.setAttribute("user_name", uname);
+            url = "/index.jsp";   
             
         // if category action is called
         } else if (userPath.equals("/category")) {
@@ -258,9 +247,7 @@ public class myControllerServlet extends HttpServlet {
             
         } else if (userPath.equals("/viewclub")) {
             
-            //int thisClub = Integer.parseInt(request.getParameter("clubId"));
             
-            //System.out.println( "selected " + thisClub);
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
             
             session.setAttribute("selectedClub", selectedClub);
@@ -268,31 +255,8 @@ public class myControllerServlet extends HttpServlet {
             clubMembers = selectedClub.getClubMembersCollection();
             
             session.setAttribute("clubMembers", clubMembers);
-//            boolean joined = joinManager.joinClub(memberID, thisClub);
-//            if (joined){
-//                url = "/index.jsp";
-//            } else {
-//                // TODO: implement a messaging system back to the user when thry make a mistake
-//                String msg = "You are already a member of this club";
-//                url = "/loginerror.jsp";
-//            }
-            
-                            // get selected category
-                //selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
-        
-                // place selected category in request scope to be used as a title
-                // in the centre column
-                //session.setAttribute("selectedCategory", selectedCategory.getName());
 
-                // get all products for selected category
-                //categoryClubs = selectedCategory.getClubCollection();
-        
-                // place the list of clubs in the request scope, jsp page iterates
-                // over the list and displays them.
-                //session.setAttribute("categoryClubs", categoryClubs);
-            
-            url = "/WEB-INF/view/club.jsp";  
-            
+            url = "/WEB-INF/view/club.jsp";              
         }
 
         // use RequestDispatcher to forward request internally
