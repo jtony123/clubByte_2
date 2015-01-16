@@ -52,14 +52,11 @@
         <title>ClubByte</title>
     </head>
     <body>
-        <div align="center">
-            Register new members page</div>
+        <h1>Register new members page</h1>
         <div id="singleColumn">
 
 
-    <div align="center">
-        In order to access club information and join clubs, please provide us with the following information:</div>
-                  
+    <p>In order to access club information and join clubs, please provide us with the following information:</p>
 
     <form id="registrationForm"action='submit_for_registration' method="post">
         <table id="checkoutTable">
@@ -187,4 +184,3 @@
 </div>
     </body>
 </html>
-                
