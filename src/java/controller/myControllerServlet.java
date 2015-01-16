@@ -48,7 +48,8 @@ import session.NewMemberManager;
                         "/joinclub",
                         "/myclubs",
                         "/mymessages",
-                        "/viewclub"})
+                        "/viewclub",
+                        "/Terms"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -96,8 +97,12 @@ public class myControllerServlet extends HttpServlet {
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
+        
+        if (userPath.equals("/Terms")) {
+            
+        
         // if category page is requested
-        if (userPath.equals("/category")) {
+        } else if (userPath.equals("/category")) {
             // TODO: Implement category request
             String categoryName = request.getQueryString();
 
