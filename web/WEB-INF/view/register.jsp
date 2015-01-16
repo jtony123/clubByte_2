@@ -56,7 +56,7 @@
         <div id="singleColumn">
 
 
-    <p>In order to access club information and join clubs, please provide us with the following information:adfedf</p>
+    <p>In order to access club information and join clubs, please provide us with the following information:zzzzz</p>
 
     <form id="registrationForm"action='submit_for_registration' method="post">
         <table id="checkoutTable">
