@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Terms and Conditions</h1>
+        <h2>Terms and Conditions</h2>
         
         <p>Credit</p>
 

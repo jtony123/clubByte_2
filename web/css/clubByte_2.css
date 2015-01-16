@@ -15,15 +15,15 @@ body {
     margin: 20px auto;
 }
 
-#main { background: #eee }
+#main { background: lightgray }
 
-.oddline { background-color: #ccc }
+.oddline { background-color: lightgray }
 
-.evenline { background-color: #fff }
+.evenline { background-color: lightgray }
 
 #header {
     height: 150px;
-    background: #aaa;
+    background:lightgrey;
 }
 
 #logo {
@@ -43,12 +43,12 @@ body {
     color: #333;
 }
 
-#widgetBar {
-    height: 50px;
-    width: 850px;
+/*#widgetBar {
+    height: 0px;
+    width: 0px;
     float: right;
     background: #ccc;
-}
+}*/
 
 
 .headerWidget {
@@ -56,22 +56,22 @@ body {
     margin: 20px 2px;
     font-size: small;
     float: right;
-    line-height: 25px;
-    background: #aaa;
+    line-height: 20px;
+    background: lightgrey;
 }
 
 #footer {
     height: 60px;
     width: 300px;
     clear: left;
-    background: #aaa;
+    background: lightgrey;
 }
 
 hr {
     border: 0;
-    background-color: #333;
-    height: 1px;
-    margin: 5px 25px;
+    background-color: lightgray;
+    height: 0px;
+    margin: 10px 25px;
     width: 300px;
 }
 
@@ -79,23 +79,23 @@ hr {
     height: 400px;
     width: 300px;
     float: left;
-    background: #ccc;
+    background: lightgrey;
 }
 
 #indexCentreColumn {
     height: 400px;
     width: 600px;
     float: left;
-    background: #ddd;
+    background: white;
 }
 
 .categoryBox {
-    height: 150px;
+    height: 140px;
     width: 550px;
     margin: 15px 25px 5px;
-    /*float: inherit;*/
+    float: inherit;
     float: left;
-    background: #888;
+    background: lightgrey;
 }
 
 .categoryLabelText {   
@@ -120,5 +120,5 @@ hr {
     height: 400px;
     width: 300px;
     float: left;
-    background: #eee;
+    background: lightgrey;
 }
