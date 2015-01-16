@@ -52,7 +52,7 @@
         <title>ClubByte</title>
     </head>
     <body>
-        <div>Register new members page</div>
+        <h1>Register new members page</h1>
         <div id="singleColumn">
 
 
