@@ -34,6 +34,8 @@
                     </c:forEach>
 
             </div>
+            <br><br>
+            <button onclick="location.href='newclub'">Create Club</button>
         </div>
         
         <div id="indexCentreColumn">
