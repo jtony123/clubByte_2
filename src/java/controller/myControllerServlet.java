@@ -49,7 +49,8 @@ import session.NewMemberManager;
                         "/myclubs",
                         "/mymessages",
                         "/viewclub",
-                        "/Terms"})
+                        "/Terms",
+                        "/newclub"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
