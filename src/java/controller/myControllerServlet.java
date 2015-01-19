@@ -205,32 +205,43 @@ public class myControllerServlet extends HttpServlet {
 
         // if register action is called
         if (userPath.equals("/submit_for_registration")) {
-            // TODO: Implement password encryption
+            // TODO: Implement password encryption            
             
-            String fname = request.getParameter("firstname");
-            String sname = request.getParameter("surname");
-            String email = request.getParameter("email");
+            // check first that the username is unique
             String uname = request.getParameter("username");
-            String pword = request.getParameter("password");
-            String mobno = request.getParameter("phone");
-            String numICE = request.getParameter("contactICE");
-            String loc = request.getParameter("location");
-            	
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String dateInString = request.getParameter("dob");
- 
-            try { 
-		Date date = formatter.parse(dateInString);
+            
+            if (newMemberMan.checkifUsernameUnique(uname)) {
                 
-                int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
-                session.setAttribute("memberID", memberID);
+                String fname = request.getParameter("firstname");
+                String sname = request.getParameter("surname");
+                String email = request.getParameter("email");
+                String pword = request.getParameter("password");
+                String mobno = request.getParameter("phone");
+                String numICE = request.getParameter("contactICE");
+                String loc = request.getParameter("location");
+                
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                String dateInString = request.getParameter("dob");
  
-            } catch (ParseException e) {
-		e.printStackTrace();
-            }
+                try { 
+                    Date date = formatter.parse(dateInString);
+
+                    int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
+                    session.setAttribute("memberID", memberID);
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             
             session.setAttribute("user_name", uname);
-            url = "/index.jsp";   
+            url = "/index.jsp";
+            
+            } else {
+                
+                session.setAttribute("message1", "That username is already taken, please choose another");
+                url = "/WEB-INF/view/register.jsp";
+                
+            }
             
         // if category action is called
         } else if (userPath.equals("/category")) {
@@ -270,8 +281,7 @@ public class myControllerServlet extends HttpServlet {
                 url = "/loginerror.jsp";
             }
             
-        } else if (userPath.equals("/viewclub")) {
-            
+        } else if (userPath.equals("/viewclub")) {            
             
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
             
