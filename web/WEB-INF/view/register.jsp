@@ -52,135 +52,57 @@
         <title>ClubByte</title>
     </head>
     <body>
-        <div>Register new members page</div>
-        <div id="singleColumn">
-
-
-    <p>In order to access club information and join clubs, please provide us with the following information:zzzzz</p>
-
-    <form id="registrationForm"action='submit_for_registration' method="post">
-        <table id="checkoutTable">
-            <tr>
-                <div><label for="name">Firstname:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="45"
-                           id="firstname"
-                           name="firstname"
-                           placeholder="first name"
-                           value="${param.firstname}">
-                </div>
-            </tr
-            <tr>
-                <div><label for="name">Surname:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="45"
-                           id="surname"
-                           name="surname"
-                           value="${param.surname}">
-                </div>
-            </tr>
-        </table>
+        <div id="indexLeftColumn">Register new members page</div>
         
-        <table id="checkoutTable">
+    <p>In order to access club information and join clubs, please provide us with the following information:</p>
+    <div id="indexCentreColumn">
+    <form class="registrationForm" action='submit_for_registration' method="post">
+        <table id="register_form">
             <tr>
-                <div><label for="email">Email:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="45"
-                           id="email"
-                           name="email"
-                           value="${param.email}">
-                </div>
+                <td>Firstname</td>
+                <td><input type="text" size="31" maxlength="45" name="firstname"></td>
             </tr>
             <tr>
-                <div><label for="email">Username:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="45"
-                           id="username"
-                           name="username"
-                           value="${param.username}">
-                </div>
-            </tr>
-                        <tr>
-                <div><label for="email">Password:</label></div>
-                <div class="inputField">
-                    <input type="password"
-                           size="31"
-                           maxlength="45"
-                           id="password"
-                           name="password"
-                           value="${param.password}">
-                </div>
-            </tr>
-            
-            <tr>
-                <div><label for="phone">Mobile no:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="16"
-                           id="phone"
-                           name="phone"
-                           value="${param.phone}">
-                </div>
+                <td>Surname</td>
+                <td><input type="text" size="31" maxlength="45"  name="surname"></td>
             </tr>
             <tr>
-
+                <td>Email:</td>
+                <td><input type="text" size="31" maxlength="45" name="email"></td>
             </tr>
             <tr>
-                <div><label for="dateofbirth">Date of Birth:</label></div>
-                <div class="inputField">
-                    <input type="date"
-                           size="31"
-                           maxlength="19"
-                           placeholder="dd/mm/yyyy"
-                           id="dob"
-                           name="dob"
-                           value="${param.dob}">
-                </div>
+                <td>Username:</td>
+                <td><input type="text" size="31" maxlength="45" name="username"></td>
             </tr>
             <tr>
-                <div><label for="contactICE">Contact number ICE:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="19"
-                           minlength="7"
-                           placeholder="phone number"
-                           id="contactICE"
-                           name="contactICE"
-                           value="${param.contactICE}">
-                </div>
+                <td>Password:</td>
+                <td><input type="password" size="31" maxlength="45" name="password"></td>
             </tr>
             <tr>
-                <div><label for="location">Location:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="31"
-                           id="location"
-                           name="location"
-                           value="${param.location}">
-                </div>
+                <td>Mobile no:</td>
+                <td><input type="text" size="31" maxlength="16" name="phone"></td>
             </tr>
             <tr>
-                <div colspan="2">
-                    <input type="submit" name="submit" value="SUBMIT">
-                    <input type="checkbox"
-                           id="checkbox"
-                           name="checkbox" 
-                           value="checkbox">Read <a href="Terms">Terms</a> & Conditions and tick box to submit.
-                </div>
+                <td>Date of Birth:</td>
+                <td><input type="date" size="31" maxlength="19" placeholder="dd/mm/yyyy" name="dob"</td>
+            </tr>
+            <tr>
+                <td>Contact number ICE:</td>
+                <td><input type="text" size="31" maxlength="19" minlength="7" name="contactICE"</td>
+            </tr>
+            <tr>
+                <td>Location:</td>
+                <td><input type="text" size="31" maxlength="31" name="location"></td>
+            </tr>
+            <tr>
+                <td colspan="2">Read <a href="Terms">Terms</a> & Conditions and tick box to agree. 
+                <input type="checkbox" name="checkbox" value="checkbox"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" name="submit" value="SUBMIT"></td>
             </tr>
         </table>
     </form>
-</div>
+    </div>
     </body>
 </html>
