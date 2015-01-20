@@ -40,7 +40,7 @@
 
     <p>In order to create a new club, please provide us with the following information:</p>
 
-    <form id="registrationForm"action='submit_for_registration' method="post">
+    <form id="newClubForm"action='submit_new_club' method="post">
         
         <table id="checkoutTable">
             <tr>

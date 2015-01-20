@@ -33,6 +33,7 @@ import session.JoinManager;
 import session.LoginManager;
 import session.Member1Facade;
 import session.NewMemberManager;
+import session.NewClubManager;
 
 /**
  *
@@ -45,6 +46,7 @@ import session.NewMemberManager;
                         "/logout",
                         "/register",
                         "/submit_for_registration",
+                        "/submit_new_club",
                         "/joinclub",
                         "/myclubs",
                         "/mymessages",
@@ -71,6 +73,8 @@ public class myControllerServlet extends HttpServlet {
     private Member1Facade memberFacade;
     @EJB
     private NewMemberManager newMemberMan;
+    @EJB
+    private NewClubManager newClubMan;
     @EJB
     private LoginManager loginMan;
     @EJB
@@ -247,9 +251,26 @@ public class myControllerServlet extends HttpServlet {
         } else if (userPath.equals("/category")) {
             // TODO: Implement category selection
                 
+        }
         
+        //////////////////////////////////////////////
+            //By Dylan
+            else if (userPath.equals("/submit_new_club")) {
+            
+            String clubName = request.getParameter("clubName");
+            String description = request.getParameter("Description");
+            String category = request.getParameter("category");
+            String maxMemString = request.getParameter("maxMembers");
+            int maxMembers = Integer.parseInt(maxMemString);
+            System.out.print("new club added");
+            
+            int clubID = newClubMan.joinClub(clubName,description,category,maxMembers);
+            }
+            ////////////////////////////////////////////////////
+            
+            
         // if login action is called
-        } else if (userPath.equals("/login")) {
+         else if (userPath.equals("/login")) {
 
             String uName = request.getParameter("this_user");
             String pWord = request.getParameter("this_password");
@@ -264,6 +285,8 @@ public class myControllerServlet extends HttpServlet {
             else {
                 url = "/loginerror.jsp";
             }
+            
+            
             
         } else if (userPath.equals("/joinclub")) {
             
