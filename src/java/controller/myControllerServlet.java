@@ -101,14 +101,12 @@ public class myControllerServlet extends HttpServlet {
         Collection<ClubMembers> myclubs;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
-
         
-        if (userPath.equals("/Terms")) {
-            
+        if (userPath.equals("/Terms")) {            
         
         // if category page is requested
         } else if (userPath.equals("/category")) {
-            // TODO: Implement category request
+            
             String categoryName = request.getQueryString();
 
             if(session.getAttribute("user_name") != null){
@@ -131,55 +129,31 @@ public class myControllerServlet extends HttpServlet {
             }
         
             
-        } else if (userPath.equals("/myclubs")) {
-            
+        } else if (userPath.equals("/myclubs")) {            
             
             int userID = (int)session.getAttribute("memberID");
             
             member = memberFacade.find(userID);
                     
             myclubs = member.getClubMembersCollection();
-            session.setAttribute("myclubs", myclubs);            
+            session.setAttribute("myclubs", myclubs); 
             
             url = "/WEB-INF/view/myclubs.jsp";
             
         } else if (userPath.equals("/logout")) {
-            
-            ///////////////////////////////////////////////////////////////
-            //by gary
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            ////////////////////////////////////////////////
-            
-            
-            
-            
+          
             System.out.println("logging out");
             session.removeAttribute("user_name");
             session.removeAttribute("memberID");
             session.invalidate();            
             
             url = "/index.jsp";
-            //blah blah blah
-            //return;
-
-        // if checkout page is requested
+            
         } else if (userPath.equals("/register")) {
-            // TODO: Implement checkout page request
 
         } 
 
-        // use RequestDispatcher to forward request internally
-        
+        // use RequestDispatcher to forward request internally       
 
         try {
             request.getRequestDispatcher(url).forward(request, response);
@@ -202,14 +176,13 @@ public class myControllerServlet extends HttpServlet {
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
         Club selectedClub;
-        Member1 member;
         Collection<ClubMembers> clubMembers;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
         // if register action is called
         if (userPath.equals("/submit_for_registration")) {
-            // TODO: Implement password encryption            
+            // TODO: Implement password encryption         
             
             // check first that the username is unique
             String uname = request.getParameter("username");
@@ -232,13 +205,13 @@ public class myControllerServlet extends HttpServlet {
 
                     int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
                     session.setAttribute("memberID", memberID);
+                    session.setAttribute("user_name", uname);
 
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }  
             
-            session.setAttribute("user_name", uname);
-            url = "/index.jsp";
+                url = "/index.jsp";
             
             } else {
                 
@@ -291,7 +264,7 @@ public class myControllerServlet extends HttpServlet {
         } else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));
-            //String thisUser = (String)session.getAttribute("user_name");
+            
             int memberID = (int)session.getAttribute("memberID");
             System.out.println("User with idnumber" + memberID + " joined " + thisClub);
             
