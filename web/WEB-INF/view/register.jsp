@@ -37,7 +37,7 @@
                     minlength: 10                    
                 },
                 checkbox:{
-                    required: true,
+                    required: true
                 }
             }
         });

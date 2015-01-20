@@ -1,0 +1,50 @@
+<%@taglib prefix="d" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 
+    Document   : index
+    Created on : 27-Nov-2014, 11:54:15
+    Author     : jtony_000
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/clubByte_2.css">
+        
+        <script src="js/jquery-1.4.2.js" type="text/javascript"></script>
+        <script src="js/jquery-ui-1.8.4.custom.min.js" type="text/javascript"></script>
+        
+        <title>clubByte_2</title>
+    </head>
+    <body>
+        <body>
+    <div id="main">
+        <div id="header">
+            <div id="widgetBar">
+                <div class="headerWidget">                    
+                    <d:choose>
+                        <d:when test="${user_name == null}">
+                            <form action="login"method="post">
+                                <input type="text" name="this_user" placeholder="username">
+                                <input type="password" name="this_password" placeholder="password"/>
+                                <input type="submit" value="      LOGIN      "/>
+                            </form>
+                        </d:when>
+                        <d:otherwise>
+                            ${user_name} logged in 
+                            <a href="logout">
+                                LOGOUT
+                            </a>
+                        </d:otherwise>
+                    </d:choose>     
+                </div>
+            </div>
+
+            <a href="index.jsp">
+                <img src="img/ClubByte_2_logo.png" id="logo" alt="clubByte logo">
+            </a>
+
+            <img src="#" id="logoText" alt="Manage all your clubs">
+        </div>
+    </div>
