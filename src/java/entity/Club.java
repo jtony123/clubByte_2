@@ -80,6 +80,14 @@ public class Club implements Serializable {
     public Club(Integer clubID) {
         this.clubID = clubID;
     }
+    
+    /*public Club(int ID, String name,String desc,String cat, int maxMem)
+    {
+        this.clubName = name;
+        this.description = desc;
+        //this.category = cat;
+        this.maxMembers = maxMem;
+    }*/
 
     public Integer getClubID() {
         return clubID;
