@@ -93,7 +93,6 @@ hr {
     height: 140px;
     width: 550px;
     margin: 15px 25px 5px;
-    float: inherit;
     float: left;
     background: lightgrey;
 }
@@ -110,7 +109,7 @@ hr {
     margin-top: 50px;
     line-height: 200%;
     font-size: medium;
-    width: 300;
+    
 }
 .categoryImage {
     float: left;
