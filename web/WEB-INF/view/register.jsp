@@ -1,7 +1,7 @@
 <%-- 
     Document   : register by gary
     Created on : 27-Nov-2014, 22:41:08
-    Author     : jtony_000
+    Author     : jtony_000 by anthony
 --%>
 
 <script src="js/jquery.validate.js" type="text/javascript"></script>
