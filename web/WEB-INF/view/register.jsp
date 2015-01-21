@@ -1,5 +1,5 @@
 <%-- 
-    Document   : register
+    Document   : register by gary
     Created on : 27-Nov-2014, 22:41:08
     Author     : jtony_000
 --%>
