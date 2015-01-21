@@ -129,7 +129,7 @@ public class myControllerServlet extends HttpServlet {
             else {
                 url = "/index.jsp";
             }
-        
+            
             
         } else if (userPath.equals("/myclubs")) {
             
@@ -143,7 +143,14 @@ public class myControllerServlet extends HttpServlet {
             
             url = "/WEB-INF/view/myclubs.jsp";
             
-        } else if (userPath.equals("/logout")) {
+        } 
+        
+        else if (userPath.equals("/newclub")) {
+                    List<Category> cats = categoryFacade.findAll();
+                    
+                    session.setAttribute("cats", cats);
+                    }
+        else if (userPath.equals("/logout")) {
             
             ///////////////////////////////////////////////////////////////
             //by gary
