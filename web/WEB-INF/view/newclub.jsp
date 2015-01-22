@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+
 <%-- 
     Document   : newclub
     Created on : 17-Jan-2015, 18:36:43
@@ -65,17 +68,14 @@
                            value="${param.Decription}">
                 </div>
             </tr>
-            
             <tr>
-                <div><label for="category">Category:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
-                           maxlength="45"
-                           id="category"
-                           name="category"
-                           value="${param.category}">
-                </div>
+            <div>
+                <select>
+                    <c:forEach var="categ" items="${cats}">
+                        <option value ="${categ.name}">${categ.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
             </tr>
                         <tr>
                 <div><label for="maxMembers">Maximum Members</label></div>

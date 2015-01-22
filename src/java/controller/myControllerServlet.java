@@ -140,6 +140,11 @@ public class myControllerServlet extends HttpServlet {
             
             url = "/WEB-INF/view/myclubs.jsp";
             
+        } else if (userPath.equals("/newclub")) {
+            
+            List<Category> cats = categoryFacade.findAll();
+            session.setAttribute("cats", cats);
+            
         } else if (userPath.equals("/logout")) {
           
             System.out.println("logging out");
