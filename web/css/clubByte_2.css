@@ -36,12 +36,6 @@ font-family: 'American Typewriter', Courier, monospace;
 font-size: 50px;
 color: #333;
 }
-#widgetBar {
-height: 50px;
-width: 850px;
-float: right;
-background: #ccc;
-}
 .headerWidget {
 width: 194px;
 margin: 20px 2px;
@@ -81,7 +75,6 @@ background: #ddd;
 height: 150px;
 width: 550px;
 margin: 15px 25px 5px;
-/*float: inherit;*/
 float: left;
 background: #888;
 }
@@ -96,7 +89,7 @@ float: left;
 margin-top: 50px;
 line-height: 200%;
 font-size: medium;
-width: 300;
+
 }
 .categoryImage {
 float: left;
