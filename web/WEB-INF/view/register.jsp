@@ -37,7 +37,7 @@
                     minlength: 10                    
                 },
                 checkbox:{
-                    required: true,
+                    required: true
                 }
             }
         });
@@ -104,5 +104,6 @@
         </table>
     </form>
     </div>
+        <div id="indexRightColumn">Adverts go here.</div>
     </body>
 </html>
