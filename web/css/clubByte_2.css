@@ -19,7 +19,7 @@ margin: 20px auto;
 .evenline { background-color: #fff }
 #header {
 height: 150px;
-background: #aaa;
+background: lightskyblue;
 }
 #logo {
 height: 135px;
@@ -37,24 +37,24 @@ font-size: 50px;
 color: #333;
 }
 .headerWidget {
-width: 194px;
+width: 190px;
 margin: 20px 2px;
-font-size: small;
+font-size: medium;
 float: right;
-line-height: 25px;
-background: #aaa;
+line-height: 0px;
+background: lightskyblue;
 }
 #footer {
 height: 60px;
 width: 300px;
 clear: left;
-background: #aaa;
+background:blue;
 }
 hr {
 border: 0;
 background-color: #333;
 height: 1px;
-margin: 5px 25px;
+margin: 5px 0px;
 width: 300px;
 }
 
@@ -72,11 +72,11 @@ float: left;
 background: #ddd;
 }
 .categoryBox {
-height: 150px;
+height: 140px;
 width: 550px;
 margin: 15px 25px 5px;
 float: left;
-background: #888;
+background: lightgrey;
 }
 .categoryLabelText {
 color: azure;
