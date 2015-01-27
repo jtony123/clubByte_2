@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -98,6 +99,7 @@ public class myControllerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Category selectedCategory;
         Member1 member;
+        Collection<Club> notmyclubs = new ArrayList<>();
         Collection<Club> categoryClubs;
         Collection<ClubMembers> myclubs;
         
@@ -108,7 +110,7 @@ public class myControllerServlet extends HttpServlet {
             
         // if category page is requested
         } else if (userPath.equals("/category")) {
-            // TODO: Implement category request
+            
             String categoryName = request.getQueryString();
 
             if(session.getAttribute("user_name") != null){
@@ -120,24 +122,43 @@ public class myControllerServlet extends HttpServlet {
                 session.setAttribute("selectedCategory", selectedCategory.getName());
 
                 categoryClubs = selectedCategory.getClubCollection();
-        
-                session.setAttribute("categoryClubs", categoryClubs);
-
-                url = "/WEB-INF/view" + userPath + ".jsp";
+                
+                int userID = (int)session.getAttribute("memberID");
+                
+                boolean ismember = false;
+                
+                // filter out clubs that this user is already a member of
+                for (Club club : categoryClubs) {  
+                    
+                    Collection<ClubMembers> cm = club.getClubMembersCollection();
+                    
+                    for (ClubMembers members : cm) {
+                        if (members.getMember1().getMemberID() == userID) {
+                            ismember = true;
+                        }   
+                    }
+                    if (!(ismember)) {
+                        notmyclubs.add(club);
+                    }
+                    ismember = false;
                 }
-            }
-            else {
+                
+                session.setAttribute("notmyclubs", notmyclubs);
+                
+                }
+             
+                url = "/WEB-INF/view" + userPath + ".jsp";
+            } else {
                 url = "/index.jsp";
             }
-            
+                
+               
             
         } else if (userPath.equals("/myclubs")) {
             
             
-            int userID = (int)session.getAttribute("memberID");
-            
-            member = memberFacade.find(userID);
-                    
+            int userID = (int)session.getAttribute("memberID");            
+            member = memberFacade.find(userID);                    
             myclubs = member.getClubMembersCollection();
             session.setAttribute("myclubs", myclubs);            
             
@@ -263,13 +284,29 @@ public class myControllerServlet extends HttpServlet {
             String parentOrg = request.getParameter("parentOrganisation");
             String parentURL = request.getParameter("parentURL");
             
-            Object clubOwnerID = session.getAttribute("memberID");
+            //Object clubOwnerID = session.getAttribute("memberID");
+            int clubOwnerID = (int)session.getAttribute("memberID");
             Member1 clubOwner = memberFacade.find(clubOwnerID);
             
-            int maxMembers = Integer.parseInt(request.getParameter("maxMembers"));
+            String maxMemString = request.getParameter("maxMembers");
+            int maxMembers = Integer.parseInt(maxMemString);
             
             int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
-            url = "/WEB-INF/view/myclubs.jsp";
+            
+            // edit by anthony -- including the clubowner as its first member.
+            // clubowner should not have to join their own club
+            
+            boolean joined = joinManager.joinClub(clubOwnerID, clubID);
+            
+            if (joined){
+                url = "/WEB-INF/view/myclubs.jsp";
+            } else {
+                // TODO: implement a messaging system back to the user when thry make a mistake
+                String msg = "Oooops, something went wrong, please try again.";
+                url = "/WEB-INF/view/newclub.jsp";
+            } 
+            
+            //url = "/WEB-INF/view/myclubs.jsp";
             }
             ////////////////////////////////////////////////////
             

@@ -28,6 +28,7 @@
                 <td>Club Owner</td>
                 <td>Max Members</td>
                 <c:forEach var="aclub" items="${myclubs}" varStatus="iter">
+                <%--<c:forEach var="aclub" items="${not_intheseclubs}" varStatus="iter">--%>
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
                             ${aclub.club.clubName}
