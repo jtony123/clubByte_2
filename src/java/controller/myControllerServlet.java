@@ -266,8 +266,7 @@ public class myControllerServlet extends HttpServlet {
             Object clubOwnerID = session.getAttribute("memberID");
             Member1 clubOwner = memberFacade.find(clubOwnerID);
             
-            String maxMemString = request.getParameter("maxMembers");
-            int maxMembers = Integer.parseInt(maxMemString);
+            int maxMembers = Integer.parseInt(request.getParameter("maxMembers"));
             
             int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
             url = "/WEB-INF/view/myclubs.jsp";

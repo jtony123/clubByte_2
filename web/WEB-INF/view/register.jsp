@@ -105,5 +105,6 @@
     </form>
     </div>
         <div id="indexRightColumn">Adverts go here.</div>
+        Testing
     </body>
 </html>
