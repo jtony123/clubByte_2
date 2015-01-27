@@ -19,7 +19,7 @@ margin: 20px auto;
 .evenline { background-color: #fff }
 #header {
 height: 150px;
-background: lightskyblue;
+background: lightgrey;
 }
 #logo {
 height: 135px;
@@ -37,12 +37,12 @@ font-size: 50px;
 color: #333;
 }
 .headerWidget {
-width: 190px;
+width: 194px;
 margin: 20px 2px;
 font-size: medium;
 float: right;
-line-height: 0px;
-background: lightskyblue;
+line-height: 20px;
+background: lightgrey;
 }
 #footer {
 height: 60px;
@@ -63,7 +63,7 @@ width: 300px;
 height: 400px;
 width: 300px;
 float: left;
-background: #ccc;
+background: lightgrey;
 }
 #indexCentreColumn {
 height: 400px;
