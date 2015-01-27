@@ -37,7 +37,7 @@
                     minlength: 10                    
                 },
                 checkbox:{
-                    required: true,
+                    required: true
                 }
             }
         });
@@ -54,11 +54,11 @@
     <body>
         <div id="indexLeftColumn">Register new members page</div>
         
-    <p>In order to access club information and join clubs, please provide us with the following information:</p>
     <div id="indexCentreColumn">
     <form class="registrationForm" action='submit_for_registration' method="post">
         <table id="register_form">
             <tr>
+                <p>In order to access club information and join clubs, please provide us with the following information:</p>
                 <td>Firstname</td>
                 <td><input type="text" size="31" maxlength="45" name="firstname"></td>
             </tr>
@@ -104,5 +104,6 @@
         </table>
     </form>
     </div>
+        <div id="indexRightColumn">Adverts go here.</div>
     </body>
 </html>
