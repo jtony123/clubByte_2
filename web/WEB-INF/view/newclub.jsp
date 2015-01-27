@@ -12,7 +12,7 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        $("#registrationForm").validate({
+        $("#newClubForm").validate({
             rules: {
                 name: "required",
                 clubName: {
@@ -22,10 +22,16 @@
                 description: {
                     required: true,
                     minlength: 6
-                }
+                },
+                category: {
+                    required: true,
+                },
+                maxMembers: {
+                    required: true
                 }
             }
         });
+        
     });
 </script>
 
@@ -65,17 +71,21 @@
                            maxlength="150"
                            id="description"
                            name="description"
-                           value="${param.Decription}">
+                           value="${param.description}">
                 </div>
             </tr>
+            
             <tr>
-            <div>
-                <select>
-                    <c:forEach var="categ" items="${cats}">
-                        <option value ="${categ.name}">${categ.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
+                <div><label for="category">Category</label></div>
+                <div>
+                    <select id ="category" name ="category"">
+                        <c:forEach var="categ" items="${cats}">
+                            <option value ="${categ.id}">${categ.name}</option>
+                        </c:forEach>
+                           
+                    </select>
+                    
+                </div>
             </tr>
                         <tr>
                 <div><label for="maxMembers">Maximum Members</label></div>
@@ -88,7 +98,28 @@
                            value="${param.maxMembers}">
                 </div>
             </tr>
-            
+            <tr>
+                <div><label for="parentOrganisation">Organisation</label></div>
+                <div class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="45"
+                           id="parentOrganisation"
+                           name="parentOrganisation"
+                           value="${param.parentOrganisation}">
+                </div>
+            </tr>
+            <tr>
+                <div><label for="parentURL">Organisation URL</label></div>
+                <div class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="45"
+                           id="clubName"
+                           name="parentURL"
+                           value="${param.parentURL}">
+                </div>
+            </tr>
             <tr>
                 <div colspan="2">
                     <input type="submit" name="submit" value="SUBMIT">

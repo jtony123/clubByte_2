@@ -2,9 +2,12 @@
 package session;
 
 import entity.Club;
+import entity.Category;
+import entity.Member1;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 
 /**
  *
@@ -16,25 +19,27 @@ public class NewClubManager {
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;
 
-    public int joinClub(String name, String desc,String category, int maxMembers) {
+    public int createClub(String name, String desc,Category cat, int maxMembers,String parentOrg,String parentURL,Member1 ownerID) {
     
-        Club club = addClub(name,desc,category,maxMembers);
+        Club club = addClub(name,desc,cat,maxMembers,parentOrg,parentURL, ownerID);
         return club.getClubID();
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    private Club addClub(String name,String desc,String category, int maxMembers ) {
+    private Club addClub(String name,String desc,Category cat, int maxMembers,String parentOrg,String parentURL, Member1 ownerID) {
     
         
         Club c = new Club();
         c.setClubName(name);
         c.setDescription(desc);
-        //c.setCategory(category);
+        c.setCategory(cat);
         c.setMaxMembers(maxMembers);
-        
-        
+        c.setParentOrganisation(parentOrg);
+        c.setParentURL(parentURL);
+        c.setClubOwnerID(ownerID);
+                
         em.persist(c);
         // have to flush through the database operation to get the 
         // id number created for this member before returning.

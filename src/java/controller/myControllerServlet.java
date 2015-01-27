@@ -35,6 +35,7 @@ import session.Member1Facade;
 import session.NewMemberManager;
 import session.NewClubManager;
 
+
 /**
  *
  * @author jtony_000
@@ -101,12 +102,13 @@ public class myControllerServlet extends HttpServlet {
         Collection<ClubMembers> myclubs;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
+
         
-        if (userPath.equals("/Terms")) {            
-        
+        if (userPath.equals("/Terms")) {
+            
         // if category page is requested
         } else if (userPath.equals("/category")) {
-            
+            // TODO: Implement category request
             String categoryName = request.getQueryString();
 
             if(session.getAttribute("user_name") != null){
@@ -127,38 +129,64 @@ public class myControllerServlet extends HttpServlet {
             else {
                 url = "/index.jsp";
             }
-        
             
-        } else if (userPath.equals("/myclubs")) {            
+            
+        } else if (userPath.equals("/myclubs")) {
+            
             
             int userID = (int)session.getAttribute("memberID");
             
             member = memberFacade.find(userID);
                     
             myclubs = member.getClubMembersCollection();
-            session.setAttribute("myclubs", myclubs); 
+            session.setAttribute("myclubs", myclubs);            
             
             url = "/WEB-INF/view/myclubs.jsp";
             
-        } else if (userPath.equals("/newclub")) {
+        } 
+        
+        else if (userPath.equals("/newclub")) {
+                    List<Category> cats = categoryFacade.findAll();
+                    
+                    session.setAttribute("cats", cats);
+                    }
+        else if (userPath.equals("/logout")) {
             
-            List<Category> cats = categoryFacade.findAll();
-            session.setAttribute("cats", cats);
+            ///////////////////////////////////////////////////////////////
+            //by gary
             
-        } else if (userPath.equals("/logout")) {
-          
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            ////////////////////////////////////////////////
+            
+            
+            
+            
             System.out.println("logging out");
             session.removeAttribute("user_name");
             session.removeAttribute("memberID");
             session.invalidate();            
             
             url = "/index.jsp";
-            
+            //blah blah blah
+            //return;
+
+        // if checkout page is requested
         } else if (userPath.equals("/register")) {
+            // TODO: Implement checkout page request
 
         } 
 
-        // use RequestDispatcher to forward request internally       
+        // use RequestDispatcher to forward request internally
+        
 
         try {
             request.getRequestDispatcher(url).forward(request, response);
@@ -180,50 +208,41 @@ public class myControllerServlet extends HttpServlet {
 
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
+        Category selectedCategory;
         Club selectedClub;
+        Member1 member;
         Collection<ClubMembers> clubMembers;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
         // if register action is called
         if (userPath.equals("/submit_for_registration")) {
-            // TODO: Implement password encryption         
+            // TODO: Implement password encryption
             
-            // check first that the username is unique
+            String fname = request.getParameter("firstname");
+            String sname = request.getParameter("surname");
+            String email = request.getParameter("email");
             String uname = request.getParameter("username");
-            
-            if (newMemberMan.checkifUsernameUnique(uname)) {
-                
-                String fname = request.getParameter("firstname");
-                String sname = request.getParameter("surname");
-                String email = request.getParameter("email");
-                String pword = request.getParameter("password");
-                String mobno = request.getParameter("phone");
-                String numICE = request.getParameter("contactICE");
-                String loc = request.getParameter("location");
-                
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                String dateInString = request.getParameter("dob");
+            String pword = request.getParameter("password");
+            String mobno = request.getParameter("phone");
+            String numICE = request.getParameter("contactICE");
+            String loc = request.getParameter("location");
+            	
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String dateInString = request.getParameter("dob");
  
-                try { 
-                    Date date = formatter.parse(dateInString);
-
-                    int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
-                    session.setAttribute("memberID", memberID);
-                    session.setAttribute("user_name", uname);
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }  
-            
-                url = "/index.jsp";
-            
-            } else {
+            try { 
+		Date date = formatter.parse(dateInString);
                 
-                session.setAttribute("message1", "That username is already taken, please choose another");
-                url = "/WEB-INF/view/register.jsp";
-                
+                int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
+                session.setAttribute("memberID", memberID);
+ 
+            } catch (ParseException e) {
+		e.printStackTrace();
             }
+            
+            session.setAttribute("user_name", uname);
+            url = "/index.jsp";   
             
         // if category action is called
         } else if (userPath.equals("/category")) {
@@ -236,13 +255,22 @@ public class myControllerServlet extends HttpServlet {
             else if (userPath.equals("/submit_new_club")) {
             
             String clubName = request.getParameter("clubName");
-            String description = request.getParameter("Description");
-            String category = request.getParameter("category");
+            String description = request.getParameter("description");
+            
+            String categoryName = request.getParameter("category");
+            Category category = categoryFacade.find(Integer.parseInt(categoryName));
+            
+            String parentOrg = request.getParameter("parentOrganisation");
+            String parentURL = request.getParameter("parentURL");
+            
+            Object clubOwnerID = session.getAttribute("memberID");
+            Member1 clubOwner = memberFacade.find(clubOwnerID);
+            
             String maxMemString = request.getParameter("maxMembers");
             int maxMembers = Integer.parseInt(maxMemString);
-            System.out.print("new club added");
             
-            int clubID = newClubMan.joinClub(clubName,description,category,maxMembers);
+            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
+            url = "/WEB-INF/view/myclubs.jsp";
             }
             ////////////////////////////////////////////////////
             
@@ -269,7 +297,7 @@ public class myControllerServlet extends HttpServlet {
         } else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));
-            
+            //String thisUser = (String)session.getAttribute("user_name");
             int memberID = (int)session.getAttribute("memberID");
             System.out.println("User with idnumber" + memberID + " joined " + thisClub);
             
@@ -282,7 +310,8 @@ public class myControllerServlet extends HttpServlet {
                 url = "/loginerror.jsp";
             }
             
-        } else if (userPath.equals("/viewclub")) {            
+        } else if (userPath.equals("/viewclub")) {
+            
             
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
             

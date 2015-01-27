@@ -7,7 +7,6 @@ package session;
 
 import entity.Member1;
 import java.util.Date;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +20,6 @@ public class NewMemberManager {
     
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;
-    private Member1Facade mf;
 
     public int joinMember(String fname, String sname, String email, String uname, String pword, Date date, String mobnum, String numICE, String location) {
     
@@ -52,14 +50,4 @@ public class NewMemberManager {
         em.flush();
         return m;
     }
-    
-    public boolean checkifUsernameUnique (String username) {
-                
-        List<Member1> ms = em.createNamedQuery("Member1.findByUserName").setParameter("userName", username).getResultList();        
-         
-        return ms.isEmpty();
-    }
-
-    
-    
 }
