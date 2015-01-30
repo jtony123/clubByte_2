@@ -42,7 +42,8 @@
             Clubs currently in the ${selectedCategory} category
 
             <table id="clubTable">
-                <c:forEach var="club" items="${categoryClubs}" varStatus="iter">
+                <%--<c:forEach var="club" items="${categoryClubs}" varStatus="iter">--%>
+                <c:forEach var="club" items="${notmyclubs}" varStatus="iter">
 
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
