@@ -7,6 +7,7 @@ package session;
 
 import entity.Club;
 import entity.ClubMembers;
+import entity.ClubMembersPK;
 import entity.Member1;
 import java.util.Collection;
 import java.util.List;
@@ -81,6 +82,17 @@ public class JoinManager {
             return false;
         } 
     
+    }
+    
+    public void leaveClub(Member1 member, Club club) {
+                
+        ClubMembersPK cmpk = new ClubMembersPK(club.getClubID(), member.getMemberID());
+        ClubMembers cm = new ClubMembers(cmpk);
+        //ClubMembers cm = clubMembersFacade.find(new ClubMembers(club.getClubID(), member.getMemberID()));
+        clubMembersFacade.remove(cm);
+        
+        //em.persist();
+        //return true;
     }
 
 }
