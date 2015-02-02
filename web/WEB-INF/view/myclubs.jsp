@@ -25,10 +25,9 @@
             <table id="myClubTable">  
                 <td>Club Name</td>
                 <td>Description</td>
-                <td>Club Owner</td>
-                <td>Max Members</td>
+                <td>#Current/Max Members</td>
+                <td>Club Details</td>
                 <c:forEach var="aclub" items="${myclubs}" varStatus="iter">
-                <%--<c:forEach var="aclub" items="${not_intheseclubs}" varStatus="iter">--%>
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
                             ${aclub.club.clubName}
@@ -37,7 +36,7 @@
                             ${aclub.club.description}
                         </td>
                         <td>
-                            ${aclub.club.maxMembers}
+                            ${aclub.club.clubMembersCollection.size()} / ${aclub.club.maxMembers}
                         </td>
                         <td>
                             <form action="viewclub" method="post">
