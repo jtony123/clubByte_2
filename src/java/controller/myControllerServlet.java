@@ -292,11 +292,11 @@ public class myControllerServlet extends HttpServlet {
             int maxMembers = Integer.parseInt(maxMemString);
             
             int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
-            
+            Club newClub = clubFacade.find(clubID);
             // edit by anthony -- including the clubowner as its first member.
             // clubowner should not have to join their own club
             
-            boolean joined = joinManager.joinClub(clubOwnerID, clubID);
+            boolean joined = joinManager.joinClub(clubOwner, newClub);
             
             if (joined){
                 url = "/WEB-INF/view/myclubs.jsp";
@@ -333,11 +333,12 @@ public class myControllerServlet extends HttpServlet {
         } else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));
+            selectedClub = clubFacade.find(thisClub);
             //String thisUser = (String)session.getAttribute("user_name");
             int memberID = (int)session.getAttribute("memberID");
-            System.out.println("User with idnumber" + memberID + " joined " + thisClub);
+            Member1 m = memberFacade.find(memberID);
             
-            boolean joined = joinManager.joinClub(memberID, thisClub);
+            boolean joined = joinManager.joinClub(m, selectedClub);
             if (joined){
                 url = "/index.jsp";
             } else {
