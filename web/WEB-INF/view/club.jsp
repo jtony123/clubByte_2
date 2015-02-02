@@ -32,6 +32,14 @@
                 Parent Club: ${clubdetails.club.parentOrganisation}
                 <br><br>
                 <a href="${clubdetails.club.parentURL}" target="_blank">Link to Parent Organisation</a>
+                <br><br>
+                <form action="leaveclub" method="post">
+                    <input type="hidden"
+                            name="clubId"
+                            value="${clubdetails.club.clubID}">
+                    <input type="submit"
+                        value="LEAVE THIS CLUB">
+                </form>
             </c:forEach>
         </div>        
         <div id="indexCentreColumn">
@@ -40,7 +48,7 @@
                 <td>Username</td>
                 <td>email address</td>
                 <td>location</td>
-                <td>age</td>
+                <td>Date joined</td>
                 <c:forEach var="member" items="${clubMembers}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
