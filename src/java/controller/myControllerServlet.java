@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import session.CategoryFacade;
 import session.ClubFacade;
+import session.ClubMembersFacade;
 import session.JoinManager;
 import session.LoginManager;
 import session.Member1Facade;
@@ -53,7 +55,8 @@ import session.NewClubManager;
                         "/mymessages",
                         "/viewclub",
                         "/Terms",
-                        "/newclub"})
+                        "/newclub",
+                        "/leaveclub"})
 // TODO: come back here and redirect page requests as pages are added
 
 public class myControllerServlet extends HttpServlet {
@@ -72,6 +75,8 @@ public class myControllerServlet extends HttpServlet {
     private ClubFacade clubFacade;
     @EJB
     private Member1Facade memberFacade;
+    @EJB
+    private ClubMembersFacade cmf;
     @EJB
     private NewMemberManager newMemberMan;
     @EJB
@@ -98,6 +103,7 @@ public class myControllerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Category selectedCategory;
         Member1 member;
+        Collection<Club> notmyclubs = new ArrayList<>();
         Collection<Club> categoryClubs;
         Collection<ClubMembers> myclubs;
         
@@ -108,7 +114,7 @@ public class myControllerServlet extends HttpServlet {
             
         // if category page is requested
         } else if (userPath.equals("/category")) {
-            // TODO: Implement category request
+            
             String categoryName = request.getQueryString();
 
             if(session.getAttribute("user_name") != null){
@@ -120,24 +126,42 @@ public class myControllerServlet extends HttpServlet {
                 session.setAttribute("selectedCategory", selectedCategory.getName());
 
                 categoryClubs = selectedCategory.getClubCollection();
-        
-                session.setAttribute("categoryClubs", categoryClubs);
-
-                url = "/WEB-INF/view" + userPath + ".jsp";
+                
+                int userID = (int)session.getAttribute("memberID");
+                
+                boolean ismember = false;
+                
+                // filter out clubs that this user is already a member of
+                for (Club club : categoryClubs) {  
+                    
+                    Collection<ClubMembers> cm = club.getClubMembersCollection();
+                    
+                    for (ClubMembers members : cm) {
+                        if (members.getMember1().getMemberID() == userID) {
+                            ismember = true;
+                        }   
+                    }
+                    if (!(ismember)) {
+                        notmyclubs.add(club);
+                    }
+                    ismember = false;
                 }
-            }
-            else {
+                
+                session.setAttribute("notmyclubs", notmyclubs);
+                
+                }
+             
+                url = "/WEB-INF/view" + userPath + ".jsp";
+            } else {
                 url = "/index.jsp";
             }
+                
+               
             
+        } else if (userPath.equals("/myclubs")) {            
             
-        } else if (userPath.equals("/myclubs")) {
-            
-            
-            int userID = (int)session.getAttribute("memberID");
-            
-            member = memberFacade.find(userID);
-                    
+            int userID = (int)session.getAttribute("memberID");            
+            member = memberFacade.find(userID);                    
             myclubs = member.getClubMembersCollection();
             session.setAttribute("myclubs", myclubs);            
             
@@ -212,6 +236,7 @@ public class myControllerServlet extends HttpServlet {
         Club selectedClub;
         Member1 member;
         Collection<ClubMembers> clubMembers;
+        Collection<ClubMembers> myclubs;
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
@@ -245,10 +270,7 @@ public class myControllerServlet extends HttpServlet {
             url = "/index.jsp";   
             
         // if category action is called
-        } else if (userPath.equals("/category")) {
-            // TODO: Implement category selection
-                
-        }
+        } 
         
         //////////////////////////////////////////////
             //By Dylan
@@ -263,15 +285,29 @@ public class myControllerServlet extends HttpServlet {
             String parentOrg = request.getParameter("parentOrganisation");
             String parentURL = request.getParameter("parentURL");
             
-            Object clubOwnerID = session.getAttribute("memberID");
+            //Object clubOwnerID = session.getAttribute("memberID");
+            int clubOwnerID = (int)session.getAttribute("memberID");
             Member1 clubOwner = memberFacade.find(clubOwnerID);
             
-            int maxMembers = Integer.parseInt(request.getParameter("maxMembers"));
+            String maxMemString = request.getParameter("maxMembers");
+            int maxMembers = Integer.parseInt(maxMemString);
             
             int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
-            url = "/WEB-INF/view/myclubs.jsp";
+            Club newClub = clubFacade.find(clubID);
+            // edit by anthony -- including the clubowner as its first member.
+            // clubowner should not have to join their own club
+            
+            boolean joined = joinManager.joinClub(clubOwner, newClub);
+            
+            if (joined){
+                url = "/WEB-INF/view/myclubs.jsp";
+            } else {
+                // TODO: implement a messaging system back to the user when thry make a mistake
+                String msg = "Oooops, something went wrong, please try again.";
+                url = "/WEB-INF/view/newclub.jsp";
+            } 
+            
             }
-            ////////////////////////////////////////////////////
             
             
         // if login action is called
@@ -296,35 +332,42 @@ public class myControllerServlet extends HttpServlet {
         } else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));
-            //String thisUser = (String)session.getAttribute("user_name");
+            selectedClub = clubFacade.find(thisClub);
             int memberID = (int)session.getAttribute("memberID");
-            System.out.println("User with idnumber" + memberID + " joined " + thisClub);
+            Member1 m = memberFacade.find(memberID);
             
-            boolean joined = joinManager.joinClub(memberID, thisClub);
+            boolean joined = joinManager.joinClub(m, selectedClub);
             if (joined){
-                url = "/index.jsp";
+                clubMembers = selectedClub.getClubMembersCollection();            
+                session.setAttribute("clubMembers", clubMembers);
+                url = "/WEB-INF/view/club.jsp";
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
                 String msg = "You are already a member of this club";
                 url = "/loginerror.jsp";
             }
             
-        } else if (userPath.equals("/viewclub")) {
+        } else if (userPath.equals("/viewclub")) {            
             
-            
-            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
-            
-            session.setAttribute("selectedClub", selectedClub);
-            
-            clubMembers = selectedClub.getClubMembersCollection();
-            
+            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
+            session.setAttribute("selectedClub", selectedClub);            
+            clubMembers = selectedClub.getClubMembersCollection();            
             session.setAttribute("clubMembers", clubMembers);
 
-            url = "/WEB-INF/view/club.jsp";              
+            url = "/WEB-INF/view/club.jsp";  
+            
+        ///////////////////////////////////////////////////////////////////
+            // by anthony
+        } else if (userPath.equals("/leaveclub")) {
+            int memberID = (int)session.getAttribute("memberID");
+            Member1 m = memberFacade.find(memberID);
+            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
+            System.out.println("got this "+selectedClub.getClubName());
+            joinManager.leaveClub(m, selectedClub);  
+            myclubs = m.getClubMembersCollection();
+            session.setAttribute("myclubs", myclubs);
+            url = "/WEB-INF/view/myclubs.jsp";
         }
-
-        // use RequestDispatcher to forward request internally
-        //String url = "/WEB-INF/view/" + userPath + ".jsp";
 
         try {
             request.getRequestDispatcher(url).forward(request, response);

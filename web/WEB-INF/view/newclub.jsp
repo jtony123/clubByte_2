@@ -17,7 +17,7 @@
                 name: "required",
                 clubName: {
                     required: true,
-                    minlength:6
+                    minlength:4
                 },
                 description: {
                     required: true,

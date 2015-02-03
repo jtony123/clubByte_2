@@ -89,6 +89,8 @@ public class Member1 implements Serializable {
     private String location;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
     private Collection<ClubMembers> clubMembersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
+    private Collection<AttendingEvent> attendingEventCollection;
     @OneToMany(mappedBy = "clubAdminID")
     private Collection<Club> clubCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubOwnerID")
@@ -196,6 +198,15 @@ public class Member1 implements Serializable {
 
     public void setClubMembersCollection(Collection<ClubMembers> clubMembersCollection) {
         this.clubMembersCollection = clubMembersCollection;
+    }
+
+    @XmlTransient
+    public Collection<AttendingEvent> getAttendingEventCollection() {
+        return attendingEventCollection;
+    }
+
+    public void setAttendingEventCollection(Collection<AttendingEvent> attendingEventCollection) {
+        this.attendingEventCollection = attendingEventCollection;
     }
 
     @XmlTransient

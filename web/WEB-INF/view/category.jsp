@@ -42,7 +42,12 @@
             Clubs currently in the ${selectedCategory} category
 
             <table id="clubTable">
-                <c:forEach var="club" items="${categoryClubs}" varStatus="iter">
+                <td>Club Logo</td>
+                <td>Name, Description</td>
+                <td>Member spaces remaining</td>
+                <td>Click to join</td>
+                <%--<c:forEach var="club" items="${categoryClubs}" varStatus="iter">--%>
+                <c:forEach var="club" items="${notmyclubs}" varStatus="iter">
 
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
@@ -54,10 +59,7 @@
                             <span class="smallText">${club.description}</span>
                         </td>
                         <td>
-                            #members; ${club.maxMembers}
-                        </td>
-                        <td>
-                            limit; ${club.maxMembers}
+                            ${club.maxMembers - club.clubMembersCollection.size()}
                         </td>
                         <td>
                             <form action="joinclub" method="post">

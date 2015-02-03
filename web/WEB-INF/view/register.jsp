@@ -52,7 +52,7 @@
         <title>ClubByte</title>
     </head>
     <body>
-        <div id="indexLeftColumn">Register new members page here</div>
+        <div id="indexLeftColumn">Register new members page</div>
         
     <div id="indexCentreColumn">
     <form class="registrationForm" action='submit_for_registration' method="post">
@@ -105,6 +105,5 @@
     </form>
     </div>
         <div id="indexRightColumn">Adverts go here.</div>
-        Testing
     </body>
 </html>
