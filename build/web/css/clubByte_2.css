@@ -1,0 +1,120 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+Created on : 27-Nov-2014, 11:56:07
+Author : jtony_000
+*/
+body {
+font-family: Arial, Helvetica, sans-serif;
+width: 1200px;
+text-align: left;
+margin: 20px auto;
+}
+
+#main { background: #eee }
+.oddline { background-color: #ccc }
+.evenline { background-color: #fff }
+#header {
+height: 150px;
+background: lightgrey;
+}
+#logo {
+height: 135px;
+width: 265px;
+float: left;
+margin-left: 15px;
+margin-top: 15px;
+}
+#logoText {
+float: left;
+margin: 20px 0 0 70px;
+/* font styles apply to text within alt tags */
+font-family: 'American Typewriter', Courier, monospace;
+font-size: 50px;
+color: #333;
+}
+.headerWidget {
+width: 194px;
+margin: 20px 2px;
+font-size: medium;
+float: right;
+line-height: 20px;
+background: lightgrey;
+}
+#footer {
+height: 60px;
+width: 300px;
+clear: left;
+background:blue;
+}
+hr {
+border: 0;
+background-color: #333;
+height: 1px;
+margin: 5px 0px;
+width: 300px;
+}
+
+
+#indexLeftColumn {
+height: 400px;
+width: 300px;
+float: left;
+background: lightgrey;
+}
+#indexCentreColumn {
+height: 400px;
+width: 600px;
+float: left;
+background: #ddd;
+}
+.categoryBox {
+height: 140px;
+width: 550px;
+margin: 15px 25px 5px;
+float: left;
+background: lightgrey;
+}
+.categoryLabelText {
+color: azure;
+margin-left: 25px;
+line-height: 150%;
+font-size: x-large;
+float: left;
+}
+.categoryDescription {
+margin-top: 50px;
+line-height: 200%;
+font-size: medium;
+
+}
+.categoryImage {
+float: left;
+}
+
+form.registrationForm {}
+
+table#register_form tbody tr td {
+    text-indent: 50px;
+    text-align: left;
+    width: 225px
+}
+
+table#register_form tbody tr td input {
+    
+    text-align: left;
+    width: 220px
+}
+
+
+#indexRightColumn {
+height: 400px;
+width: 300px;
+float: left;
+background: #eee;
+}
+
+
