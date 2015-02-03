@@ -18,29 +18,51 @@
         <div id="indexLeftColumn">
            this clubs details: name, etc...
            <br><br>
-            <c:forEach begin="0" end="0" step="1" var="clubdetails" items="${clubMembers}" varStatus="iter">
-                Club Name: ${clubdetails.club.clubName}
+                <%--<c:forEach begin="0" end="0" step="1" var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
+                <%--<c:forEach var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
+                Club Name: ${selectedClub.clubName}
                 <br><br>
-                Club Owner:${clubdetails.club.clubOwnerID.firstName} ${clubdetails.club.clubOwnerID.surName}
+                Club Owner:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}
                 <br><br>
-                Description: ${clubdetails.club.description}
+                Description: ${selectedClub.description}
                 <br><br>
-                Max no of members: ${clubdetails.club.maxMembers}
+                Max no of members: ${selectedClub.maxMembers}
                 <br><br>
-                Category: ${clubdetails.club.category.name}
+                Category: ${selectedClub.category.name}
                 <br><br>
-                Parent Club: ${clubdetails.club.parentOrganisation}
+                Parent Club: ${selectedClub.parentOrganisation}
                 <br><br>
-                <a href="${clubdetails.club.parentURL}" target="_blank">Link to Parent Organisation</a>
-            </c:forEach>
+                <a href="${clubdetails.parentURL}" target="_blank">Link to Parent Organisation</a>
+                <br><br>
+            
         </div>        
         <div id="indexCentreColumn">
-            This Clubs Members 
+             
+            <c:choose>
+                <c:when test="${clubMembers.size() == 0}">
+                    Only paid up members can view the other members of a club
+                            <form action="payfees" method="post">
+                                <input type="hidden"
+                                       name="clubId"
+                                       value="${selectedClub.clubID}">
+                                <input type="submit"
+                                       value="JOIN THIS CLUB">
+                            </form>
+                </c:when>
+                <c:otherwise>
+                This Clubs Members
+                <form action="leaveclub" method="post">
+                    <input type="hidden"
+                            name="clubId"
+                            value="${selectedClub.clubID}">
+                    <input type="submit"
+                        value="LEAVE THIS CLUB">
+                </form>
             <table id="myClubTable">  
                 <td>Username</td>
                 <td>email address</td>
                 <td>location</td>
-                <td>age</td>
+                <td>Date joined</td>
                 <c:forEach var="member" items="${clubMembers}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
@@ -66,6 +88,8 @@
                         </td>
                     </tr>
                 </c:forEach>
+                </c:otherwise>
+            </c:choose>
             </table>            
         </div>
         <div id="indexRightColumn">

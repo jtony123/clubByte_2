@@ -51,6 +51,7 @@ import session.NewClubManager;
                         "/submit_for_registration",
                         "/submit_new_club",
                         "/joinclub",
+                        "/payfees",
                         "/myclubs",
                         "/mymessages",
                         "/viewclub",
@@ -121,15 +122,15 @@ public class myControllerServlet extends HttpServlet {
                                     
                 if (categoryName != null) {
 
-                selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));
+                selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));                        
                         
                 session.setAttribute("selectedCategory", selectedCategory.getName());
 
                 categoryClubs = selectedCategory.getClubCollection();
                 
-                int userID = (int)session.getAttribute("memberID");
+                int userID = (int)session.getAttribute("memberID");                
                 
-                boolean ismember = false;
+                boolean ismember = false;                
                 
                 // filter out clubs that this user is already a member of
                 for (Club club : categoryClubs) {  
@@ -163,6 +164,8 @@ public class myControllerServlet extends HttpServlet {
             int userID = (int)session.getAttribute("memberID");            
             member = memberFacade.find(userID);                    
             myclubs = member.getClubMembersCollection();
+            //////////////not updating dynamically
+            //session.removeAttribute("myclubs");
             session.setAttribute("myclubs", myclubs);            
             
             url = "/WEB-INF/view/myclubs.jsp";
@@ -299,7 +302,9 @@ public class myControllerServlet extends HttpServlet {
             
             boolean joined = joinManager.joinClub(clubOwner, newClub);
             
-            if (joined){
+            if (joined){ 
+                myclubs = clubOwner.getClubMembersCollection();
+                session.setAttribute("myclubs", myclubs);
                 url = "/WEB-INF/view/myclubs.jsp";
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
@@ -327,8 +332,12 @@ public class myControllerServlet extends HttpServlet {
                 url = "/loginerror.jsp";
             }
             
+        } else if (userPath.equals("/payfees")) {
             
             
+            // update the joinclub case below to run after fee paid successfully
+            // change the join button on the clubs listing from join to view
+            // add the join button to the club page which directs to the fee page
         } else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));

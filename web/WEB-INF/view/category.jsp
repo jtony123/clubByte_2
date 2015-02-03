@@ -45,6 +45,7 @@
                 <td>Club Logo</td>
                 <td>Name, Description</td>
                 <td>Member spaces remaining</td>
+                <td>Click to view details</td>
                 <td>Click to join</td>
                 <%--<c:forEach var="club" items="${categoryClubs}" varStatus="iter">--%>
                 <c:forEach var="club" items="${notmyclubs}" varStatus="iter">
@@ -62,12 +63,12 @@
                             ${club.maxMembers - club.clubMembersCollection.size()}
                         </td>
                         <td>
-                            <form action="joinclub" method="post">
+                            <form action="viewclub" method="post">
                                 <input type="hidden"
                                        name="clubId"
                                        value="${club.clubID}">
                                 <input type="submit"
-                                       value="JOIN">
+                                       value="VIEW">
                             </form>
                         </td>
                     </tr>

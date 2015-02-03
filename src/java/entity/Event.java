@@ -6,21 +6,27 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,16 +37,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "SELECT e FROM Event e"),
-    @NamedQuery(name = "Event.findByEventID", query = "SELECT e FROM Event e WHERE e.eventPK.eventID = :eventID"),
+    @NamedQuery(name = "Event.findByEventID", query = "SELECT e FROM Event e WHERE e.eventID = :eventID"),
     @NamedQuery(name = "Event.findByEventName", query = "SELECT e FROM Event e WHERE e.eventName = :eventName"),
     @NamedQuery(name = "Event.findByEventVenue", query = "SELECT e FROM Event e WHERE e.eventVenue = :eventVenue"),
     @NamedQuery(name = "Event.findByEventDate", query = "SELECT e FROM Event e WHERE e.eventDate = :eventDate"),
     @NamedQuery(name = "Event.findByEventTime", query = "SELECT e FROM Event e WHERE e.eventTime = :eventTime"),
-    @NamedQuery(name = "Event.findByClubclubID", query = "SELECT e FROM Event e WHERE e.eventPK.clubclubID = :clubclubID")})
+    @NamedQuery(name = "Event.findByClubclubID", query = "SELECT e FROM Event e WHERE e.clubclubID = :clubclubID")})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected EventPK eventPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "EventID")
+    private Integer eventID;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -55,32 +64,32 @@ public class Event implements Serializable {
     @Column(name = "eventTime")
     @Temporal(TemporalType.TIME)
     private Date eventTime;
-    @JoinColumn(name = "Club_clubID", referencedColumnName = "clubID", insertable = false, updatable = false)
+    @Column(name = "Club_clubID")
+    private Integer clubclubID;
+    @JoinColumn(name = "Club_clubID1", referencedColumnName = "clubID")
     @ManyToOne(optional = false)
-    private Club club;
+    private Club clubclubID1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private Collection<AttendingEvent> attendingEventCollection;
 
     public Event() {
     }
 
-    public Event(EventPK eventPK) {
-        this.eventPK = eventPK;
+    public Event(Integer eventID) {
+        this.eventID = eventID;
     }
 
-    public Event(EventPK eventPK, String eventName) {
-        this.eventPK = eventPK;
+    public Event(Integer eventID, String eventName) {
+        this.eventID = eventID;
         this.eventName = eventName;
     }
 
-    public Event(int eventID, int clubclubID) {
-        this.eventPK = new EventPK(eventID, clubclubID);
+    public Integer getEventID() {
+        return eventID;
     }
 
-    public EventPK getEventPK() {
-        return eventPK;
-    }
-
-    public void setEventPK(EventPK eventPK) {
-        this.eventPK = eventPK;
+    public void setEventID(Integer eventID) {
+        this.eventID = eventID;
     }
 
     public String getEventName() {
@@ -115,18 +124,35 @@ public class Event implements Serializable {
         this.eventTime = eventTime;
     }
 
-    public Club getClub() {
-        return club;
+    public Integer getClubclubID() {
+        return clubclubID;
     }
 
-    public void setClub(Club club) {
-        this.club = club;
+    public void setClubclubID(Integer clubclubID) {
+        this.clubclubID = clubclubID;
+    }
+
+    public Club getClubclubID1() {
+        return clubclubID1;
+    }
+
+    public void setClubclubID1(Club clubclubID1) {
+        this.clubclubID1 = clubclubID1;
+    }
+
+    @XmlTransient
+    public Collection<AttendingEvent> getAttendingEventCollection() {
+        return attendingEventCollection;
+    }
+
+    public void setAttendingEventCollection(Collection<AttendingEvent> attendingEventCollection) {
+        this.attendingEventCollection = attendingEventCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (eventPK != null ? eventPK.hashCode() : 0);
+        hash += (eventID != null ? eventID.hashCode() : 0);
         return hash;
     }
 
@@ -137,7 +163,7 @@ public class Event implements Serializable {
             return false;
         }
         Event other = (Event) object;
-        if ((this.eventPK == null && other.eventPK != null) || (this.eventPK != null && !this.eventPK.equals(other.eventPK))) {
+        if ((this.eventID == null && other.eventID != null) || (this.eventID != null && !this.eventID.equals(other.eventID))) {
             return false;
         }
         return true;
@@ -145,7 +171,7 @@ public class Event implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Event[ eventPK=" + eventPK + " ]";
+        return "entity.Event[ eventID=" + eventID + " ]";
     }
     
 }
