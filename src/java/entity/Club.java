@@ -62,7 +62,7 @@ public class Club implements Serializable {
     private String parentURL;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Collection<ClubMembers> clubMembersCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubclubID1")
     private Collection<Event> eventCollection;
     @JoinColumn(name = "category", referencedColumnName = "name")
     @ManyToOne(optional = false)

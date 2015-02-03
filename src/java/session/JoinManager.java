@@ -32,29 +32,7 @@ public class JoinManager {
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;   
     
-    public List checkMembership(int memberID, int thisClub) {
-    return em.createQuery(
-        "SELECT c FROM ClubMembers c WHERE c.clubMembersPK.clubclubID = :clubID AND c.clubMembersPK.membermemberID = :memberID")
-        .setParameter("clubID", thisClub)
-        .setParameter("memberID", memberID)
-        .getResultList();
-    }
     
-    public boolean notMember(Member1 m, Club club) {
-        
-        Club aclub = clubFacade.find(club.getClubID());
-        return true;
-    }
-    
-    public boolean clubNotFull (Club thisClub) {
-        
-        Club club = clubFacade.find(thisClub.getClubID());
-        int max = club.getMaxMembers();
-        Collection<ClubMembers> cm = club.getClubMembersCollection();
-        int size = cm.size();
-        return max>size;
-    }
-
     public boolean joinClub(Member1 m, Club thisClub) {
         //To change body of generated methods, choose Tools | Templates.
         Club club = clubFacade.find(thisClub.getClubID());
@@ -91,8 +69,6 @@ public class JoinManager {
         //ClubMembers cm = clubMembersFacade.find(new ClubMembers(club.getClubID(), member.getMemberID()));
         clubMembersFacade.remove(cm);
         
-        //em.persist();
-        //return true;
     }
 
 }
