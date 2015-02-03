@@ -78,13 +78,13 @@
             <tr>
                 <div><label for="category">Category</label></div>
                 <div>
-                    <select id ="category" name ="category"">
+                    <select id ="category" name ="category">
                         <c:forEach var="categ" items="${cats}">
                             <option value ="${categ.id}">${categ.name}</option>
                         </c:forEach>
                            
                     </select>
-                    
+ 
                 </div>
             </tr>
                         <tr>
