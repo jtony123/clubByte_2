@@ -73,6 +73,9 @@ public class Club implements Serializable {
     @JoinColumn(name = "clubOwnerID", referencedColumnName = "memberID")
     @ManyToOne(optional = false)
     private Member1 clubOwnerID;
+    @JoinColumn(name = "Fee_feeID", referencedColumnName = "feeID")
+    @ManyToOne(optional = false)
+    private Fee feefeeID;
 
     public Club() {
     }
@@ -169,6 +172,14 @@ public class Club implements Serializable {
 
     public void setClubOwnerID(Member1 clubOwnerID) {
         this.clubOwnerID = clubOwnerID;
+    }
+
+    public Fee getFeefeeID() {
+        return feefeeID;
+    }
+
+    public void setFeefeeID(Fee feefeeID) {
+        this.feefeeID = feefeeID;
     }
 
     @Override
