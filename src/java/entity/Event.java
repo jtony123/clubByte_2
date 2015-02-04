@@ -41,8 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Event.findByEventName", query = "SELECT e FROM Event e WHERE e.eventName = :eventName"),
     @NamedQuery(name = "Event.findByEventVenue", query = "SELECT e FROM Event e WHERE e.eventVenue = :eventVenue"),
     @NamedQuery(name = "Event.findByEventDate", query = "SELECT e FROM Event e WHERE e.eventDate = :eventDate"),
+    @NamedQuery(name = "Event.findByEventDetails", query = "SELECT e FROM Event e WHERE e.eventDetails = :eventDetails"),
     @NamedQuery(name = "Event.findByEventTime", query = "SELECT e FROM Event e WHERE e.eventTime = :eventTime"),
-    @NamedQuery(name = "Event.findByClubclubID", query = "SELECT e FROM Event e WHERE e.clubclubID = :clubclubID")})
+    @NamedQuery(name = "Event.findByRecurring", query = "SELECT e FROM Event e WHERE e.recurring = :recurring")})
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,14 +59,18 @@ public class Event implements Serializable {
     @Size(max = 45)
     @Column(name = "eventVenue")
     private String eventVenue;
+    @Size(max = 45)
     @Column(name = "eventDate")
-    @Temporal(TemporalType.DATE)
-    private Date eventDate;
+    private String eventDate;
+    @Size(max = 450)
+    @Column(name = "EventDetails")
+    private String eventDetails;
     @Column(name = "eventTime")
     @Temporal(TemporalType.TIME)
     private Date eventTime;
-    @Column(name = "Club_clubID")
-    private Integer clubclubID;
+    @Size(max = 45)
+    @Column(name = "recurring")
+    private String recurring;
     @JoinColumn(name = "Club_clubID1", referencedColumnName = "clubID")
     @ManyToOne(optional = false)
     private Club clubclubID1;
@@ -108,12 +113,20 @@ public class Event implements Serializable {
         this.eventVenue = eventVenue;
     }
 
-    public Date getEventDate() {
+    public String getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Date eventDate) {
+    public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public String getEventDetails() {
+        return eventDetails;
+    }
+
+    public void setEventDetails(String eventDetails) {
+        this.eventDetails = eventDetails;
     }
 
     public Date getEventTime() {
@@ -124,12 +137,12 @@ public class Event implements Serializable {
         this.eventTime = eventTime;
     }
 
-    public Integer getClubclubID() {
-        return clubclubID;
+    public String getRecurring() {
+        return recurring;
     }
 
-    public void setClubclubID(Integer clubclubID) {
-        this.clubclubID = clubclubID;
+    public void setRecurring(String recurring) {
+        this.recurring = recurring;
     }
 
     public Club getClubclubID1() {
