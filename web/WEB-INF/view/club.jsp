@@ -32,7 +32,7 @@
                 <br><br>
                 Parent Club: ${selectedClub.parentOrganisation}
                 <br><br>
-                <a href="${clubdetails.parentURL}" target="_blank">Link to Parent Organisation</a>
+                <a href="${selectedClub.parentURL}" target="_blank">Link to Parent Organisation</a>
                 <br><br>
             
         </div>        
@@ -41,6 +41,14 @@
             <c:choose>
                 <c:when test="${clubMembers.size() == 0}">
                     Only paid up members can view the other members of a club
+                    <br>This clubs fee structure..........
+                    <br>
+                    <br>Type of fee: ${selectedClub.feefeeID.name}
+                    <br>For a period of: ${selectedClub.feefeeID.period}
+                    <br>Payment type(s) accepted: ${selectedClub.feefeeID.type}
+                    <br>Payment details(the small print): ${selectedClub.feefeeID.details}
+                    <br>
+                    <br>
                             <form action="payfees" method="post">
                                 <input type="hidden"
                                        name="clubId"
