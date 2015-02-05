@@ -44,6 +44,7 @@
                     <br>This clubs fee structure..........
                     <br>
                     <br>Type of fee: ${selectedClub.feefeeID.name}
+                    <br>Amount to be paid: ${selectedClub.feefeeID.amount}
                     <br>For a period of: ${selectedClub.feefeeID.period}
                     <br>Payment type(s) accepted: ${selectedClub.feefeeID.type}
                     <br>Payment details(the small print): ${selectedClub.feefeeID.details}

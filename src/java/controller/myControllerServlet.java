@@ -8,6 +8,7 @@ package controller;
 import entity.Category;
 import entity.Club;
 import entity.ClubMembers;
+import entity.Fee;
 import entity.Member1;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import session.CategoryFacade;
 import session.ClubFacade;
 import session.ClubMembersFacade;
+import session.FeeFacade;
 import session.JoinManager;
 import session.LoginManager;
 import session.Member1Facade;
@@ -87,6 +89,8 @@ public class myControllerServlet extends HttpServlet {
     private LoginManager loginMan;
     @EJB
     private JoinManager joinManager;
+    @EJB
+    private FeeFacade feeFacade;
     
     @Override
         public void init(ServletConfig servletConfig) throws ServletException {
@@ -175,8 +179,10 @@ public class myControllerServlet extends HttpServlet {
         
         else if (userPath.equals("/newclub")) {
                     List<Category> cats = categoryFacade.findAll();
-                    
                     session.setAttribute("cats", cats);
+                    
+                    List<Fee> fees = feeFacade.findAll();
+                    session.setAttribute("fees", fees);
                     }
         else if (userPath.equals("/logout")) {
             
@@ -288,15 +294,15 @@ public class myControllerServlet extends HttpServlet {
             
             String parentOrg = request.getParameter("parentOrganisation");
             String parentURL = request.getParameter("parentURL");
+            Fee feetype = feeFacade.find(Integer.parseInt(request.getParameter("fees")));
             
-            //Object clubOwnerID = session.getAttribute("memberID");
             int clubOwnerID = (int)session.getAttribute("memberID");
             Member1 clubOwner = memberFacade.find(clubOwnerID);
             
             String maxMemString = request.getParameter("maxMembers");
             int maxMembers = Integer.parseInt(maxMemString);
             
-            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner);
+            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner,feetype);
             Club newClub = clubFacade.find(clubID);
             // edit by anthony -- including the clubowner as its first member.
             // clubowner should not have to join their own club

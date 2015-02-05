@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Fee.findByName", query = "SELECT f FROM Fee f WHERE f.name = :name"),
     @NamedQuery(name = "Fee.findByPeriod", query = "SELECT f FROM Fee f WHERE f.period = :period"),
     @NamedQuery(name = "Fee.findByType", query = "SELECT f FROM Fee f WHERE f.type = :type"),
-    @NamedQuery(name = "Fee.findByDetails", query = "SELECT f FROM Fee f WHERE f.details = :details")})
+    @NamedQuery(name = "Fee.findByDetails", query = "SELECT f FROM Fee f WHERE f.details = :details"),
+    @NamedQuery(name = "Fee.findByAmount", query = "SELECT f FROM Fee f WHERE f.amount = :amount")})
 public class Fee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +57,9 @@ public class Fee implements Serializable {
     @Size(max = 255)
     @Column(name = "details")
     private String details;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "amount")
+    private Float amount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "feefeeID")
     private Collection<Club> clubCollection;
 
@@ -109,6 +113,14 @@ public class Fee implements Serializable {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public Float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Float amount) {
+        this.amount = amount;
     }
 
     @XmlTransient
