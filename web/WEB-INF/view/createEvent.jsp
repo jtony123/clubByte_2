@@ -11,19 +11,22 @@
         $("#newEventForm").validate({
             rules: {
                 name: "required",
-                clubName: {
+                eventName: {
                     required: true
                 },
-                description: {
+                eventVenue: {
                     required: true,
                     minlength: 6
                 },
-                location: {
+                eventDate:{
+                    required: true
+                },
+                eventTime:{
+                    required: true
+                },
+                eventDetails: {
                     required: true,
                     minlength: 6
-                },
-                dateandTime:{
-                    required: true
                 }
             }
         });
@@ -47,47 +50,56 @@
         <table id="createEvent_form">
     <p>In order to create a new Event, please provide us with the following information:</p>                   
             <tr>
-                <div><label for="clubName">Club Name</label></div>
-                
-                    <select id ="clubName" name ="clubName">
-                        <c:forEach var="categ" items="${cats}">
-                            <option value ="${categ.id}">${categ.name}</option>
-                        </c:forEach>
-                           
-                    </select>
-                   
-                
-            </tr>
-            <tr>
-                <div><label for="description">Description</label></div>
+                    <div><label for="eventName">Event Name:</label></div>
                 <div class="inputField">
                     <input type="text"
                            size="31"
-                           maxlength="150"
-                           id="description"
-                           name="description"
-                           value="${param.description}">
-                </div>
+                           maxlength="45"
+                           id="eventName"
+                           name="eventName"
+                           value="${param.eventName}">
+                </div>   
             </tr>
                         <tr>
-                <div><label for="location">Location</label></div>
+                <div><label for="eventVenue">Event Venue</label></div>
                 <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="150"
-                           id="location"
-                           name="description"
-                           value="${param.location}">
+                           id="eventVenue"
+                           name="eventVenue"
+                           value="${param.eventVenue}">
                 </div>
             </tr>
               <tr>
-              <div<lable for="dateandTime">Date and Time of Event:</lable></div>
-                <div>
-                    <input type="dateandtime"
+              <div><label for="eventDate">Date of Event:</label></div>
+                <div class="inputField">
+                    <input type="date"
                            size="31"
                            maxlength="19"
-                           placeholder="dd/mm/yyyy00:00"
-                           name="dateandTime"
+                           placeholder="dd/mm/yyyy"
+                           name="eventDate"
+                </div>
+            </tr>
+             <tr>
+              <div><label for="eventTime">Time of Event:</label></div>
+                <div class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="19"
+                           placeholder="00:00"
+                           name="eventTime"
+                </div>
+            </tr>
+             <tr>
+                <div><label for="eventDetails">Event details</label></div>
+                <div class="inputField">
+                    <input type="text"
+                           size="31"
+                           maxlength="150"
+                           id="eventDetails"
+                           name="eventDetails"
+                           value="${param.eventDetails}">
                 </div>
             </tr>
 

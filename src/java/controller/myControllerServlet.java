@@ -87,6 +87,8 @@ public class myControllerServlet extends HttpServlet {
     private LoginManager loginMan;
     @EJB
     private JoinManager joinManager;
+    @EJB
+    //private EventFacade eventFacade;
     
     @Override
         public void init(ServletConfig servletConfig) throws ServletException {
