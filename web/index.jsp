@@ -17,11 +17,15 @@
                                 </a>
                             </c:when>
                             <c:otherwise>
+                                <br>
                                 <a href="mymessages">
-                                Your Messages
-                                </a><br>
+                                My Messages
+                                </a><br><br>
                                 <a href="myclubs">
-                                Your Club Membership
+                                My Memberships
+                                </a><br><br>
+                                <a href="ownerclubs">
+                                My Clubs
                                 </a>
                             </c:otherwise>
                         </c:choose>

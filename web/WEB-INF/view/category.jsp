@@ -11,8 +11,9 @@
 <!DOCTYPE html>
     
         <div id="indexLeftColumn">
-            <div id="welcomeText">
-                <p>Club Categories</p>
+            <div class="leftColumnTitle">
+                <p>Club Categories</p>                
+                <div class="leftsideButtons">
                     <c:forEach var="category" items="${categories}">
 
                         <c:choose>
@@ -32,21 +33,20 @@
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
-
-            </div>
             <br><br>
-            <button onclick="location.href='newclub'">Create Club</button>
+            <button id="buttonsA" onclick="location.href='newclub'">Create a Club</button>
+            </div>
         </div>
-        
+        </div>
         <div id="indexCentreColumn">
             Clubs currently in the ${selectedCategory} category
 
             <table id="clubTable">
                 <td>Club Logo</td>
-                <td>Name, Description</td>
-                <td>Member spaces remaining</td>
-                <td>Click to view details</td>
-                <td>Click to join</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Spaces</td>
+                <td>Click to see more....</td>
                 <%--<c:forEach var="club" items="${categoryClubs}" varStatus="iter">--%>
                 <c:forEach var="club" items="${notmyclubs}" varStatus="iter">
 
@@ -56,8 +56,9 @@
                         </td>
                         <td>
                             ${club.clubName}
-                            <br>
-                            <span class="smallText">${club.description}</span>
+                        </td>
+                        <td>
+                            ${club.description}
                         </td>
                         <td>
                             ${club.maxMembers - club.clubMembersCollection.size()}
@@ -67,15 +68,15 @@
                                 <input type="hidden"
                                        name="clubId"
                                        value="${club.clubID}">
-                                <input type="submit"
+                                <input id="viewButton"
+                                        type="submit"
                                        value="VIEW">
                             </form>
                         </td>
                     </tr>
 
                 </c:forEach>
-
-</table>
+            </table>
             
         </div>
 

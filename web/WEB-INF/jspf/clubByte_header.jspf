@@ -22,17 +22,18 @@
     <div id="main">
         <div id="header">
             <div id="widgetBar">
-                <div class="headerWidget">                    
+                <div class="userloginWidget">                    
                     <d:choose>
                         <d:when test="${user_name == null}">
                             <form action="login"method="post">
-                                <input type="text" name="this_user" placeholder="username">
-                                <input type="password" name="this_password" placeholder="password"/>
-                                <input type="submit" value="      LOGIN      "/>
+                                <input type="text" name="this_user" placeholder="username" size="20">
+                                <input type="password" name="this_password" placeholder="password" size="20"/>
+                                <input type="submit" value="              LOGIN              " size="20"/>
                             </form>
                         </d:when>
                         <d:otherwise>
-                            ${user_name} logged in 
+                            ${user_name} <br>
+                            logged in <br>
                             <a href="logout">
                                 LOGOUT
                             </a>
@@ -44,7 +45,9 @@
             <a href="index.jsp">
                 <img src="img/ClubByte_2_logo.png" id="logo" alt="clubByte logo">
             </a>
-
-            <img src="#" id="logoText" alt="Manage all your clubs">
+            <div id="headerAnim">
+               <p>Manage all your clubs</p> 
+            </div>
+            
         </div>
     </div>
