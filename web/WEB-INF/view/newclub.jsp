@@ -55,9 +55,12 @@
 
     <p>In order to create a new club, please provide us with the following information:</p>
 
-    <form id="newClubForm"action='submit_new_club' method="post">
+    <form id="newClubForm"action='submit_new_club' method="post" enctype="multipart/form-data">
         
         <table id="checkoutTable">
+            <tr>
+            Include an image for your club<input type="file" name="file" id="file" /> <br/>
+            </tr>
             <tr>
                 <div><label for="clubName">Club Name:</label></div>
                 <div class="inputField">
@@ -136,11 +139,12 @@
             </tr>
             <tr>
                 <div colspan="2">
-                    <input type="submit" name="submit" value="SUBMIT">
+<!--                    Include an image for your club<input type="file" name="name" value="Select a File..." size="60"/>-->
+                    <input type="submit" name="submit" value="MAKE MY CLUB">
                 </div>
             </tr>
         </table>
-    </form>
+    </form>           
 </div>
     </body>
 </html>
