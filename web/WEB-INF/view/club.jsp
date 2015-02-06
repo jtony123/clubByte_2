@@ -20,6 +20,9 @@
            <br><br>
                 <%--<c:forEach begin="0" end="0" step="1" var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
                 <%--<c:forEach var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
+                
+                <img src="${initParam.clubImagePath}${selectedClub.clubImageFilename}" width="240" height="180" alt="${selectedClub.clubName}"></img>
+                <br>    
                 Club Name: ${selectedClub.clubName}
                 <br><br>
                 Club Owner:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}

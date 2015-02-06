@@ -22,13 +22,19 @@
         </div>        
         <div id="indexCentreColumn">
             Your Clubs 
-            <table id="myClubTable">  
+            <table id="myClubTable"> 
+                <td>
+                    Logo
+                </td>
                 <td>Club Name</td>
                 <td>Description</td>
                 <td>#Current/Max Members</td>
                 <td>Club Details</td>
                 <c:forEach var="aclub" items="${myclubs}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
+                        <td>
+                            <img src="${initParam.clubImagePath}${aclub.club.clubImageFilename}" width="120" height="90" alt="${aclub.club.clubName}"></img>
+                        </td>
                         <td>
                             ${aclub.club.clubName}
                         </td>    
