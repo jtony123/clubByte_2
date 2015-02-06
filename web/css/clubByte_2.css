@@ -9,24 +9,60 @@ Author : jtony_000
 */
 body {
 font-family: Arial, Helvetica, sans-serif;
-width: 1200px;
+width: 1300px;
+background-color:midnightblue;
 text-align: left;
-margin: 20px auto;
+margin: 10px auto;
 }
 
 #main { background: #eee }
-.oddline { background-color: #ccc }
-.evenline { background-color: #fff }
+
+
+
 #header {
-height: 150px;
-background: lightgrey;
+height: 100px;
+    width: 1300px;
+    position: fixed;
+    top: 10px;   
+    background: lightgrey; 
+    color: darkslateblue;
+    font-size: 40px;
+    font-weight: 900;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    letter-spacing: 10px;
+    text-align: center;    
+}
+#headerAnim {
+     height:100px;
+    width: 700px; 
+    position: fixed;
+    left:300px;
+    top:10px;
+    
+    color: darkslateblue;
+    animation-name: myfirst;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-delay: 50s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+    animation-play-state: running;    
+}
+@keyframes myfirst {
+
+    0%   {color:darkslateblue; left:300px; top:-20px;}
+    20%   {color:darkslateblue; left:300px; top:20px;}
+    40%   {color:darkslateblue; left:300px; top:10px;}
+    60%  {color:slateblue; left:300px; top:20px;}
+    80%  {color:slateblue; left:300px; top:5px;}
+    100%  {color:slateblue; left:300px; top:20px;}
 }
 #logo {
-height: 135px;
-width: 265px;
+height: 90px;
+width: 250px;
 float: left;
-margin-left: 15px;
-margin-top: 15px;
+margin-left: 5px;
+margin-top: 5px;
 }
 #logoText {
 float: left;
@@ -36,19 +72,23 @@ font-family: 'American Typewriter', Courier, monospace;
 font-size: 50px;
 color: #333;
 }
-.headerWidget {
-width: 194px;
-margin: 20px 2px;
-font-size: medium;
-float: right;
-line-height: 20px;
-background: lightgrey;
+.userloginWidget {
+    width: 250px;
+    margin: 10px;
+    font-size: medium;
+    letter-spacing: 3px;
+    font-family: 'Arial', Courier, monospace;
+    float: right;
+    line-height: 20px;
+    background: lightgrey;
 }
 #footer {
-height: 60px;
-width: 300px;
+height: 40px;
+width: 1300px;
+    position: fixed;
+    top: 590px;
 clear: left;
-background:blue;
+background:lightgrey;
 }
 hr {
 border: 0;
@@ -60,40 +100,126 @@ width: 300px;
 
 
 #indexLeftColumn {
-height: 400px;
-width: 300px;
+height: 500px;
+width: 250px;
+position: fixed;
+top: 120px;
+left: 25px;
 float: left;
 background: lightgrey;
 }
+
+.leftColumnTitle {
+    position:absolute;
+    left:10px;    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;  
+}
+
+.leftsideButtons {
+    margin-left:20px;
+    text-align: left;
+    
+    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
+#buttonsA {
+    border:1px solid #007aa7;
+    background:darkslateblue;
+/*     background:#00aeef; */
+    padding:5px 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 0px rgba(0,0,0, .75);
+    color:#f3f3f3;
+    font-size:1.2em;
+    cursor:pointer;
+}
+#buttonsA:hover, #buttonsA:focus {
+  background-color :#0090c6; 
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75); /* drop shadow is narrower to give a pushed effect */
+  -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+  box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
 #indexCentreColumn {
-height: 400px;
-width: 600px;
+height: auto;
+width: 750px;
+    position: relative;
+    top: 120px;
+    left: 275px;
 float: left;
 background: #ddd;
 }
 .categoryBox {
 height: 140px;
-width: 550px;
-margin: 15px 25px 5px;
+width: 720px;
+margin: 15px 15px;
 float: left;
 background: lightgrey;
 }
 .categoryLabelText {
-color: azure;
-margin-left: 25px;
-line-height: 150%;
-font-size: x-large;
+color:darkslateblue;
+margin-left: 15px;
+line-height: 250%;
+font-size: xx-large;
 float: left;
 }
-.categoryDescription {
-margin-top: 50px;
-line-height: 200%;
-font-size: medium;
 
+.categoryDescription {
+    margin-top: 50px;
+    margin-left: 300px;
+    line-height: 200%;
+    font-size: medium;
 }
 .categoryImage {
-float: left;
+    float: left;
+    border-style: double;
+    border-color: darkslateblue;
+    border-width: 5px;
+    
 }
+
+#clubTable {
+    background-color: lightgrey;
+    color:darkslateblue;
+}
+
+
+.oddline { 
+    background-color: azure;
+    
+}
+
+.evenline { 
+    background-color: #eee;
+}
+
+#viewButton {
+      border:1px solid #007aa7;
+    background:darkslateblue;
+/*     background:#00aeef; */
+    padding:5px 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 0px rgba(0,0,0, .75);
+    color:#f3f3f3;
+    font-size:em;
+    cursor:pointer;  
+}
+#viewButton:hover, #viewButton:focus {
+  background-color :#0090c6; 
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75); /* drop shadow is narrower to give a pushed effect */
+  -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+  box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+
 
 form.registrationForm {}
 
@@ -111,10 +237,20 @@ table#register_form tbody tr td input {
 
 
 #indexRightColumn {
-height: 400px;
-width: 300px;
+height: 500px;
+width: 250px;
+position: fixed;
+top: 120px;
+left: 1075px;
 float: left;
-background: #eee;
+background: lightgrey;
+}
+
+.rightColumnTitle {
+    position:absolute;
+    left:10px;    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;    
 }
 
 
