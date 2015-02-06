@@ -24,9 +24,12 @@
                     minlength: 6
                 },
                 category: {
-                    required: true,
+                    required: true
                 },
                 maxMembers: {
+                    required: true
+                },
+                fees: {
                     required: true
                 }
             }
@@ -43,15 +46,21 @@
         <title>ClubByte</title>
     </head>
     <body>
-        <div>Create New Club</div>
-        <div id="singleColumn">
+        <div id="indexLeftColumn">
+            Create New Club
+            <br>you will be the club owner, be responsible!!
+        </div>
+        <div id="indexCentreColumn">
 
 
     <p>In order to create a new club, please provide us with the following information:</p>
 
-    <form id="newClubForm"action='submit_new_club' method="post">
+    <form id="newClubForm"action='submit_new_club' method="post" enctype="multipart/form-data">
         
         <table id="checkoutTable">
+            <tr>
+            Include an image for your club<input type="file" name="file" id="file" /> <br/>
+            </tr>
             <tr>
                 <div><label for="clubName">Club Name:</label></div>
                 <div class="inputField">
@@ -82,13 +91,21 @@
                         <c:forEach var="categ" items="${cats}">
                             <option value ="${categ.id}">${categ.name}</option>
                         </c:forEach>
-                           
                     </select>
- 
                 </div>
             </tr>
-                        <tr>
-                <div><label for="maxMembers">Maximum Members</label></div>
+            <tr>
+                <div><label for="fees">Fee</label></div>
+                <div>
+                    <select id ="fees" name ="fees">
+                        <c:forEach var="fee" items="${fees}">
+                            <option value ="${fee.feeID}">${fee.name} - ${fee.type} - ${fee.amount}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </tr>
+            <tr>
+                <div><label for="maxMembers">Max Members</label></div>
                 <div class="inputField">
                     <input type="number"
                            size="4"
@@ -99,7 +116,7 @@
                 </div>
             </tr>
             <tr>
-                <div><label for="parentOrganisation">Organisation</label></div>
+                <div><label for="parentOrganisation">Parent organisation</label></div>
                 <div class="inputField">
                     <input type="text"
                            size="31"
@@ -110,7 +127,7 @@
                 </div>
             </tr>
             <tr>
-                <div><label for="parentURL">Organisation URL</label></div>
+                <div><label for="parentURL">Parent organisation URL</label></div>
                 <div class="inputField">
                     <input type="text"
                            size="31"
@@ -122,11 +139,12 @@
             </tr>
             <tr>
                 <div colspan="2">
-                    <input type="submit" name="submit" value="SUBMIT">
+<!--                    Include an image for your club<input type="file" name="name" value="Select a File..." size="60"/>-->
+                    <input type="submit" name="submit" value="MAKE MY CLUB">
                 </div>
             </tr>
         </table>
-    </form>
+    </form>           
 </div>
     </body>
 </html>

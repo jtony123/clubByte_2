@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -60,6 +61,9 @@ public class Club implements Serializable {
     @Size(max = 100)
     @Column(name = "parentURL")
     private String parentURL;
+    @Lob
+    @Column(name = "clubImage")
+    private byte[] clubImage;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Collection<ClubMembers> clubMembersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubclubID1")
@@ -130,6 +134,14 @@ public class Club implements Serializable {
 
     public void setParentURL(String parentURL) {
         this.parentURL = parentURL;
+    }
+
+    public byte[] getClubImage() {
+        return clubImage;
+    }
+
+    public void setClubImage(byte[] clubImage) {
+        this.clubImage = clubImage;
     }
 
     @XmlTransient
