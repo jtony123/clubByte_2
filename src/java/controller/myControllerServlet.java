@@ -321,12 +321,14 @@ public class myControllerServlet extends HttpServlet {
             String maxMemString = request.getParameter("maxMembers");
             int maxMembers = Integer.parseInt(maxMemString);
             
-            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner,feetype);
-            Club newClub = clubFacade.find(clubID);
+
+            
             // edit by anthony, allowing members to upload images as logos
             // for their clubs.
-            
-            final String path = "C:\\Users\\jtony_000\\Desktop\\clubByte_clubImages";
+            final String appPath = request.getServletContext().getRealPath("");
+            System.out.println(appPath);
+            String modified = appPath.replace("\\", "\\\\");
+            final String path = modified + "\\\\img\\\\clubImages\\\\";
             final Part filePart = request.getPart("file");
             final String fileName = getFileName(filePart);
             
@@ -334,8 +336,7 @@ public class myControllerServlet extends HttpServlet {
             InputStream filecontent = null;
 
             try {
-                out = new FileOutputStream(new File(path + File.separator
-                        + fileName));
+                out = new FileOutputStream(new File(path + fileName));
                 filecontent = filePart.getInputStream();
 
                 int read = 0;
@@ -355,6 +356,8 @@ public class myControllerServlet extends HttpServlet {
                     filecontent.close();
                 }
             }
+            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner,feetype, fileName);
+            Club newClub = clubFacade.find(clubID);
             // edit by anthony -- including the clubowner as its first member.
             // clubowner should not have to join their own club
             

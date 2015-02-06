@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Club.findByDescription", query = "SELECT c FROM Club c WHERE c.description = :description"),
     @NamedQuery(name = "Club.findByMaxMembers", query = "SELECT c FROM Club c WHERE c.maxMembers = :maxMembers"),
     @NamedQuery(name = "Club.findByParentOrganisation", query = "SELECT c FROM Club c WHERE c.parentOrganisation = :parentOrganisation"),
-    @NamedQuery(name = "Club.findByParentURL", query = "SELECT c FROM Club c WHERE c.parentURL = :parentURL")})
+    @NamedQuery(name = "Club.findByParentURL", query = "SELECT c FROM Club c WHERE c.parentURL = :parentURL"),
+    @NamedQuery(name = "Club.findByClubImageFilename", query = "SELECT c FROM Club c WHERE c.clubImageFilename = :clubImageFilename")})
 public class Club implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,9 +61,9 @@ public class Club implements Serializable {
     @Size(max = 100)
     @Column(name = "parentURL")
     private String parentURL;
-    @Lob
-    @Column(name = "clubImage")
-    private byte[] clubImage;
+    @Size(max = 90)
+    @Column(name = "clubImageFilename")
+    private String clubImageFilename;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Collection<ClubMembers> clubMembersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubclubID1")
@@ -136,12 +136,12 @@ public class Club implements Serializable {
         this.parentURL = parentURL;
     }
 
-    public byte[] getClubImage() {
-        return clubImage;
+    public String getClubImageFilename() {
+        return clubImageFilename;
     }
 
-    public void setClubImage(byte[] clubImage) {
-        this.clubImage = clubImage;
+    public void setClubImageFilename(String clubImageFilename) {
+        this.clubImageFilename = clubImageFilename;
     }
 
     @XmlTransient

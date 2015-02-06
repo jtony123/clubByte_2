@@ -20,16 +20,16 @@ public class NewClubManager {
     @PersistenceContext(unitName = "cluBbyte_2PU")
     private EntityManager em;
 
-    public int createClub(String name, String desc,Category cat, int maxMembers,String parentOrg,String parentURL,Member1 ownerID, Fee fee) {
+    public int createClub(String name, String desc,Category cat, int maxMembers,String parentOrg,String parentURL,Member1 ownerID, Fee fee, String imagefilename) {
     
-        Club club = addClub(name,desc,cat,maxMembers,parentOrg,parentURL, ownerID, fee);
+        Club club = addClub(name,desc,cat,maxMembers,parentOrg,parentURL, ownerID, fee, imagefilename);
         return club.getClubID();
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    private Club addClub(String name,String desc,Category cat, int maxMembers,String parentOrg,String parentURL, Member1 ownerID, Fee fee) {
+    private Club addClub(String name,String desc,Category cat, int maxMembers,String parentOrg,String parentURL, Member1 ownerID, Fee fee, String filename) {
     
         
         Club c = new Club();
@@ -41,6 +41,7 @@ public class NewClubManager {
         c.setParentURL(parentURL);
         c.setClubOwnerID(ownerID);
         c.setFeefeeID(fee);
+        c.setClubImageFilename(filename);
     
                 
         em.persist(c);
