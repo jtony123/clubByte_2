@@ -9,24 +9,29 @@ Author : jtony_000
 */
 body {
 font-family: Arial, Helvetica, sans-serif;
-width: 1200px;
+width: 1300px;
+background-color:midnightblue;
 text-align: left;
-margin: 20px auto;
+margin: 10px auto;
 }
 
 #main { background: #eee }
 .oddline { background-color: #ccc }
 .evenline { background-color: #fff }
+
 #header {
-height: 150px;
+height: 100px;
+    width: 1300px;
+    position: fixed;
+    top: 10px;
 background: lightgrey;
 }
 #logo {
-height: 135px;
-width: 265px;
+height: 90px;
+width: 250px;
 float: left;
-margin-left: 15px;
-margin-top: 15px;
+margin-left: 5px;
+margin-top: 5px;
 }
 #logoText {
 float: left;
@@ -37,18 +42,20 @@ font-size: 50px;
 color: #333;
 }
 .headerWidget {
-width: 194px;
-margin: 20px 2px;
+width: 250px;
+margin: 10px;
 font-size: medium;
 float: right;
 line-height: 20px;
 background: lightgrey;
 }
 #footer {
-height: 60px;
-width: 300px;
+height: 40px;
+width: 1300px;
+    position: fixed;
+    top: 590px;
 clear: left;
-background:blue;
+background:lightgrey;
 }
 hr {
 border: 0;
@@ -60,21 +67,40 @@ width: 300px;
 
 
 #indexLeftColumn {
-height: 400px;
-width: 300px;
+height: 500px;
+width: 250px;
+position: fixed;
+top: 120px;
+left: 25px;
 float: left;
 background: lightgrey;
 }
+
+.leftColumnTitle {
+    position:absolute;
+    left:10px;    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;  
+}
+
+.leftsideButtons {
+    text-indent: 50px;
+    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+}
 #indexCentreColumn {
-height: 400px;
-width: 600px;
+height: auto;
+width: 750px;
+    position: relative;
+    top: 120px;
+    left: 275px;
 float: left;
 background: #ddd;
 }
 .categoryBox {
 height: 140px;
-width: 550px;
-margin: 15px 25px 5px;
+width: 720px;
+margin: 15px 15px;
 float: left;
 background: lightgrey;
 }
@@ -88,7 +114,7 @@ float: left;
 .categoryDescription {
 margin-top: 50px;
 line-height: 200%;
-font-size: medium;
+font-size: small;
 
 }
 .categoryImage {
@@ -111,10 +137,20 @@ table#register_form tbody tr td input {
 
 
 #indexRightColumn {
-height: 400px;
-width: 300px;
+height: 500px;
+width: 250px;
+position: fixed;
+top: 120px;
+left: 1075px;
 float: left;
-background: #eee;
+background: lightgrey;
+}
+
+.rightColumnTitle {
+    position:absolute;
+    left:10px;    
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;    
 }
 
 
