@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <div id ="terms>"
         <h1>Terms and Conditions</h1>
         
         <p>Credit</p>
@@ -174,5 +175,6 @@
 
 <p>You can contact [NAME] by email to [EMAIL].<br />
 </p>
+        </div>
     </body>
 </html>
