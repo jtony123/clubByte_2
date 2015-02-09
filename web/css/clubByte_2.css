@@ -123,6 +123,10 @@ background: lightgrey;
     
     font-family:"Comic Sans MS", cursive, sans-serif;
 }
+
+.leftColumnSmallText {
+    font-size: 14px;
+}
 #buttonsA {
     border:1px solid #007aa7;
     background:darkslateblue;

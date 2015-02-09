@@ -16,9 +16,13 @@
     </head>
     <body>
         <div id="indexLeftColumn">
-            Hi!
-           <br><br>
-            <button onclick="location.href='newclub'">Create Club</button>
+            <div class="leftColumnTitle">
+                Some options for you..
+            </div>  
+            <br><br>
+            <div class="leftsideButtons">
+            <button id="buttonsA" onclick="location.href='newclub'">Create Club</button>
+            </div>
         </div>        
         <div id="indexCentreColumn">
             Your Clubs 

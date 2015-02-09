@@ -47,9 +47,15 @@
     </head>
     <body>
         <div id="indexLeftColumn">
-            Create New Club
-            <br>you will be the club owner, be responsible!!
+            <div class="leftColumnTitle">
+            Creating a new club
+            </div>
+            <br><br>
+            <div class="leftColumnSmallText">
+            you will be the club owner, be responsible!!
+            </div>
         </div>
+        
         <div id="indexCentreColumn">
 
 
