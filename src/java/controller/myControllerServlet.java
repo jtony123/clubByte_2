@@ -411,7 +411,7 @@ public class myControllerServlet extends HttpServlet {
             if (joined){
                 clubMembers = selectedClub.getClubMembersCollection();            
                 session.setAttribute("clubMembers", clubMembers);
-                url = "/WEB-INF/view/club.jsp";
+                url = "/WEB-INF/view/myclubs.jsp";
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
                 String msg = "You are already a member of this club";

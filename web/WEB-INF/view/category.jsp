@@ -18,15 +18,15 @@
 
                         <c:choose>
                             <c:when test="${category.id == pageContext.request.queryString}">
-                                <div class="categoryButton" id="selectedCategory">
-                                    <span class="categoryText">
+                                <div>
+                                    <span>
                                         ${category.name}
                                     </span>
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <a href="category?${category.id}" class="categoryButton">
-                                    <div class="categoryText">
+                                <a href="category?${category.id}">
+                                    <div>
                                         ${category.name}
                                     </div>
                                 </a>

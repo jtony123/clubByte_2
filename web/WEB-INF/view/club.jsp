@@ -16,28 +16,34 @@
     </head>
     <body>
         <div id="indexLeftColumn">
+            <div class="leftColumnTitle">
            this clubs details: name, etc...
-           <br><br>
-                <%--<c:forEach begin="0" end="0" step="1" var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
-                <%--<c:forEach var="clubdetails" items="${selectedClub}" varStatus="iter">--%>
-                
-                <img src="${initParam.clubImagePath}${selectedClub.clubImageFilename}" width="240" height="180" alt="${selectedClub.clubName}"></img>
+           <div class="leftsideButtons">
+           <br>
+                <div class="leftColumnSmallText">
+                <img src="${initParam.clubImagePath}${selectedClub.clubImageFilename}" width="240" height="180" alt="no image uploaded"></img>
+                </div>
                 <br>    
                 Club Name: ${selectedClub.clubName}
-                <br><br>
-                Club Owner:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}
+                <br>
+                <div class ="leftColumnSmallText">
+                owned by:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}
+                </div>
                 <br><br>
                 Description: ${selectedClub.description}
-                <br><br>
+                <br>
+                <div class="leftColumnSmallText">
                 Max no of members: ${selectedClub.maxMembers}
-                <br><br>
+                </div>
+                <br>
                 Category: ${selectedClub.category.name}
                 <br><br>
                 Parent Club: ${selectedClub.parentOrganisation}
-                <br><br>
+                <br>
                 <a href="${selectedClub.parentURL}" target="_blank">Link to Parent Organisation</a>
                 <br><br>
-            
+                </div>
+            </div>
         </div>        
         <div id="indexCentreColumn">
              
