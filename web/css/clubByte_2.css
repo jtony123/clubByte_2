@@ -104,7 +104,7 @@ height: 500px;
 width: 250px;
 position: fixed;
 top: 120px;
-left: 25px;
+//left: 25px;
 float: left;
 background: lightgrey;
 }
@@ -114,6 +114,14 @@ background: lightgrey;
     left:10px;    
     font-family:"Comic Sans MS", cursive, sans-serif;
     font-size: 18px;  
+}
+
+.leftColumnImages {
+    position:absolute;
+    left:-5px; 
+/*    border-style: double;
+    border-color: darkslateblue;
+    border-width: 2px;*/
 }
 
 .leftsideButtons {
@@ -127,6 +135,7 @@ background: lightgrey;
 .leftColumnSmallText {
     font-size: 14px;
 }
+
 #buttonsA {
     border:1px solid #007aa7;
     background:darkslateblue;
@@ -141,8 +150,35 @@ background: lightgrey;
     color:#f3f3f3;
     font-size:1.2em;
     cursor:pointer;
+    width: auto;
+    text-align: center;
 }
 #buttonsA:hover, #buttonsA:focus {
+  background-color :#0090c6; 
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75); /* drop shadow is narrower to give a pushed effect */
+  -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
+  box-shadow: 0 0 1px rgba(0,0,0, .75);
+}
+#buttonsB {
+    
+    float:left;
+    border:1px solid #007aa7;
+    background:darkslateblue;
+/*     background:#00aeef; */
+    padding:5px 15px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    -moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+    box-shadow: 0 0 0px rgba(0,0,0, .75);
+    color:#f3f3f3;
+    font-size:1.2em;
+    cursor:pointer;
+    width: auto;
+    text-align: center;
+}
+#buttonsB:hover, #buttonsB:focus {
   background-color :#0090c6; 
   -webkit-box-shadow: 0 0 1px rgba(0,0,0, .75); /* drop shadow is narrower to give a pushed effect */
   -moz-box-shadow: 0 0 1px rgba(0,0,0, .75);
