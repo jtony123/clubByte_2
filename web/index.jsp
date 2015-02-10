@@ -24,7 +24,7 @@
                                 <a href="myclubs">
                                 My Memberships
                                 </a><br><br>
-                                <a href="ownerclubs">
+                                <a href="ownersclubs">
                                 My Clubs
                                 </a>
                             </c:otherwise>

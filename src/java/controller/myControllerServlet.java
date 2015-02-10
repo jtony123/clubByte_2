@@ -66,12 +66,15 @@ import session.NewClubManager;
                         "/joinclub",
                         "/payfees",
                         "/myclubs",
+                        "/ownersclubs",
+                        "/sendmessage",
                         "/mymessages",
                         "/viewclub",
                         "/Terms",
                         "/newclub",
                         "/leaveclub",
-                        "/createEvent"})
+                        "/createEvent",
+                        "/add_new_event"})
 
 //@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
 //                 maxFileSize=1024*1024*10,      // 10MB
@@ -134,7 +137,20 @@ public class myControllerServlet extends HttpServlet {
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
         
-        if (userPath.equals("/Terms")) {
+        if (userPath.equals("/ownersclubs")) {
+            
+            int clubOwnerID = (int)session.getAttribute("memberID");
+            Member1 clubOwner = memberFacade.find(clubOwnerID);
+            Collection<Club> owns = clubOwner.getClubCollection1();
+            session.setAttribute("owns", owns);
+            url = "/WEB-INF/view/ownersclubs.jsp";
+            
+            
+        } else if (userPath.equals("/add_new_event")) {
+            
+            url = "/WEB-INF/view/createEvent.jsp";
+            
+        } else if (userPath.equals("/Terms")) {
             
         // if category page is requested
         } else if (userPath.equals("/category")) {
@@ -418,6 +434,8 @@ public class myControllerServlet extends HttpServlet {
                 url = "/loginerror.jsp";
             }
             
+        
+        
         } else if (userPath.equals("/viewclub")) {            
             
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
@@ -427,7 +445,11 @@ public class myControllerServlet extends HttpServlet {
 
             url = "/WEB-INF/view/club.jsp";  
             
-        ///////////////////////////////////////////////////////////////////
+        
+
+
+
+///////////////////////////////////////////////////////////////////
             // by anthony
         } else if (userPath.equals("/leaveclub")) {
             int memberID = (int)session.getAttribute("memberID");
