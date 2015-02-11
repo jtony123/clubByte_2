@@ -11,7 +11,7 @@
                 <p>All about clubByte and how it works, what it can do for you.</p>
                     <div class="leftsideButtons">
                         <c:choose>
-                            <c:when test="${user_name == null}">
+                            <c:when test="${user == null}">
                                 <a href="register">
                                 Register
                                 </a>
@@ -21,10 +21,10 @@
                                 <a href="mymessages">
                                 My Messages
                                 </a><br><br>
-                                <a href="myclubs">
+                                <a href="mymemberships">
                                 My Memberships
                                 </a><br><br>
-                                <a href="ownersclubs">
+                                <a href="myclubs">
                                 My Clubs
                                 </a>
                             </c:otherwise>

@@ -67,6 +67,7 @@ import session.NewClubManager;
                         "/payfees",
                         "/myclubs",
                         "/ownersclubs",
+                        "/mymemberships",
                         "/sendmessage",
                         "/mymessages",
                         "/viewclub",
@@ -122,95 +123,194 @@ public class myControllerServlet extends HttpServlet {
         
     }
         
+        /*
+        session attributes to be maintained:-
+            the user, ie. a member1 object.
+        
+            the users memberships, ie those clubs the user is a member of but 
+                        not the owner of.
+        
+            the users non memberships, ie. thosse clubs that he user does not belong to
+        
+            the users clubs, ie those clubs that he is the owner of.
+        
+            the categories of clubs
+        
+            the fees for clubs
+        
+        */
+        
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
         String userPath = request.getServletPath();
         HttpSession session = request.getSession();
+        
+        //System.out.println(session.getMaxInactiveInterval( ));
+        
+        Member1 member = null;        
+        Collection<Club> clubsOwned = null;
+        Collection<ClubMembers> clubMembership;
+        Collection<ClubMembers> clubsMemberNotOwner; 
+        
+        // gets run for ebvery request processed to keep session attributes
+        // update at every page change
+        //<editor-fold defaultstate="collapsed" desc="UPDATE SESSION ATTRIBUTES ON EACH GET REQUEST">
+        if(session.getAttribute("user") != null){            
+            
+            // get the collection of clubs this user owns
+            //Member1 thisUser = (Member1)session.getAttribute("user");
+            member = (Member1)session.getAttribute("user");
+            clubsOwned = member.getClubCollection1();
+            // the following sleep is required to overcome the 
+            //"instantiate the LAZY relationship prior to serialization." exception
+            // you really dont want to know what that means, all hail js callbacks
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            session.setAttribute("clubsOwned", clubsOwned);
+            
+            //get the collection of clubs this user is a member of
+            clubMembership = member.getClubMembersCollection();
+            //filter out the clubs they own
+            clubsMemberNotOwner = new ArrayList();            
+            for (ClubMembers cm : clubMembership) {
+                
+                int userID = cm.getMember1().getMemberID();
+                int ownerID = cm.getClub().getClubOwnerID().getMemberID();
+                if (!(userID == ownerID)) {
+                        clubsMemberNotOwner.add(cm);
+                    }  
+            }
+            session.setAttribute("clubsMemberNotOwner", clubsMemberNotOwner);
+            //System.out.println(thisUser.getFirstName());
+        }
+        //</editor-fold>
+        
+        Club selectedClub;
         Category selectedCategory;
-        Member1 member;
-        Collection<Club> notmyclubs = new ArrayList<>();
         Collection<Club> categoryClubs;
-        Collection<ClubMembers> myclubs;
+        Collection<ClubMembers> clubMembers;
+//        Collection<ClubMembers> myclubs;
+//        Collection<ClubMembers> myMemberships;
+        Collection<Club> notMember = new ArrayList<>();        
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
 
-        
-        if (userPath.equals("/ownersclubs")) {
-            
-            int clubOwnerID = (int)session.getAttribute("memberID");
-            Member1 clubOwner = memberFacade.find(clubOwnerID);
-            Collection<Club> owns = clubOwner.getClubCollection1();
-            session.setAttribute("owns", owns);
+
+        //<editor-fold defaultstate="collapsed" desc="MYCLUBS REQUEST">
+        // if ownersclubs requested
+        if (userPath.equals("/myclubs")) {
+
             url = "/WEB-INF/view/ownersclubs.jsp";
+        } 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="CREATE EVENT REQUEST">
+        // if CREATEEVENT requested
+        else if (userPath.equals("/add_new_event")) {
             
+            url = "/WEB-INF/view/createEvent.jsp";            
+        } 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="TERMS PAGE REQUEST">
+        ///////////////////////////////////////// if TERMS page requested
+        else if (userPath.equals("/Terms")) {
             
-        } else if (userPath.equals("/add_new_event")) {
-            
-            url = "/WEB-INF/view/createEvent.jsp";
-            
-        } else if (userPath.equals("/Terms")) {
-            
-        // if category page is requested
-        } else if (userPath.equals("/category")) {
+            url = "/WEB-INF/view/Terms.jsp";
+        } 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="CATEGORY REQUEST">
+        ///////////////////////////////////////// if CATEGORY page is requested
+        else if (userPath.equals("/category")) {
             
             String categoryName = request.getQueryString();
-
-            if(session.getAttribute("user_name") != null){
+            if(session.getAttribute("user") != null){
                                     
                 if (categoryName != null) {
 
-                selectedCategory = categoryFacade.find(Integer.parseInt(categoryName));                        
-                        
-                session.setAttribute("selectedCategory", selectedCategory.getName());
-
-                categoryClubs = selectedCategory.getClubCollection();
-                
-                int userID = (int)session.getAttribute("memberID");                
-                
-                boolean ismember = false;                
-                
-                // filter out clubs that this user is already a member of
-                for (Club club : categoryClubs) {  
+                    selectedCategory = categoryFacade.find(Integer.parseInt(categoryName)); 
+                    session.setAttribute("selectedCategory", selectedCategory.getName());
                     
-                    Collection<ClubMembers> cm = club.getClubMembersCollection();
+                    categoryClubs = selectedCategory.getClubCollection();
+                    //Member1 m = (Member1)session.getAttribute("user");
+                    boolean ismember = false;                
+                
+                    // filter out clubs that this user is already a member of
+                    for (Club club : categoryClubs) {  
+                        Collection<ClubMembers> cm = club.getClubMembersCollection();
                     
-                    for (ClubMembers members : cm) {
-                        if (members.getMember1().getMemberID() == userID) {
-                            ismember = true;
-                        }   
-                    }
-                    if (!(ismember)) {
-                        notmyclubs.add(club);
-                    }
-                    ismember = false;
-                }
-                
-                session.setAttribute("notmyclubs", notmyclubs);
-                
-                }
-             
+                        for (ClubMembers members : cm) {
+                            // do not shorten this***
+                            int x = members.getMember1().getMemberID();
+                            int y = member.getMemberID();                            
+                            if (x==y) {ismember=true;}                          
+                        }
+                        if (!(ismember)) {
+                            notMember.add(club);
+                        }
+                        ismember = false;
+                    }                
+                session.setAttribute("notMember", notMember);                
+                }             
                 url = "/WEB-INF/view" + userPath + ".jsp";
+                
             } else {
+                // no user logged in yet
                 url = "/index.jsp";
             }
-                
-               
-            
-        } else if (userPath.equals("/myclubs")) {            
-            
-            int userID = (int)session.getAttribute("memberID");            
-            member = memberFacade.find(userID);                    
-            myclubs = member.getClubMembersCollection();
-            //////////////not updating dynamically
-            //session.removeAttribute("myclubs");
-            session.setAttribute("myclubs", myclubs);            
-            
-            url = "/WEB-INF/view/myclubs.jsp";
+        }      
+        //</editor-fold>   
+        
+        //<editor-fold defaultstate="collapsed" desc="MYMEMBERSHIPS REQUEST">
+
+        else if (userPath.equals("/mymemberships")) {   
+     
+            url = "/WEB-INF/view/clubs.jsp";
             
         } 
         
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="VIEW A CLUB REQUEST"> 
+                 
+        else if (userPath.equals("/viewclub")) {            
+            
+            // remove this attribute before user views another club
+            if (null != session.getAttribute("isMember")) {
+                session.removeAttribute("isMember");
+            }
+            
+            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
+            session.setAttribute("selectedClub", selectedClub);
+            
+            // test first to see if this user is a member of this club
+            //int userID = (int)session.getAttribute("memberID");                        
+            clubMembers = selectedClub.getClubMembersCollection();
+            boolean isMember = false;
+            for (ClubMembers cm : clubMembers) {
+                
+                int x = cm.getMember1().getMemberID();
+                int y = member.getMemberID();                
+                if (x==y){                    
+                    session.setAttribute("clubMembers", clubMembers);
+                    isMember = true;
+                    session.setAttribute("isMember", isMember);
+                }                
+            }
+            
+            url = "/WEB-INF/view/club.jsp";  
+        } 
+        
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="NEWCLUB REQUEST">
         else if (userPath.equals("/newclub")) {
                     List<Category> cats = categoryFacade.findAll();
                     session.setAttribute("cats", cats);
@@ -218,6 +318,10 @@ public class myControllerServlet extends HttpServlet {
                     List<Fee> fees = feeFacade.findAll();
                     session.setAttribute("fees", fees);
                     }
+        
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="LOGOUT REQUEST">
         else if (userPath.equals("/logout")) {
             
             ///////////////////////////////////////////////////////////////
@@ -248,11 +352,16 @@ public class myControllerServlet extends HttpServlet {
             //return;
 
         // if checkout page is requested
-        } else if (userPath.equals("/register")) {
+        } 
+        
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="REGISTER REQUEST">
+        else if (userPath.equals("/register")) {
             // TODO: Implement checkout page request
 
         } 
-
+        //</editor-fold>
         // use RequestDispatcher to forward request internally
         
 
@@ -261,8 +370,10 @@ public class myControllerServlet extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
+    }   
+    
+    
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -276,16 +387,52 @@ public class myControllerServlet extends HttpServlet {
 
         String userPath = request.getServletPath();        
         HttpSession session = request.getSession();
+        
+        
         Category selectedCategory;
         Club selectedClub;
-        Member1 member;
-        Collection<ClubMembers> clubMembers;
+        Member1 member = null;
+        
         Collection<ClubMembers> myclubs;
+        Collection<Club> clubsOwned;       
+               
+        Collection<ClubMembers> clubMembership;
+        Collection<ClubMembers> clubsMemberNotOwner;
+           
+        Collection<Club> notMember = new ArrayList<>();
+        
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
+        if (session.getAttribute("user") != null) {
+            member = (Member1)session.getAttribute("user");
+        }
+        
+        //<editor-fold defaultstate="collapsed" desc="LOGIN POST">       
+        // if login action is called
+        if (userPath.equals("/login")) {
 
+            String uName = request.getParameter("this_user");
+            String pWord = request.getParameter("this_password");
+            
+            int memberID = loginMan.checkValidUser(uName, pWord);
+            Member1 m = memberFacade.find(memberID);
+            
+            if(memberID != 0){
+                session.setAttribute("user", m);
+                //session.setAttribute("user_name", uName);
+                //session.setAttribute("memberID", memberID);
+                url = "/index.jsp";
+            }
+            else {
+                url = "/loginerror.jsp";
+            }
+            
+        }  
+        //</editor-fold>
+             
+        //<editor-fold defaultstate="collapsed" desc="REGISTER POST"> 
         // if register action is called
-        if (userPath.equals("/submit_for_registration")) {
+        else if (userPath.equals("/submit_for_registration")) {
             // TODO: Implement password encryption
             
             String fname = request.getParameter("firstname");
@@ -304,40 +451,33 @@ public class myControllerServlet extends HttpServlet {
 		Date date = formatter.parse(dateInString);
                 
                 int memberID = newMemberMan.joinMember(fname, sname, email, uname, pword, date, mobno, numICE, loc);
-                session.setAttribute("memberID", memberID);
+                Member1 m = memberFacade.find(memberID);
+                session.setAttribute("user", m);
  
             } catch (ParseException e) {
 		e.printStackTrace();
             }
-            
-            session.setAttribute("user_name", uname);
-            url = "/index.jsp";   
-            
-        // if user submits details of a new club
+            url = "/index.jsp"; 
         } 
+        //</editor-fold>
         
+        //<editor-fold defaultstate="collapsed" desc="SUBMIT NEW CLUB POST"> 
+        
+        // if user submits details of a new club
         //////////////////////////////////////////////
             //By Dylan
             else if (userPath.equals("/submit_new_club")) {
             
             String clubName = request.getParameter("clubName");
-            //System.out.println(clubName);
-            String description = request.getParameter("description");
-            
+            String description = request.getParameter("description");            
             String categoryName = request.getParameter("category");
-            Category category = categoryFacade.find(Integer.parseInt(categoryName));
-            
+            Category category = categoryFacade.find(Integer.parseInt(categoryName));            
             String parentOrg = request.getParameter("parentOrganisation");
             String parentURL = request.getParameter("parentURL");
             Fee feetype = feeFacade.find(Integer.parseInt(request.getParameter("fees")));
             
-            int clubOwnerID = (int)session.getAttribute("memberID");
-            Member1 clubOwner = memberFacade.find(clubOwnerID);
-            
             String maxMemString = request.getParameter("maxMembers");
             int maxMembers = Integer.parseInt(maxMemString);
-            
-
             
             // edit by anthony, allowing members to upload images as logos
             // for their clubs.
@@ -372,17 +512,18 @@ public class myControllerServlet extends HttpServlet {
                     filecontent.close();
                 }
             }
-            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,clubOwner,feetype, fileName);
+            int clubID = newClubMan.createClub(clubName,description,category,maxMembers,parentOrg,parentURL,member,feetype, fileName);
             Club newClub = clubFacade.find(clubID);
             // edit by anthony -- including the clubowner as its first member.
             // clubowner should not have to join their own club
             
-            boolean joined = joinManager.joinClub(clubOwner, newClub);
+            boolean joined = joinManager.joinClub(member, newClub);
             
             if (joined){ 
-                myclubs = clubOwner.getClubMembersCollection();
-                session.setAttribute("myclubs", myclubs);
+//                myclubs = clubOwner.getClubMembersCollection();
+//                session.setAttribute("myclubs", myclubs);
                 url = "/WEB-INF/view/myclubs.jsp";
+                
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
                 String msg = "Oooops, something went wrong, please try again.";
@@ -391,43 +532,32 @@ public class myControllerServlet extends HttpServlet {
             //////////////////////////take this out after testing
             //url = "/WEB-INF/view/myclubs.jsp";
             }
+        //</editor-fold>
             
+        //<editor-fold defaultstate="collapsed" desc="PAYFEES POST"> 
             
-        // if login action is called
-         else if (userPath.equals("/login")) {
-
-            String uName = request.getParameter("this_user");
-            String pWord = request.getParameter("this_password");
-            
-            int memberID = loginMan.checkValidUser(uName, pWord);
-            
-            if(memberID != 0){
-                session.setAttribute("user_name", uName);
-                session.setAttribute("memberID", memberID);
-                url = "/index.jsp";
-            }
-            else {
-                url = "/loginerror.jsp";
-            }
-            
-        } else if (userPath.equals("/payfees")) {
+         else if (userPath.equals("/payfees")) {
             
             
             // update the joinclub case below to run after fee paid successfully
             // change the join button on the clubs listing from join to view
             // add the join button to the club page which directs to the fee page
-        } else if (userPath.equals("/joinclub")) {
+        } 
+        //</editor-fold>
+         
+        //<editor-fold defaultstate="collapsed" desc="JOINCLUB POST"> 
+        
+         
+         else if (userPath.equals("/joinclub")) {
             
             int thisClub = Integer.parseInt(request.getParameter("clubId"));
             selectedClub = clubFacade.find(thisClub);
-            int memberID = (int)session.getAttribute("memberID");
-            Member1 m = memberFacade.find(memberID);
-            
-            boolean joined = joinManager.joinClub(m, selectedClub);
+                        
+            boolean joined = joinManager.joinClub(member, selectedClub);
             if (joined){
-                clubMembers = selectedClub.getClubMembersCollection();            
-                session.setAttribute("clubMembers", clubMembers);
-                url = "/WEB-INF/view/myclubs.jsp";
+//                clubMembers = selectedClub.getClubMembersCollection();            
+//                session.setAttribute("clubMembers", clubMembers);
+                url = "/WEB-INF/view/clubs.jsp";
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
                 String msg = "You are already a member of this club";
@@ -436,38 +566,39 @@ public class myControllerServlet extends HttpServlet {
             
         
         
-        } else if (userPath.equals("/viewclub")) {            
-            
-            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
-            session.setAttribute("selectedClub", selectedClub);            
-            clubMembers = selectedClub.getClubMembersCollection();            
-            session.setAttribute("clubMembers", clubMembers);
+        }
+        //</editor-fold>       
 
-            url = "/WEB-INF/view/club.jsp";  
-            
         
-
-
-
-///////////////////////////////////////////////////////////////////
+         //<editor-fold defaultstate="collapsed" desc="LEAVE CLUB POST"> 
+        
+        
+        ///////////////////////////////////////////////////////////////////
             // by anthony
-        } else if (userPath.equals("/leaveclub")) {
-            int memberID = (int)session.getAttribute("memberID");
-            Member1 m = memberFacade.find(memberID);
+        else if (userPath.equals("/leaveclub")) {
+            //int memberID = (int)session.getAttribute("memberID");
+            //Member1 m = memberFacade.find(memberID);
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
             System.out.println("got this "+selectedClub.getClubName());
-            joinManager.leaveClub(m, selectedClub);  
-            myclubs = m.getClubMembersCollection();
-            session.setAttribute("myclubs", myclubs);
-            url = "/WEB-INF/view/myclubs.jsp";
+            joinManager.leaveClub(member, selectedClub);  
+//            myclubs = member.getClubMembersCollection();
+//            session.setAttribute("myclubs", myclubs);
+            url = "/WEB-INF/view/clubs.jsp";
         }
 
+        
+        //</editor-fold>
+        
         try {
             request.getRequestDispatcher(url).forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+    
+    
+            //<editor-fold defaultstate="collapsed" desc="TEMPLATE FOLD"> 
+        //</editor-fold>
     
         /**
      * Extracts file name from HTTP header content-disposition

@@ -48,7 +48,7 @@
                 <td>Spaces</td>
                 <td>Click to see more....</td>
                 <%--<c:forEach var="club" items="${categoryClubs}" varStatus="iter">--%>
-                <c:forEach var="club" items="${notmyclubs}" varStatus="iter">
+                <c:forEach var="club" items="${notMember}" varStatus="iter">
 
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
@@ -64,7 +64,7 @@
                             ${club.maxMembers - club.clubMembersCollection.size()}
                         </td>
                         <td>
-                            <form action="viewclub" method="post">
+                            <form action="viewclub" method="get">
                                 <input type="hidden"
                                        name="clubId"
                                        value="${club.clubID}">

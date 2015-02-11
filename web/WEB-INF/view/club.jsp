@@ -16,8 +16,6 @@
         <title>Club Details</title>
     </head>
     <body>
-                <d:set var="owner" value="${selectedClub.clubOwnerID.userName}"/>
-                <d:set var="user" value="${username}"/>
         <div id="indexLeftColumn">
             <div class="leftColumnTitle">
            this clubs details.....           
@@ -49,7 +47,8 @@
                
         <div id="indexCentreColumn">    
             <c:choose>
-                <c:when test="${clubMembers.size() == 0}">
+                <%--<c:when test="${clubMembers.size() == 0}">--%>
+                <c:when test="${isMember == null}">
                     Only paid up members can view the other members of a club
                     <br>This clubs fee structure..........
                     <br>
@@ -107,39 +106,41 @@
                     
                 </c:forEach>
             </table><br><br><br><br>
-        </c:otherwise>
+            
+                        <div id="buttonsB">
+                            <d:set var="owner" value="${selectedClub.clubOwnerID.userName}"/>
+                            <d:set var="user" value="${user.userName}"/>
+                            <d:choose>
+                                <d:when test="${fn:contains(owner, user)}">
+                                    <div id="buttonsB">
+                                        <form action="add_new_event" method="get">
+                                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
+                                        <input type="submit" value="ADD NEW EVENT">
+                                        </form>
+                                        </div>
+                                        <div id="buttonsB">
+                                        <form action="edit_club" method="post">
+                                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
+                                        <input type="submit" value="EDIT THIS CLUB">
+                                        </form> 
+                                        </div>
+                                        <div id="buttonsB">
+                                        <form action="deleteclub" method="post">
+                                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
+                                        <input type="submit" value="DELETE THIS CLUB :(">
+                                        </form>
+                                        </div>
+                                </d:when>
+                                <d:otherwise>                
+                                    <form action="leaveclub" method="post">
+                                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
+                                        <input type="submit" value="LEAVE THIS CLUB">
+                                    </form>
+                                </d:otherwise>
+                            </d:choose>   
+                        </div>          
+            </c:otherwise>
         </c:choose>
-        <div id="buttonsB">
-            <d:choose>
-                <d:when test="${fn:contains(owner, user)}">
-                    <div id="buttonsB">
-                        <form action="add_new_event" method="get">
-                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
-                        <input type="submit" value="ADD NEW EVENT">
-                        </form>
-                        </div>
-                        <div id="buttonsB">
-                        <form action="edit_club" method="post">
-                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
-                        <input type="submit" value="EDIT THIS CLUB">
-                        </form> 
-                        </div>
-                        <div id="buttonsB">
-                        <form action="deleteclub" method="post">
-                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
-                        <input type="submit" value="DELETE THIS CLUB :(">
-                        </form>
-                        </div>
-                </d:when>
-                <d:otherwise>                
-                    <form action="leaveclub" method="post">
-                        <input type="hidden" name="clubId" value="${selectedClub.clubID}">
-                        <input type="submit" value="LEAVE THIS CLUB">
-                    </form>
-                </d:otherwise>
-            </d:choose>   
-        </div>          
-                        
         </div>
         <div id="indexRightColumn">
             yet more advertising goes here!

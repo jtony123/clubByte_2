@@ -25,7 +25,7 @@
             </div>
         </div>        
         <div id="indexCentreColumn">
-            Your Clubs 
+            Your are a member of these clubs 
             <table id="myClubTable"> 
                 <td>
                     Logo
@@ -34,7 +34,7 @@
                 <td>Description</td>
                 <td>#Current/Max Members</td>
                 <td>Club Details</td>
-                <c:forEach var="aclub" items="${myclubs}" varStatus="iter">
+                <c:forEach var="aclub" items="${clubsMemberNotOwner}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
                             <img src="${initParam.clubImagePath}${aclub.club.clubImageFilename}" width="120" height="90" alt="${aclub.club.clubName}"></img>
@@ -49,7 +49,7 @@
                             ${aclub.club.clubMembersCollection.size()} / ${aclub.club.maxMembers}
                         </td>
                         <td>
-                            <form action="viewclub" method="post">
+                            <form action="viewclub" method="get">
                                 <input type="hidden"
                                        name="clubId"
                                        value="${aclub.club.clubID}">
