@@ -35,7 +35,7 @@
                 <td>Description</td>
                 <td>#Current/Max Members</td>
                 <td>Club Details</td>
-                <c:forEach var="aclub" items="${owns}" varStatus="iter">
+                <c:forEach var="aclub" items="${clubsOwned}" varStatus="iter">
                     <tr class="${((iter.index % 2) == 0) ? 'oddline' : 'evenline'}">
                         <td>
                             <img src="${initParam.clubImagePath}${aclub.clubImageFilename}" width="120" height="90" alt="${aclub.clubName}"></img>
@@ -50,7 +50,7 @@
                             ${aclub.clubMembersCollection.size()} / ${aclub.maxMembers}
                         </td>
                         <td>
-                            <form action="viewclub" method="post">
+                            <form action="viewclub" method="get">
                                 <input type="hidden"
                                        name="clubId"
                                        value="${aclub.clubID}">
