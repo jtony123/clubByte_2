@@ -26,6 +26,9 @@
                                 </a><br><br>
                                 <a href="myclubs">
                                 My Clubs
+                                </a><br><br>
+                                <a href="myevents">
+                                My Events
                                 </a>
                             </c:otherwise>
                         </c:choose>

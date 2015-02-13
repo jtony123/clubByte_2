@@ -119,9 +119,9 @@
                                         </form>
                                         </div>
                                         <div id="buttonsB">
-                                        <form action="edit_club" method="post">
+                                        <form action="events" method="get">
                                         <input type="hidden" name="clubId" value="${selectedClub.clubID}">
-                                        <input type="submit" value="EDIT THIS CLUB">
+                                        <input type="submit" value="VIEW EVENTS">
                                         </form> 
                                         </div>
                                         <div id="buttonsB">

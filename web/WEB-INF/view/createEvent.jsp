@@ -46,7 +46,7 @@
         <div id="indexLeftColumn">Create New Events</div>
 
 <div id="indexCentreColumn">
-    <form class="createEventForm" action='submit_for_registration' method="post">
+    <form class="createEventForm" action='add_new_event' method="post">
         <table id="createEvent_form">
     <p>In order to create a new Event, please provide us with the following information:</p>                   
             <tr>
@@ -74,7 +74,7 @@
               <tr>
               <div><label for="eventDate">Date of Event:</label></div>
                 <div class="inputField">
-                    <input type="date"
+                    <input type="text"
                            size="31"
                            maxlength="19"
                            placeholder="dd/mm/yyyy"
@@ -105,7 +105,7 @@
 
             <tr>
                 <div colspan="2">
-                    <input type="submit" name="submit" value="SUBMIT">
+                    <input type="submit" name="add_new_event" value="ADD THIS EVENT">
                 </div>
             </tr>
         </table>
