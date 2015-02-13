@@ -339,6 +339,10 @@ public class myControllerServlet extends HttpServlet {
                 session.removeAttribute("isMember");
             }
             
+            
+            int numClubs = clubFacade.count();
+            session.setAttribute("numClubs", numClubs);
+            
             selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
             session.setAttribute("selectedClub", selectedClub);
             
