@@ -106,7 +106,7 @@ height: 100%;
 width: 17%;
 position: fixed;
 top: 120px;
-//left: 25px;
+right:20;
 float: left;
 background: lightgrey;
 }
@@ -215,7 +215,7 @@ background: lightgrey;
 }
 #indexCentreColumn {
 height: auto;
-width: 750px;
+width: 60%;
     position: relative;
     top: 120px;
     left: 275px;
@@ -320,8 +320,8 @@ width: 20%;
 position: fixed;
 top: 120px;
 margin:0;
-left: 1075px;
-float: right;
+right: 0;
+float: left;
 background: lightgrey;
 }
 
