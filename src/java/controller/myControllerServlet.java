@@ -5,9 +5,12 @@
  */
 package controller;
 
+import entity.AttendingEvent;
+import entity.AttendingEventPK;
 import entity.Category;
 import entity.Club;
 import entity.ClubMembers;
+import entity.Event;
 import entity.Fee;
 import entity.Member1;
 import java.io.BufferedOutputStream;
@@ -39,9 +42,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.servlet.http.HttpSession;
+import session.AttendingEventFacade;
 import session.CategoryFacade;
 import session.ClubFacade;
 import session.ClubMembersFacade;
+import session.EventFacade;
+import session.EventManager;
 import session.FeeFacade;
 import session.JoinManager;
 import session.LoginManager;
@@ -75,7 +81,10 @@ import session.NewClubManager;
                         "/newclub",
                         "/leaveclub",
                         "/createEvent",
-                        "/add_new_event"})
+                        "/add_new_event",
+                        "/attend_event",
+                        "/events",
+                        "/myevents"})
 
 //@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
 //                 maxFileSize=1024*1024*10,      // 10MB
@@ -111,6 +120,12 @@ public class myControllerServlet extends HttpServlet {
     private LoginManager loginMan;
     @EJB
     private JoinManager joinManager;
+    @EJB
+    private EventManager eventManager;
+    @EJB
+    private EventFacade eventFacade;
+    @EJB
+    private AttendingEventFacade attendingEventFacade;
     @EJB
     private FeeFacade feeFacade;
     
@@ -195,8 +210,8 @@ public class myControllerServlet extends HttpServlet {
         Category selectedCategory;
         Collection<Club> categoryClubs;
         Collection<ClubMembers> clubMembers;
-//        Collection<ClubMembers> myclubs;
-//        Collection<ClubMembers> myMemberships;
+        Collection<Event> clubEvents;
+        Collection<AttendingEvent> myEvents;
         Collection<Club> notMember = new ArrayList<>();        
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
@@ -215,6 +230,43 @@ public class myControllerServlet extends HttpServlet {
         else if (userPath.equals("/add_new_event")) {
             
             url = "/WEB-INF/view/createEvent.jsp";            
+        } 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="EVENTS PAGE REQUEST">
+        ///////////////////////////////////////// if EVENTS page requested
+        else if (userPath.equals("/events")) {
+            
+            selectedClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));            
+            session.setAttribute("selectedClub", selectedClub);
+            
+            clubEvents = selectedClub.getEventCollection();
+            
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            session.setAttribute("clubEvents", clubEvents);
+            url = "/WEB-INF/view/events.jsp";
+        } 
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="MYEVENTS REQUEST">
+        ///////////////////////////////////////// if MYEVENTS page requested
+        else if (userPath.equals("/myevents")) {
+            
+            myEvents = member.getAttendingEventCollection();
+            
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            session.setAttribute("myEvents", myEvents);
+            url = "/WEB-INF/view/myevents.jsp";
         } 
         //</editor-fold>
         
@@ -394,10 +446,13 @@ public class myControllerServlet extends HttpServlet {
         Member1 member = null;
         
         Collection<ClubMembers> myclubs;
-        Collection<Club> clubsOwned;       
+        Collection<Club> clubsOwned; 
+        
                
         Collection<ClubMembers> clubMembership;
         Collection<ClubMembers> clubsMemberNotOwner;
+        Collection<Event> clubEvents;
+        Collection<AttendingEvent> myEvents;
            
         Collection<Club> notMember = new ArrayList<>();
         
@@ -543,6 +598,78 @@ public class myControllerServlet extends HttpServlet {
             // change the join button on the clubs listing from join to view
             // add the join button to the club page which directs to the fee page
         } 
+        //</editor-fold>
+         
+        //<editor-fold defaultstate="collapsed" desc="NEW EVENT POST"> 
+        else if (userPath.equals("/add_new_event")) {
+            
+            String eventName = request.getParameter("eventName");
+            String eventVenue = request.getParameter("eventVenue");
+            String eventDate = request.getParameter("eventDate");
+            String eventTime = request.getParameter("eventTime");
+            String eventDetails = request.getParameter("eventDetails");
+            //int clubID = (int)session.getAttribute("selectedClub");
+            //Club club = clubFacade.find(clubID);
+            Club club = (Club)session.getAttribute("selectedClub");
+            
+            boolean eventCreated = eventManager.addNewEvent(eventName, eventVenue, eventDate, eventTime, eventDetails, club);
+            
+            if (eventCreated) {
+                                
+                session.setAttribute("selectedClub", club);
+            
+                clubEvents = club.getEventCollection();
+                session.setAttribute("clubEvents", clubEvents);
+                
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                url = "/WEB-INF/view/events.jsp";
+                
+            }
+            else {
+                
+                url = "/WEB-INF/view/createEvent.jsp";
+            }
+            
+            
+        } 
+         
+         
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="GO TO EVENT POST"> 
+        else if (userPath.equals("/attend_event")) {
+            
+            int eventID = Integer.parseInt(request.getParameter("thisEvent"));
+            Event event = eventFacade.find(eventID);
+            
+            if (eventManager.gotoEvent(member, event)) {
+                       
+                myEvents = member.getAttendingEventCollection();
+                session.setAttribute("myEvents", myEvents);
+                
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                url = "/WEB-INF/view/myevents.jsp";
+                
+            }
+            else {
+                
+                url = "/WEB-INF/view/events.jsp";
+                
+            }
+      
+        } 
+         
+         
         //</editor-fold>
          
         //<editor-fold defaultstate="collapsed" desc="JOINCLUB POST"> 
