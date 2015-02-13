@@ -8,23 +8,56 @@
     Author     : jtony_000
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Clubs you are the owner of</title>
     </head>
-    <body>
+    <body>--%>
         <div id="indexLeftColumn">
+            
             <div class="leftColumnTitle">
+                ...clubs you own...
+                <br>
+                    <div class="leftsideButtons">
+                        
+                        <c:choose>
+                            <c:when test="${user == null}">
+                                <a href="register">
+                                Register
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <br>
+                                <a href="mymessages">
+                                My Messages
+                                </a><br><br>
+                                <a href="mymemberships">
+                                My Memberships
+                                </a><br><br>
+                                <a href="myclubs">
+                                My Clubs
+                                </a><br><br>
+                                <a href="myevents">
+                                My Events
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>        
+            
+                <br>
                 Some options for you..
-            </div>  
-            <br><br>
+                           <br><br>
             <div class="leftsideButtons">
             <button id="buttonsA" onclick="location.href='newclub'">Create Club</button>
             </div>
-        </div>        
+            </div> 
+            </div>
+        
+        
+        
         <div id="indexCentreColumn">
             Your Clubs 
             <table id="myClubTable"> 
@@ -55,7 +88,7 @@
                                        name="clubId"
                                        value="${aclub.clubID}">
                                 <input type="submit"
-                                       value="EDIT THIS CLUB">
+                                       value="LOOK CLOSER">
                             </form>
                         </td>
                     </tr>

@@ -684,7 +684,25 @@ public class myControllerServlet extends HttpServlet {
             if (joined){
 //                clubMembers = selectedClub.getClubMembersCollection();            
 //                session.setAttribute("clubMembers", clubMembers);
+                
+                //call method to refresh this users clubs
+                            //get the collection of clubs this user is a member of
+            clubMembership = member.getClubMembersCollection();
+            //filter out the clubs they own
+            clubsMemberNotOwner = new ArrayList();            
+            for (ClubMembers cm : clubMembership) {
+                
+                int userID = cm.getMember1().getMemberID();
+                int ownerID = cm.getClub().getClubOwnerID().getMemberID();
+                if (!(userID == ownerID)) {
+                        clubsMemberNotOwner.add(cm);
+                    }  
+            }
+            session.setAttribute("clubsMemberNotOwner", clubsMemberNotOwner);
+            //System.out.println(thisUser.getFirstName());               
+                
                 url = "/WEB-INF/view/clubs.jsp";
+                
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
                 String msg = "You are already a member of this club";

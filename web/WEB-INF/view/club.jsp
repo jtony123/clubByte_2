@@ -8,44 +8,69 @@
     Author     : jtony_000
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Club Details</title>
     </head>
-    <body>
+    <body>--%>
         <div id="indexLeftColumn">
+            
             <div class="leftColumnTitle">
-           this clubs details.....           
+                ...this clubs details...       
            <br>
-                <div class="leftColumnImages" >
-                <img src="${initParam.clubImagePath}${selectedClub.clubImageFilename}" width="240" height="180" alt="no image uploaded"></img>
-                </div>
-                <div class="leftsideButtons">
-                <br> <br> <br> <br> <br> <br> <br>    
-                Club Name: ${selectedClub.clubName}
-                <br>
-                <div class ="leftColumnSmallText">
-                owned by:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}
-                </div>
-                <br>
-                Description: ${selectedClub.description}
-                <br>
-                Max no of members: ${selectedClub.maxMembers}
-                <br>
-                Category: ${selectedClub.category.name}
-                <br>
-                Parent Club: ${selectedClub.parentOrganisation}
-                </div>
-                <br>
-                <a href="${selectedClub.parentURL}" target="_blank">Link to Parent Organisation</a>
-                <br><br>
+                    <div class="leftsideButtons">
+                        
+                        <c:choose>
+                            <c:when test="${user == null}">
+                                <a href="register">
+                                Register
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <br>
+                                <a href="mymessages">
+                                My Messages
+                                </a><br><br>
+                                <a href="mymemberships">
+                                My Memberships
+                                </a><br><br>
+                                <a href="myclubs">
+                                My Clubs
+                                </a><br><br>
+                                <a href="myevents">
+                                My Events
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div> 
             </div>
         </div>
                
-        <div id="indexCentreColumn">    
+        <div id="indexCentreColumn">  
+            
+            <div class="centreColumnImages" >
+                <img src="${initParam.clubImagePath}${selectedClub.clubImageFilename}" width="240" height="180" alt="no image uploaded"></img>
+                </div>
+                <div class="leftsideButtons">
+                <%--<br> <br> <br> <br> <br> <br> <br>--%>   
+                ${selectedClub.clubName}
+                
+                <div class ="leftColumnSmallText">
+                owned by:${selectedClub.clubOwnerID.firstName} ${selectedClub.clubOwnerID.surName}
+                <br>
+                Category: ${selectedClub.category.name}&nbsp;&nbsp;&nbsp;Max no of members: ${selectedClub.maxMembers}
+                </div>
+                <br>
+                Description: ${selectedClub.description}
+                <br>  
+                Parent Club: ${selectedClub.parentOrganisation}                  
+                <br>
+                <a href="${selectedClub.parentURL}" target="_blank">${selectedClub.parentURL}</a>
+                <br><br>
+                </div>
             <c:choose>
                 <%--<c:when test="${clubMembers.size() == 0}">--%>
                 <c:when test="${isMember == null}">
@@ -141,6 +166,7 @@
                         </div>          
             </c:otherwise>
         </c:choose>
+            <br><br><br><br><br><br> ...
         </div>
         <div id="indexRightColumn">
             yet more advertising goes here!
