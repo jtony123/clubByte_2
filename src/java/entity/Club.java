@@ -64,6 +64,8 @@ public class Club implements Serializable {
     @Size(max = 90)
     @Column(name = "clubImageFilename")
     private String clubImageFilename;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubclubID")
+    private Collection<Messages> messagesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "club")
     private Collection<ClubMembers> clubMembersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clubclubID1")
@@ -142,6 +144,15 @@ public class Club implements Serializable {
 
     public void setClubImageFilename(String clubImageFilename) {
         this.clubImageFilename = clubImageFilename;
+    }
+
+    @XmlTransient
+    public Collection<Messages> getMessagesCollection() {
+        return messagesCollection;
+    }
+
+    public void setMessagesCollection(Collection<Messages> messagesCollection) {
+        this.messagesCollection = messagesCollection;
     }
 
     @XmlTransient

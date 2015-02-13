@@ -87,6 +87,10 @@ public class Member1 implements Serializable {
     @Size(max = 45)
     @Column(name = "location")
     private String location;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "toMembermemberID")
+    private Collection<Messages> messagesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
+    private Collection<Messages> messagesCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
     private Collection<ClubMembers> clubMembersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member1")
@@ -189,6 +193,24 @@ public class Member1 implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @XmlTransient
+    public Collection<Messages> getMessagesCollection() {
+        return messagesCollection;
+    }
+
+    public void setMessagesCollection(Collection<Messages> messagesCollection) {
+        this.messagesCollection = messagesCollection;
+    }
+
+    @XmlTransient
+    public Collection<Messages> getMessagesCollection1() {
+        return messagesCollection1;
+    }
+
+    public void setMessagesCollection1(Collection<Messages> messagesCollection1) {
+        this.messagesCollection1 = messagesCollection1;
     }
 
     @XmlTransient
