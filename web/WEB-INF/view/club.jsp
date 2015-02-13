@@ -8,14 +8,6 @@
     Author     : jtony_000
 --%>
 
-<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Club Details</title>
-    </head>
-    <body>--%>
 <div id="indexLeftColumn">
 
     <div class="leftColumnTitle">
@@ -67,16 +59,16 @@
                 </c:otherwise>
             </c:choose> 
         </div>
-        
+
         <div id="buttonsC">.........................</div>
-        
+
         <div id="buttonsC">
             <c:choose>
                 <c:when test="${selectedClub.clubID < numClubs}">
-            <form action="viewclub" method="get">
-                <input type="hidden" name="clubId" value="${selectedClub.clubID + 1}">
-                <input type="submit" value="NEXT CLUB >>>">
-            </form>
+                    <form action="viewclub" method="get">
+                        <input type="hidden" name="clubId" value="${selectedClub.clubID + 1}">
+                        <input type="submit" value="NEXT CLUB >>>">
+                    </form>
                 </c:when>
                 <c:otherwise>
                     <form action="viewclub" method="get">
@@ -108,33 +100,33 @@
             <br>
             <a href="${selectedClub.parentURL}" target="_blank">${selectedClub.parentURL}</a>
             <br><br>
-        
-    </div>
-    <c:choose>
-        <%--<c:when test="${clubMembers.size() == 0}">--%>
-        <c:when test="${isMember == null}">
-            Only paid up members can view the other members of a club
-            <br>This clubs fee structure..........
-            <br>
-            <br>Type of fee: ${selectedClub.feefeeID.name}
-            <br>Amount to be paid: ${selectedClub.feefeeID.amount}
-            <br>For a period of: ${selectedClub.feefeeID.period}
-            <br>Payment type(s) accepted: ${selectedClub.feefeeID.type}
-            <br>Payment details(the small print): ${selectedClub.feefeeID.details}
-            <br>
-            <br>
-            <form action="payfees" method="post">
-                <input type="hidden"
-                       name="clubId"
-                       value="${selectedClub.clubID}">
-                <input type="submit"
-                       value="JOIN THIS CLUB">
-            </form>
-        </c:when>
-        <c:otherwise>
-            This Clubs Members
-            <br>
-</div>
+
+        </div>
+        <c:choose>
+            <%--<c:when test="${clubMembers.size() == 0}">--%>
+            <c:when test="${isMember == null}">
+                Only paid up members can view the other members of a club
+                <br>This clubs fee structure..........
+                <br>
+                <br>Type of fee: ${selectedClub.feefeeID.name}
+                <br>Amount to be paid: ${selectedClub.feefeeID.amount}
+                <br>For a period of: ${selectedClub.feefeeID.period}
+                <br>Payment type(s) accepted: ${selectedClub.feefeeID.type}
+                <br>Payment details(the small print): ${selectedClub.feefeeID.details}
+                <br>
+                <br>
+                <form action="payfees" method="post">
+                    <input type="hidden"
+                           name="clubId"
+                           value="${selectedClub.clubID}">
+                    <input type="submit"
+                           value="JOIN THIS CLUB">
+                </form>
+            </c:when>
+            <c:otherwise>
+                This Clubs Members
+                <br>
+            </div>
             <table id="myClubTable">  
                 <tr>
                     <td>Username</td>

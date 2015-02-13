@@ -8,7 +8,11 @@
 
         <div id="indexLeftColumn">
             <div class="leftColumnTitle">
-                <p>All about clubByte and how it works, what it can do for you.</p>
+                <p>All about ClubByte, what it can do for you....all from one place</p>
+                <p>>> keep up to date with all your clubs, societies, groups, classes.....</p>
+                <p>>> create your own clubs, groups, societies....and manage them all easily</p>
+                <p>>> keep all your members informed from one place</p>
+                <p>>> pay or collect your fees easily and safely</p>
                     <div class="leftsideButtons">
                         <c:choose>
                             <c:when test="${user == null}">
