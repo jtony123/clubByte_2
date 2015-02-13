@@ -223,6 +223,15 @@ float: left;
     
 }
 
+.centreColumnImages {
+    float: right;
+    //position:absolute;
+    //left:-5px; 
+/*    border-style: double;
+    border-color: darkslateblue;
+    border-width: 2px;*/
+}
+
 #clubTable {
     background-color: lightgrey;
     color:darkslateblue;

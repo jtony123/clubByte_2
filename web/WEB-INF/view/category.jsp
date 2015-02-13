@@ -12,7 +12,7 @@
     
         <div id="indexLeftColumn">
             <div class="leftColumnTitle">
-                <p>Club Categories</p>                
+                <p>Browse other clubs <br><br> ...the categories...</p>                
                 <div class="leftsideButtons">
                     <c:forEach var="category" items="${categories}">
 
