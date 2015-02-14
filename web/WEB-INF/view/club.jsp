@@ -149,12 +149,10 @@
                             ${member.member1.dob}&nbsp
                         </td>
                         <td><div id="buttonsA">
-                                <form action="sendmessage" method="post">
-                                    <input type="hidden"
-                                           name="clubId"
-                                           value="${member.member1.emailAddress}">
-                                    <input type="submit"
-                                           value="SEND MESSAGE">
+                                <form action="compose_message" method="post">
+                                    <input type="hidden" name="clubId" value="${selectedClub.clubID}">
+                                    <input type="hidden" name="recipientID" value="${member.member1.memberID}">
+                                    <input type="submit" value="SEND A MESSAGE">
                                 </form>
                             </div>
                         </td>
