@@ -13,6 +13,8 @@ import entity.ClubMembers;
 import entity.Event;
 import entity.Fee;
 import entity.Member1;
+import entity.Messages;
+import entity.MessagesPK;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,6 +34,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.jms.Message;
 import javax.persistence.TypedQuery;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -52,6 +55,7 @@ import session.FeeFacade;
 import session.JoinManager;
 import session.LoginManager;
 import session.Member1Facade;
+import session.MessageManager;
 import session.NewMemberManager;
 import session.NewClubManager;
 
@@ -75,6 +79,8 @@ import session.NewClubManager;
                         "/ownersclubs",
                         "/mymemberships",
                         "/sendmessage",
+                        "/compose_message",
+                        "/post_message",
                         "/mymessages",
                         "/viewclub",
                         "/Terms",
@@ -128,6 +134,9 @@ public class myControllerServlet extends HttpServlet {
     private AttendingEventFacade attendingEventFacade;
     @EJB
     private FeeFacade feeFacade;
+    @EJB
+    private MessageManager msgMan;
+    
     
     @Override
         public void init(ServletConfig servletConfig) throws ServletException {
@@ -212,6 +221,8 @@ public class myControllerServlet extends HttpServlet {
         Collection<ClubMembers> clubMembers;
         Collection<Event> clubEvents;
         Collection<AttendingEvent> myEvents;
+        Collection<Messages> myMsgs;
+        Collection<Messages> sentMsgs;
         Collection<Club> notMember = new ArrayList<>();        
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
@@ -327,6 +338,25 @@ public class myControllerServlet extends HttpServlet {
             url = "/WEB-INF/view/clubs.jsp";
             
         } 
+        
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="MYMESSAGES REQUEST">
+        else if (userPath.equals("/mymessages")) {
+            
+            myMsgs = member.getMessagesCollection(); 
+            sentMsgs = member.getMessagesCollection1();
+            
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            session.setAttribute("myMsgs", myMsgs);  
+            session.setAttribute("sentMsgs", sentMsgs); 
+            url = "/WEB-INF/view/messages.jsp";
+        }
         
         //</editor-fold>
         
@@ -462,6 +492,7 @@ public class myControllerServlet extends HttpServlet {
         
         
         String url = "/WEB-INF/view" + userPath + ".jsp";
+        
         if (session.getAttribute("user") != null) {
             member = (Member1)session.getAttribute("user");
         }
@@ -716,10 +747,9 @@ public class myControllerServlet extends HttpServlet {
         
         
         }
-        //</editor-fold>       
-
+        //</editor-fold>    
         
-         //<editor-fold defaultstate="collapsed" desc="LEAVE CLUB POST"> 
+        //<editor-fold defaultstate="collapsed" desc="LEAVE CLUB POST"> 
         
         
         ///////////////////////////////////////////////////////////////////
@@ -733,10 +763,51 @@ public class myControllerServlet extends HttpServlet {
 //            myclubs = member.getClubMembersCollection();
 //            session.setAttribute("myclubs", myclubs);
             url = "/WEB-INF/view/clubs.jsp";
-        }
-
-        
+        }       
         //</editor-fold>
+        
+        
+        //<editor-fold defaultstate="collapsed" desc="COMPOSE MESSAGE POST">       
+        
+        ///////////////////////////////////////////////////////////////////
+            // by anthony
+        else if (userPath.equals("/compose_message")) {
+            
+            Member1 recipient = memberFacade.find(Integer.parseInt(request.getParameter("recipientID")));
+            Club recipientsClub = clubFacade.find(Integer.parseInt(request.getParameter("clubId")));
+            session.setAttribute("recipient", recipient);
+            session.setAttribute("recipientsClub", recipientsClub);
+           
+            url = "/WEB-INF/view/newmessage.jsp";
+        }       
+        //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="SEND MESSAGE POST">       
+        
+        ///////////////////////////////////////////////////////////////////
+            // by anthony
+        else if (userPath.equals("/post_message")) {
+            
+            Member1 to = (Member1)session.getAttribute("recipient");
+            Club c = (Club)session.getAttribute("recipientsClub");
+            
+            String msg = request.getParameter("message");
+            
+            boolean posted = msgMan.postMessage(member, to, c, msg );
+            if (posted) {
+                url = "/WEB-INF/view/club.jsp";
+            }
+            else {
+                url = "/WEB-INF/view/newmessage.jsp";
+            }
+           
+            
+        }       
+        //</editor-fold>
+        
+        
+        
+        
         
         try {
             request.getRequestDispatcher(url).forward(request, response);
