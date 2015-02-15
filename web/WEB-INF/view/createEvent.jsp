@@ -78,16 +78,7 @@
               <div class="inputField">
               <input type="Text"size="31" name="eventDate" value="">
               <a href="javascript:show_calendar('document.tstest.eventDate', document.tstest.eventDate.value);">
-              <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>  
-                
-<!--                    <input type="text"
-                           
-                           maxlength="19"
-                           placeholder="dd/mm/yyyy"
-                           name="eventDate"-->
-                </div>
-            
-             
+              <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a> </div>
               <div><label for="eventTime">Time of Event:</label></div>
                 <div class="inputField">
                     <input type="text"
@@ -106,17 +97,16 @@
                            id="eventDetails"
                            name="eventDetails"
                            value="${param.eventDetails}"></div>
+                           <div><label for="recurring">Recurring</label></div>
+                           <INPUT TYPE="radio" name="command" value="0"/>Every week
+                           <INPUT TYPE="radio" NAME="command" VALUE="1"/>Every month
               <div colspan="2">
                     <input type="submit" name="add_new_event" value="ADD THIS EVENT">
                 </div>
-            
+                           
         </table>
     </form>
-<!--                <form name="tstest" method="post">
-            <input type="Text" name="timestamp" value="">
-            <a href="javascript:show_calendar('document.tstest.timestamp', document.tstest.timestamp.value);">
-                <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
-            </form>-->
+                           
 </div>
                 <div id="indexRightColumn">Adverts go here.</div>
     </body>
