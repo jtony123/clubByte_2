@@ -3,6 +3,7 @@
     Created on : 30-Jan-2015, 14:23:28
     Author     : gary
 --%>
+
 <script src="js/jquery.validate.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -39,6 +40,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script language="JavaScript" src="js/ts_picker.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ClubByte</title>
     </head>
@@ -46,10 +48,10 @@
         <div id="indexLeftColumn">Create New Events</div>
 
 <div id="indexCentreColumn">
-    <form class="createEventForm" action='add_new_event' method="post">
+    <form class="createEventForm" action='add_new_event'name="tstest" method="post">
         <table id="createEvent_form">
     <p>In order to create a new Event, please provide us with the following information:</p>                   
-            <tr>
+            
                     <div><label for="eventName">Event Name:</label></div>
                 <div class="inputField">
                     <input type="text"
@@ -59,8 +61,8 @@
                            name="eventName"
                            value="${param.eventName}">
                 </div>   
-            </tr>
-                        <tr>
+            
+                        
                 <div><label for="eventVenue">Event Venue</label></div>
                 <div class="inputField">
                     <input type="text"
@@ -70,18 +72,22 @@
                            name="eventVenue"
                            value="${param.eventVenue}">
                 </div>
-            </tr>
-              <tr>
+            
+              
               <div><label for="eventDate">Date of Event:</label></div>
-                <div class="inputField">
-                    <input type="text"
-                           size="31"
+              <div class="inputField">
+              <input type="Text"size="31" name="eventDate" value="">
+              <a href="javascript:show_calendar('document.tstest.eventDate', document.tstest.eventDate.value);">
+              <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>  
+                
+<!--                    <input type="text"
+                           
                            maxlength="19"
                            placeholder="dd/mm/yyyy"
-                           name="eventDate"
+                           name="eventDate"-->
                 </div>
-            </tr>
-             <tr>
+            
+             
               <div><label for="eventTime">Time of Event:</label></div>
                 <div class="inputField">
                     <input type="text"
@@ -90,8 +96,8 @@
                            placeholder="00:00"
                            name="eventTime"
                 </div>
-            </tr>
-             <tr>
+            
+             
                 <div><label for="eventDetails">Event details</label></div>
                 <div class="inputField">
                     <input type="text"
@@ -99,17 +105,18 @@
                            maxlength="150"
                            id="eventDetails"
                            name="eventDetails"
-                           value="${param.eventDetails}">
-                </div>
-            </tr>
-
-            <tr>
-                <div colspan="2">
+                           value="${param.eventDetails}"></div>
+              <div colspan="2">
                     <input type="submit" name="add_new_event" value="ADD THIS EVENT">
                 </div>
-            </tr>
+            
         </table>
     </form>
+<!--                <form name="tstest" method="post">
+            <input type="Text" name="timestamp" value="">
+            <a href="javascript:show_calendar('document.tstest.timestamp', document.tstest.timestamp.value);">
+                <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a>
+            </form>-->
 </div>
                 <div id="indexRightColumn">Adverts go here.</div>
     </body>
