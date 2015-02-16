@@ -102,7 +102,7 @@ function show_calendar(str_target, str_datetime) {
 }
 // datetime parsing and formatting routimes. modify them if you wish other datetime format
 function str2dt (str_datetime) {
-	var re_date = /^(\d+)\-(\d+)\-(\d+)\s+(\d+)\:(\d+)\:(\d+)$/;
+	var re_date = /^(\d+)\/(\d+)\/(\d+)/;//s+(\d+)\:(\d+)\:(\d+)$/;
 	if (!re_date.exec(str_datetime))
 		return alert("Invalid Datetime format: "+ str_datetime);
 	return (new Date (RegExp.$3, RegExp.$2-1, RegExp.$1, RegExp.$4, RegExp.$5, RegExp.$6));
