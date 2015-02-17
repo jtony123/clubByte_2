@@ -30,14 +30,14 @@ function show_calendar(str_target, str_datetime) {
 		"<table cellspacing=\"1\" cellpadding=\"3\" border=\"0\" width=\"100%\">\n"+
 		"<tr>\n	<td bgcolor=\"#4682B4\"><a href=\"javascript:window.opener.show_calendar('"+
 		str_target+"', '"+ dt2dtstr(dt_prev_month)+"'+document.cal.time.value);\">"+
-		"<img src=\"img\"prev.gif\" width=\"16\" height=\"16\" border=\"0\""+
+		"<img src=\"prev.gif\" width=\"16\" height=\"16\" border=\"0\""+
 		" alt=\"previous month\"></a></td>\n"+
 		"	<td bgcolor=\"#4682B4\" colspan=\"5\">"+
 		"<font color=\"white\" face=\"tahoma, verdana\" size=\"2\">"
 		+arr_months[dt_datetime.getMonth()]+" "+dt_datetime.getFullYear()+"</font></td>\n"+
 		"	<td bgcolor=\"#4682B4\" align=\"right\"><a href=\"javascript:window.opener.show_calendar('"
 		+str_target+"', '"+dt2dtstr(dt_next_month)+"'+document.cal.time.value);\">"+
-		"<img src=\"img\"next.gif\" width=\"16\" height=\"16\" border=\"0\""+
+		"<img src=\"next.gif\" width=\"16\" height=\"16\" border=\"0\""+
 		" alt=\"next month\"></a></td>\n</tr>\n"
 	);
 

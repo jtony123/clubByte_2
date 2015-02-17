@@ -90,8 +90,7 @@ import session.NewClubManager;
                         "/add_new_event",
                         "/attend_event",
                         "/events",
-                        "/myevents",
-                        "/newjsp"})
+                        "/myevents"})
 
 //@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
 //                 maxFileSize=1024*1024*10,      // 10MB
@@ -836,7 +835,7 @@ private String getFileName(final Part part) {
     return null;
 }
 
-    
+
 //    private class FileUploadServlet extends HttpServlet{
 //
 //        public FileUploadServlet() {
