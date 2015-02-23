@@ -656,17 +656,17 @@ public class myControllerServlet extends HttpServlet {
                 clubEvents = club.getEventCollection();
                 session.setAttribute("clubEvents", clubEvents);
                 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    Thread.sleep(500);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(myControllerServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                 
                 url = "/WEB-INF/view/events.jsp";
                 
             }
             else {
-                
+                String msg = "Oooops, something went wrong, please try again.";
                 url = "/WEB-INF/view/createEvent.jsp";
             }
             

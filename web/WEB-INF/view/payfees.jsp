@@ -12,16 +12,18 @@
         <title>Pay fees for the club selected</title>
     </head>
     <body>
-        <h1>Here the member will pay their fees to join the club selected.</h1>
+        <div id="indexCentreColumn">
+        Here the member will pay their fees to join the club selected.
         credit card details, etc.. will be collected her for processing :)
         <br>For now, just go ahead and pretend that you have paid.
         <br>
             <form action="joinclub" method="post">
                 <input type="hidden"
-                    name="clubId"
+                    name="clubId"  
                     value="${selectedClub.clubID}">
                 <input type="submit"
                     value="I HAVE PAID">
             </form>
+        </div>
     </body>
 </html>
