@@ -611,8 +611,8 @@ public class myControllerServlet extends HttpServlet {
             
             if (joined){ 
 //                myclubs = clubOwner.getClubMembersCollection();
-//                session.setAttribute("myclubs", myclubs);
-                url = "/WEB-INF/view/myclubs.jsp";
+                session.setAttribute("selectedClub", newClub);
+                url = "/WEB-INF/view/club.jsp";
                 
             } else {
                 // TODO: implement a messaging system back to the user when thry make a mistake
