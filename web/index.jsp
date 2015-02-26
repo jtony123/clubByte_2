@@ -13,10 +13,12 @@
                         <c:choose>
                             <c:when test="${user == null}">
                                 <p>All about ClubByte, what it can do for you....all from one place</p>
-                                <p>>> keep up to date with all your clubs, societies, groups, classes.....</p>
-                                <p>>> create your own clubs, groups, societies....and manage them all easily</p>
-                                <p>>> keep all your members informed from one place</p>
-                                <p>>> pay or collect your fees easily and safely</p>
+                                <ul>
+                                    <li> Pay or collect your fees easily and safely</li><br>
+                                    <li> keep up to date with all your clubs, societies, groups, classes...</li>
+                                    <li> create your own clubs, groups, societies....and manage them all easily</li>
+                                    <li> keep all your members informed from one place</li>
+                                </ul>
                                 <a href="register">
                                 Register
                                 </a>
