@@ -74,19 +74,19 @@
                 </div>
             
               
-              <div><label for="eventDate">Date of Event:</label></div>
+              <div><label for="eventDate">Date & Time of Event:</label></div>
               <div class="inputField">
-              <input type="Text"size="31" name="eventDate" value="">
+                  <input type="Text"size="31" placeholder="DD/MM/YY HH:MM" name="eventDate" value="">
               <a href="javascript:show_calendar('document.tstest.eventDate', document.tstest.eventDate.value);">
               <img src="img/cal.gif" width="16" height="16" border="0" alt="Click Here to Pick up the timestamp"></a> </div>
-              <div><label for="eventTime">Time of Event:</label></div>
+<!--              <div><label for="eventTime">Time of Event:</label></div>
                 <div class="inputField">
                     <input type="text"
                            size="31"
                            maxlength="19"
                            placeholder="00:00"
                            name="eventTime"
-                </div>
+                </div>-->
             
              
                 <div><label for="eventDetails">Event details</label></div>

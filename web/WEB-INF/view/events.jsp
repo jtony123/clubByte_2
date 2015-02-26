@@ -33,8 +33,8 @@
                     </td>
                     <td>Event Name</td>
                     <td>Venue</td>
-                    <td>Date</td>                
-                    <td>Time</td>
+                    <td>Date & Time</td>                
+                    
                     <td>Event Details</td>
                     <td>Attending</td>
                 </tr>
@@ -52,9 +52,9 @@
                         <td>
                             ${event.eventDate} 
                         </td>
-                        <td>
+<!--                        <td>
                             ${event.eventTime} 
-                        </td>
+                        </td>-->
                         <td>
                             ${event.eventDetails} 
                         </td>
