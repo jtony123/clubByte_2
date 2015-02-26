@@ -58,8 +58,7 @@
             </td>
             <td>Event Name</td>
             <td>Venue</td>
-            <td>Date</td>                
-            <td>Time</td>
+            <td>Date & Time</td>                
             <td>Event Details</td>
             <td>Attending</td>
         </tr>
@@ -77,9 +76,9 @@
                 <td>
                     ${myevent.event.eventDate} 
                 </td>
-                <td>
+<!--                <td>
                     ${myevent.event.eventTime} 
-                </td>
+                </td>-->
                 <td>
                     ${myevent.event.eventDetails} 
                 </td>
