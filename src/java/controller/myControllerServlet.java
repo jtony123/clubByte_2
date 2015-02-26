@@ -590,6 +590,7 @@ public class myControllerServlet extends HttpServlet {
 
                 while ((read = filecontent.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
+                    out.flush();
                 }
                 
             } catch (FileNotFoundException fne) {
